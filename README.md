@@ -1,5 +1,7 @@
 # LunesPy
-LunesPy is an object-oriented Python interface to the Lunes blockchain platform, 100% based on LunesPy - and MIT License.
+
+## Interface for consuming the REST APIs of *Lunes Node*
+---
 
 ## Getting Started
 
