@@ -7,9 +7,9 @@
 
 ## Project Structure Guide
 
-https://docs.python-guide.org/writing/structure/
-https://kenreitz.org/essays/2013/01/27/repository-structure-and-python
-https://realpython.com/python-application-layouts/
+- https://docs.python-guide.org/writing/structure/
+- https://kenreitz.org/essays/2013/01/27/repository-structure-and-python
+- https://realpython.com/python-application-layouts/
 
 ## Getting Started
 
