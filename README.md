@@ -18,7 +18,7 @@ The library utilizes classes to represent various Lunes data structures:
 
 #### Code Example
 ```python
-import lunespy as lp
+import LunesPy as lp
 
 myAddress = lp.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
 otherAddress = lp.Address('3PNTcNiUzppQXDL9RZrK3BcftbujiFqrAfM')
