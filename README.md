@@ -2,7 +2,7 @@
 
 ---
 
-## [How To This Work](./docs/lunespy)?
+## [How Does It Works](./docs/lunespy)?
 
 ---
 
