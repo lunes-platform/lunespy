@@ -8,36 +8,43 @@
 
 ## Project Structure Guide[¹](#reference)
 
-    lunespy/
-    │
-    │
-    ├── lunespy/
-    │   ├── __init__.py
-    |   |
-    │   ├── core/
-    │   │   ├── __init__.py
+    lunespy
+    │   ├── address
     │   │   ├── .py
     │   │   └── .py
     │   │
-    │   └── helpers/
-    │       ├── __init__.py
-    │       ├── .py
-    │       └── .py
-    |
-    |
-    ├── tests/
-    │   ├── core
+    │   ├── assets
     │   │   ├── .py
     │   │   └── .py
     │   │
-    │   └── helpers/
+    │   ├── crypto
+    │   │   ├── .py
+    │   │   └── .py
+    │   │
+    │   └── settings
     │       ├── .py
     │       └── .py
-    │
     |
-    ├── data/
-    │   ├── input.csv
-    │   └── output.xlsx
+    ├── tests
+    │   ├── address
+    │   │   ├── .py
+    │   │   └── .py
+    │   │
+    │   ├── assets
+    │   │   ├── .py
+    │   │   └── .py
+    │   │
+    │   ├── crypto
+    │   │   ├── .py
+    │   │   └── .py
+    │   │
+    │   └── settings
+    │       ├── .py
+    │       └── .py
+    |
+    ├── data
+    │   ├── all_wallets.csv
+    │   └── rich_list.csv
     │
     |
     ├── docs/
@@ -47,7 +54,6 @@
     ├── .gitignore
     ├── LICENSE
     ├── README.md
-    ├── setup.py
     └── requeriments.txt
 
 ---
