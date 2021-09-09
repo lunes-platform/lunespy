@@ -395,19 +395,19 @@ class Address(object):
                     struct.pack(">Q", timestamp) + \
                     struct.pack(">Q", amount) + \
                     struct.pack(">Q", txFee) + \
-                    base58.b58decode(recipient.address) + \
-                    struct.pack(">H", len(attachment)) + \
-                    crypto.str2bytes(attachment)
+                    base58.b58decode(recipient.address) 
+                    # struct.pack(">H", len(attachment)) + \
+                    # crypto.str2bytes(attachment)
             signature = crypto.sign(self.privateKey, sData)
-            data = json.dumps({
+            data = {
                 "senderPublicKey": self.publicKey,
                 "recipient": recipient.address,
                 "amount": amount,
                 "fee": txFee,
                 "timestamp": timestamp,
-                "attachment": base58.b58encode(crypto.str2bytes(attachment)),
+                # "attachment": base58.b58encode(crypto.str2bytes(attachment)),
                 "signature": signature
-            })
+            }
 
             return lunespy.wrapper('/assets/broadcast/transfer', data)
 
