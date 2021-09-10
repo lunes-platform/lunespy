@@ -1,62 +1,50 @@
-# Interface for consuming the REST APIs of *Lunes Node*
+# LunesPy
 
----
+Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
+Allows the automation of **sending assets**, **issue end reissue tokens**, **leasing**, **registry**, and **create new wallet**.
+<!-- 
+## Prerequisites
 
-## [How Does It Works](./docs/lunespy.md)?
+Before you begin, ensure you have met the following requirements:
+* You have installed the latest version of `python`
 
----
+## Installing LunesPy
 
-## Project Structure Guide[¹](#reference)
+To use LunesPy, follow these steps:
 
-    lunespy
-    │   ├── address
-    │   │   ├── .py
-    │   │   └── .py
-    │   │
-    │   ├── assets
-    │   │   ├── .py
-    │   │   └── .py
-    │   │
-    │   ├── crypto
-    │   │   ├── .py
-    │   │   └── .py
-    │   │
-    │   └── settings
-    │       ├── .py
-    │       └── .py
-    |
-    ├── tests
-    │   ├── address
-    │   │   ├── .py
-    │   │   └── .py
-    │   │
-    │   ├── assets
-    │   │   ├── .py
-    │   │   └── .py
-    │   │
-    │   ├── crypto
-    │   │   ├── .py
-    │   │   └── .py
-    │   │
-    │   └── settings
-    │       ├── .py
-    │       └── .py
-    |
-    ├── data
-    │   ├── all_wallets.csv
-    │   └── rich_list.csv
-    │
-    |
-    ├── docs/
-    │   └── lunespy.md
-    |
-    │
-    ├── .gitignore
-    ├── LICENSE
-    ├── README.md
-    └── requeriments.txt
+Linux and macOS:
+```
+<install_command>
+```
 
----
+Windows:
+```
+<install_command>
+``` -->
 
-## Reference
-¹ [Python Application Layouts: A Reference](https://realpython.com/python-application-layouts/)
+## Using LunesPy
+
+To use LunesPy, follow these [tutorial](./docs/TUTORIAL.md)
+
+## Contributing to LunesPy
+
+To contribute to LunesPy, follow these [step](./docs/CONTRIBUTING.md)
+
+## Contributors
+
+Thanks to the following people who have contributed to this project:
+
+* [@olivmath](https://github.com/olivmath)
+
+
+<!---
+You might want to consider using something like the [All Contributors](https://github.com/all-contributors/all-contributors) specification and its [emoji key](https://allcontributors.org/docs/en/emoji-key).
+--->
+## Contact
+
+If you want to contact me you can reach me at <lucas.oliveira@lunes.io>.
+
+## License
+<!--- If you're not sure which open license to use see https://choosealicense.com/--->
+
+This project uses the following license: [Apache License Version 2.0, January 2004](./LICENSE).
