@@ -7,9 +7,9 @@ from lunespy.client.wallet.generators import wallet_generator
 from lunespy.client.wallet import ADDRESS_CHECKSUM_LENGTH
 from lunespy.client.wallet import ADDRESS_VERSION
 from lunespy.client.wallet import ADDRESS_LENGTH
-from lunespy.utils.crypto.convert import bytes_to_string
-from lunespy.utils.crypto.convert import string_to_bytes
-from lunespy.utils.crypto.convert import hash_chain
+from lunespy.utils.crypto.converters import bytes_to_string
+from lunespy.utils.crypto.converters import string_to_bytes
+from lunespy.utils.crypto.converters import hash_chain
 from lunespy.server import CHAIN_ID
 from lunespy.server import OFFLINE
 from lunespy.server.address import aliases
