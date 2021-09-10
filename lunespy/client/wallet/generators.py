@@ -1,6 +1,6 @@
-from lunespy.utils.crypto.convert import bytes_to_string
-from lunespy.utils.crypto.convert import string_to_bytes
-from lunespy.utils.crypto.convert import hash_chain
+from lunespy.utils.crypto.converters import bytes_to_string
+from lunespy.utils.crypto.converters import string_to_bytes
+from lunespy.utils.crypto.converters import hash_chain
 from lunespy.client.wallet import word_list
 from lunespy.server import CHAIN_ID
 import axolotl_curve25519 as curve
@@ -24,7 +24,7 @@ def new_seed_generator() -> str:
 
 
 def seed_generator(seed: str, nonce: int) -> dict:
-    from lunespy.utils.crypto.convert import sha256
+    from lunespy.utils.crypto.converters import sha256
     import struct
     
     seed_hash = hash_chain(struct.pack(">L", nonce) + string_to_bytes(seed))
