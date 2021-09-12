@@ -45,7 +45,7 @@ def hash_chain(address: str) -> str:
     return y
 
 
-def sign(privateKey: str, message):
+def sign(privateKey: str, message: bytes) -> bytes:
     import axolotl_curve25519 as curve
     from base58 import b58encode
     from base58 import b58decode
