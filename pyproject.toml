@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "lunespy"
+version = "0.13.1"
+description = "Library for communication with nodes in mainnet or testnet of the lunes-blockchain network"
+authors = ["Lunes Platform <lucas.oliveira@lunes.io>"]
+license = "Apache License, Version 2.0, january 2004"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+python-axolotl-curve25519 =  "^0.4.1.post2"
+requests = "^2.26.0"
+pyblake2 = "^1.1.2"
+base58 = "^2.1.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
