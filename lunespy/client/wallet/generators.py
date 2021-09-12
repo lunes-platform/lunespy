@@ -18,8 +18,12 @@ def address_generator(public_key: str, chain_id: str) -> dict:
         'seed': '',
         'nonce': 0,
         'private_key': '',
-        'public_key': public_key_b58,
-        'address': address
+        'public_key': public_key_b58.decode(),
+        'address': address.decode(),
+        'byte_private_key': b'',
+        'byte_public_key': public_key_b58,
+        'byte_address': address
+
     }
 
 
@@ -50,9 +54,12 @@ def seed_generator(seed: str, nonce: int, chain_id: str) -> dict:
     return {
         'seed': seed,
         'nonce': nonce,
-        'private_key': b58encode(private_key),
-        'public_key': b58encode(public_key),
+        'private_key': b58encode(private_key).decode(),
+        'public_key': b58encode(public_key).decode(),
         'address': address['address'],
+        'byte_private_key': b58encode(private_key),
+        'byte_public_key': b58encode(public_key),
+        'byte_address': address['byte_address']
     }
 
 
@@ -63,9 +70,12 @@ def private_key_generator(private_key: str, chain_id: str) -> dict:
     return {
         'seed': "",
         'nonce': 0,
-        'private_key': b58encode(private_key_b58),
-        'public_key': b58encode(public_key),
-        'address': address['address']
+        'private_key': b58encode(private_key_b58).decode(),
+        'public_key': b58encode(public_key).decode(),
+        'address': address['address'],
+        'byte_private_key': b58encode(private_key_b58),
+        'byte_public_key': b58encode(public_key),
+        'byte_address': address['byte_address']
 
     }
     
@@ -77,8 +87,11 @@ def public_key_generator(public_key: str, chain_id: str) -> dict:
         'seed': "",
         'nonce': 0,
         'private_key': "",
-        'public_key': b58encode(public_key_b58),
+        'public_key': b58encode(public_key_b58).decode(),
         'address': address['address'],
+        'byte_private_key': b"",
+        'byte_public_key': b58encode(public_key_b58),
+        'byte_address': address['byte_address']
     }
 
 
