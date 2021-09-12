@@ -1,366 +1,277 @@
-# Building...
-
-
 ## Getting Started
 
 You can install LunesPy using:
 
-    pip install LunesPy
+    pip install lunespy
 
 ## Documentation
 
-The library utilizes classes to represent various Lunes data structures:
+The library is driven-transactions on the *lunesnode* architecture:
 
-- lunespy.Address
-- lunespy.Asset
-- lunespy.AssetPair
-- lunespy.Order
+**classes**
+- Account
+- TransferAssets
+- IssueAsset
+- Leasing
+- Comming Soon...
 
-#### Code Example
+## Generate a Wallet
+
+A `Wallet` is as `email account` thats have:
+- seed
+- nonce
+- private key
+- public key
+- address
+
+The wallet can be generated for `testnet` or `mainnet`. **This will only change the address**
+
+You can generate a wallet passing your `seed`, `private_key`, `public_key`, `address` as **parameters** or none of that.
+
+Changing the `nonce` is possible generate `4,294,967,295` different wallets with only a `seed`.
+
+**Exemple without nothing**
 ```python
-import lunespy as lp
 
-myAddress = lp.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
-otherAddress = lp.Address('3PNTcNiUzppQXDL9RZrK3BcftbujiFqrAfM')
-myAddress.sendLunes(otherAddress, 10000000)
-myToken = myAddress.issueAsset('Token1', 'My Token', 1000, 0)
-while not myToken.status():
-	pass
-myAddress.sendAsset(otherAddress, myToken, 50)
+from lunespy.client.wallet import Account
 
+new_wallet = Account()
+print(new_wallet)
 ```
 
-### Address Class
-__lunespy.Address(address, publicKey, privateKey, seed)__ _Creates a new Address object_
-
-#### attributes:
-- _address_
-- _publicKey_
-- _privateKey_
-- _seed_
-
-#### methods:
-
-`balance(assetId='', confirmations=0)` returns balance of Lunes or other assets
-
-`assets()` returns a list of assets owned by the address
-
-`issueAsset(name, description, quantity, decimals=0, reissuable=False, txFee=DEFAULT_ASSET_FEE, timestamp=0)` issue a new asset
-
-`reissueAsset(Asset, quantity, reissuable=False, txFee=DEFAULT_ASSET_FEE, timestamp=0)` reissue an asset
-
-`burnAsset(Asset, quantity, txFee=DEFAULT_ASSET_FEE, timestamp=0)` burn the specified quantity of an asset
-
-`sendLunes(recipient, amount, attachment='', txFee=DEFAULT_TX_FEE, timestamp=0)` send specified amount of Lunes to recipient
-
-`massTransferLunes(transfers, attachment='', timestamp=0)` sending Lunes tokens via a mass transfer
-
-`sendAsset(recipient, asset, amount, attachment='', txFee=DEFAULT_TX_FEE, timestamp=0)` send specified amount of an asset to recipient
-
-`massTransferLunes(self, transfers, attachment='', timestamp=0)` sending an asset via mass transfer
-
-`lease(recipient, amount, txFee=DEFAULT_LEASE_FEE, timestamp=0)` post a lease transaction
-
-`leaseCancel(leaseId, txFee=DEFAULT_LEASE_FEE, timestamp=0)` cancel a lease
-
-`createAlias(alias, txFee=DEFAULT_ALIAS_FEE, timestamp=0)` create alias
-
-
-### Asset Class
-__lunespy.Asset(assetId)__ _Creates a new Asset object_
-
-#### attributes:
-- _status_
-- _assetId_
-- _issuer_
-- _name_
-- _description_
-- _quantity_
-- _decimals_ = 0
-- _reissuable = False_
-
-#### methods:
-`status()` returns 'Issued' if the asset exists
-
-
-## Other functions
-`lunespy.setNode(node, chain, chain_id)`  set node URL ('http://ip-address:port') and chain (either 'mainnet' or 'testnet', or any other chain, if you also define the chain id)
-
-`lunespy.setChain(chain, chain_id)`  set chain (either 'mainnet' or 'testnet', or any other chain if you also supply the chain id)
-
-`lunespy.setOffline()`  switch to offline mode; sign tx locally without broadcasting to network
-
-`lunespy.setOnline()`  switch to online mode; sign tx locally a broadcast to network
-
-`lunespy.validateAddress(address)`  checks if the provided address is a valid Lunes address
-
-`lunespy.setMatcher(node)`  set matcher URL ('http://ip-address:port')
-
-`lunespy.setDatafeed(node)`  set datafeed URL ('http://ip-address:port')
-
-`lunespy.height()` get blockchain height
-
-`lunespy.lastblock()` get last block
-
-`lunespy.block(n)` get block at specified height
-
-`lunespy.tx(id)` get transaction details
-
-
-### Default Fees
-The fees for lunes/asset transfers, asset issue/reissue/burn and matcher transactions are set by default as follows:
-* DEFAULT_TX_FEE = 100000
-* DEFAULT_ASSET_FEE = 100000000
-* DEFAULT_MATCHER_FEE = 1000000
-* DEFAULT_LEASE_FEE = 100000
-* DEFAULT_ALIAS_FEE = 100000
-
-## More Examples
-
-#### Playing with addresses:
-
-```python
-import lunespy as lp
-
-# generate a new address
-myAddress = lp.Address()  
-
-# set an address with an address
-myAddress = lp.Address('3P6WfA4qYtkgwVAsWiiB6yaea2X8zyXncJh')
-
-# get an existing address from seed
-myAddress = lp.Address(seed='seven wrist bargain hope pattern banner plastic maple student chaos grit next space visa answer')
-
-# get an existing address from privateKey
-myAddress = lp.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
-
-# get an existing address from a publicKey
-address = lp.Address(publicKey=“EYNuSmW4Adtcc6AMCZyxkiHMPmF2BZ2XxvjpBip3UFZL”)
-
-# get an address from a seed with a different nonce (This is especially useful for accessing addresses generated by nodes)
-myAddress = lp.Address(seed='seven wrist bargain hope pattern banner plastic maple student chaos grit next space visa answer', nonce=1)
+```py
+[output]:
+seed
+ └──"roast mother supply match result breeze canoe immune spike vague poverty apology found ivory reward"
+nonce
+ └── 0
+private key
+ └── "EUMUHS8StgpYPkNFVLC1yucioN1WAEXLA16XbaTc4i7g"
+publiv key
+└── "8oo2AThLJtRwhBrwsZgdHtZfPpAp2bKhcLT11FbvL6xr"
+address
+ └── "37p2LHMx3WP3n2thAyBeP3wzidiEmKxjxU9"
 ```
 
-#### Balances:
+
+## Send Lunes
+
+Only for send `Lunes` asset you dont must be pass `asset_id` parameter in `TranferAssets`.
+
+**Exemple code**
 ```python
-import lunespy as lp
+from lunespy.client.transactions.transfer_asset import TransferAssets
+from lunespy.client.wallet import Account
 
-myAddress = lp.Address('3P6WfA4qYtkgwVAsWiiB6yaea2X8zyXncJh')
+# Generate the wallets
+seed = "My_seed"
+my_wallet = Account(seed=seed, chain="testnet", nonce=0)
+random_wallet = Account(chain='testnet')
 
-# get Lunes balance
-print("Your balance is %18d" % myAddress.balance())
+# Mount a transfer asset Transaction
+tx = TransferAssets(my_wallet, random_wallet, amount=100)
 
-# get Lunes balance after 20 confirmations
-print("Your balance is %18d" % myAddress.balance(confirmations = 20))
-
-# get an asset balance
-print("Your asset balance is %18d" % myAddress.balance('DHgwrRvVyqJsepd32YbBqUeDH4GJ1N984X8QoekjgH8J'))
+# Send a Transaction
+tx.send
+print(tx.history)
 ```
-
-#### Lunes and asset transfers:
-```python
-import lunespy as lp
-
-myAddress = lp.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
-
-# send Lunes to another address
-myAddress.sendLunes(recipient = lp.Address('3PNTcNiUzppQXDL9RZrK3BcftbujiFqrAfM'),
-                    amount = 100000000)
-
-# send asset to another address
-myToken = lp.Asset('4ZzED8WJXsvuo2MEm2BmZ87Azw8Sx7TVC6ufSUA5LyTV')
-myAddress.sendAsset(recipient = lp.Address('3PNTcNiUzppQXDL9RZrK3BcftbujiFqrAfM'),
-                    asset = myToken,
-                    amount = 1000)
-```
-
-#### Issuing an asset:
-```python
-import lunespy as lp
-
-myToken = myAddress.issueToken( name = "MyToken",
-                                description = "This is my first token",
-                                quantity = 1000000,
-                                decimals = 2 )
-```
-
-#### Create an alias:
-```python
-import lunespy as lp
-
-lp.setNode(node = 'http://127.0.0.1:5555', chain = 'testnet')
-
-myAddress = lp.Address(privateKey='CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S')
-myAddress.createAlias("MYALIAS1")
-```
-
-#### Mass payment:
-```python
-import lunespy as lp
-
-recipients =   ['3PBbp6bg2YEnHfdJtYM7jzzXYQeb7sx5oFg',
-                '3P4A27aCd3skNja46pcgrLYEnK36TkSzgUp',
-                '3P81U3ujotNUwZMWALdcJQLzBVbrAuUQMfs',
-                '3PGcKEMwQcEbmeL8Jhe9nZQRBNCNdcHCoZP',
-                '3PKjtzZ4FhKrJUikbQ1hRk5xbwVKDyTyvkn']
-
-myAddress = lp.Address(privateKey = "CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S")
-
-for address in recipients:
-	myAddress.sendLunes(lp.Address(address), 1000000)
-```
-
-#### Mass transfer of Lunes (feature 11)
-```python
-import lunespy as lp
-
-transfers = [
-	{ 'recipient': '3N1xca2DY8AEwqRDAJpzUgY99eq8J9h4rB3', 'amount': 1 },
-	{ 'recipient': '3N3YWbQ27NnK7tek6ASFh38Bj93guLxxSi1', 'amount': 2 },
-	{ 'recipient': '3MwiB5UkWxt4X1qJ8DQpP2LpM3m48V1z5rC', 'amount': 3 }
+**Failed**
+```json
+[
+  {
+    "ready": true,
+    "senderPublicKey": "4SpyrKC8KFq2AF2RjgS6o373vTFrAAwrFmMfYL8PfezE",
+    "signature": "4jD1B37yewcwedSZ6gt8LeVPY8f2i4tn8VjrnhNukCkpTrvm1e5YtrH7Byzj7rYTbB9dMzKzdL5P1E7xR7N89zp9",
+    "timestamp": 1631473467403,
+    "recipient": "37ani1re8pMVYRkHo1xDPtj8kBYyDu3DGkP",
+    "feeAsset": "",
+    "assetId": "",
+    "amount": 100,
+    "type": 4,
+    "fee": 100000,
+    "send": false,
+    "reason": {
+      "error": 112,
+      "message": "State check failed. Reason: Attempt to transfer unavailable funds: Transaction application leads to negative lunes balance to (at least) temporary negative state, current balance equals 0, spends equals -100100, result is -100100",
+      "tx": {
+        "type": 4,
+        "id": "EzQVTZGavd9jmWprnADWMK3dya8ZeF1dAF4JNYmAkkH1",
+        "sender": "37QqvghNGWrUWSjALayGjCnT1nC28wXV6pL",
+        "senderPublicKey": "4SpyrKC8KFq2AF2RjgS6o373vTFrAAwrFmMfYL8PfezE",
+        "fee": 100000,
+        "timestamp": 1631473467403,
+        "signature": "4jD1B37yewcwedSZ6gt8LeVPY8f2i4tn8VjrnhNukCkpTrvm1e5YtrH7Byzj7rYTbB9dMzKzdL5P1E7xR7N89zp9",
+        "recipient": "37ani1re8pMVYRkHo1xDPtj8kBYyDu3DGkP",
+        "assetId": null,
+        "amount": 100,
+        "feeAsset": null
+      }
+    }
+  }
 ]
-
-address = lp.Address(privateKey = "CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S")
-address.massTransferLunes(transfers)
 ```
-
-#### Mass transfer of Assets (feature 11)
-```python
-import lunespy as lp
-
-transfers = [
-	{ 'recipient': '3N1xca2DY8AEwqRDAJpzUgY99eq8J9h4rB3', 'amount': 1 },
-	{ 'recipient': '3N3YWbQ27NnK7tek6ASFh38Bj93guLxxSi1', 'amount': 2 },
-	{ 'recipient': '3MwiB5UkWxt4X1qJ8DQpP2LpM3m48V1z5rC', 'amount': 3 }
+**Successful**
+```json
+[
+  {
+    "ready": true,
+    "senderPublicKey": "4SpyrKC8KFq2AF2RjgS6o373vTFrAAwrFmMfYL8PfezE",
+    "signature": "4jD1B37yewcwedSZ6gt8LeVPY8f2i4tn8VjrnhNukCkpTrvm1e5YtrH7Byzj7rYTbB9dMzKzdL5P1E7xR7N89zp9",
+    "timestamp": 1631473467403,
+    "recipient": "37ani1re8pMVYRkHo1xDPtj8kBYyDu3DGkP",
+    "feeAsset": "",
+    "assetId": "",
+    "amount": 100,
+    "type": 4,
+    "fee": 100000,
+    "send": true,
+    "reason": {
+      "type": 4,
+      "id": "DFh451K5ot7J8sjobVsrMcAQiFnRESXG6C19UnKsS5Mi",
+      "sender": "37bpECMv85nUr14YEfkyyyWKN2gYgrCfDhX",
+      "senderPublicKey": "FYvp88jP2xC21JCQfeSxUkg6qmLSGs5x8TBr5V3pT2NH",
+      "fee": 100000,
+      "timestamp": 1631473695599,
+      "signature": "2VwHiMtN2CUqJuMiaGqhsM1Qorhz7jMbjGb5wxN9Hb7WnLZXAwPPTEYjht8Ey8FjDt8739EFnuSvwMiwioqJ3XXd",
+      "recipient": "37hqrPGmzzT6xk5GFXbc9u5yYnRmBWSJuTY",
+      "assetId": null,
+      "amount": 100,
+      "feeAsset": null
+    }
+  }
 ]
-
-address = lp.Address(privateKey = "CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S")
-address.massTransferAssets(transfers, lp.Asset('9DtBNdyBCyViLZHptyF1HbQk73F6s7nQ5dXhNHubtBhd'))
-```
-
-#### Token airdrop:
-```python
-import lunespy as lp
-
-myAddress = lp.Address(privateKey = '`')
-myToken = lp.Asset('4ZzED8WJXsvuo2MEm2BmZ87Azw8Sx7TVC6ufSUA5LyTV')
-amount = 1000
-
-with open('recipients.txt') as f:
-	lines = f.readlines()
-for address in lines:
-	myAddress.sendAsset(lp.Address(address.strip()), myToken, amount)
-```
-
-#### LPOS
-```python
-import lunespy as lp
-
-# connect to a local testnet node
-lp.setNode(node = 'http://127.0.0.1:5555', chain = 'testnet')
-
-myAddress = lp.Address(privateKey = 'CsBpQpNE3Z1THNMS9vJPaXqYwN9Hgmhd9AsAPrM3tiuJ')
-minerAddress = lp.Address('3NBThmVJmcexzJ9itP9KiiC2K6qnGQwpqMq')
-
-# lease 1000 Lunes to minerAddress
-leaseId = myAddress.lease(minerAddress, 100000000000)
-
-# revoke the lease
-myAddress.leaseCancel(leaseId)
-
 ```
 
 
-### Using PyLunes in a Python shell
-
-#### Check an address balance:
-```
->>> import lunespy as lp
->>> lp.Address('37mCm11kpfQWiYaJuPJJG65PhgyhCQtqLxL')
-address = 37mCm11kpfQWiYaJuPJJG65PhgyhCQtqLxL
-publicKey =
-privateKey =
-seed =
-balances:
-  lunes = 1186077288304570
-  BDMRyZsmDZpgKhdM7fUTknKcUbVVkDpMcqEj31PUzjMy (Tokes) = 43570656915
-  RRBqh2XxcwAdLYEdSickM589Vb4RCemBCPH5mJaWhU9 (Ripto Bux) = 4938300000000
-  4rmhfoscYcjz1imNDvtz45doouvrQqDpbX7xdfLB4guF (incentCoffee) = 7
-  Ftim86CXM6hANxArJXZs2Fq7XLs3nJvgBzzEwQWwQn6N (Lunes) = 2117290600000000
-  E4ip4jzTc4PCvebYn1818T4LNoYBVL3Y4Y4dMPatGwa9 (BitCoin) = 500000000000
-  FLbGXzrpqkvucZqsHDcNxePTkh2ChmEi4GdBfDRRJVof (Incent) = 12302659925430
-  GQr2fpkfmWjMaZCbqMxefbiwgvpcNgYdev7xpuX6xqcE (KISS) = 1000
-  DxG3PLganyNzajHGzvWLjc4P3T2CpkBGxY4J9eJAAUPw (UltraCoin) = 200000000000000
-  4eWBPyY4XNPsFLoQK3iuVUfamqKLDu5o6zQCYyp9d8Ae (LIKE) = 1000
->>>
-```
-
-#### Generate a new address:
-```
->>> import lunespy as lp
->>> lp.Address()
-address = 3P6WfA4qYtkgwVAsWiiB6yaea2X8zyXncJh
-publicKey = EYNuSmW4Adtcc6AMCZyxkiHMPmF2BZ2XxvjpBip3UFZL
-privateKey = CtMQWJZqfc7PRzSWiMKaGmWFm4q2VN5fMcYyKDBPDx6S
-seed = seven wrist bargain hope pattern banner plastic maple student chaos grit next space visa answer
-balances:
-  Lunes = 0
->>>
-```
-
-#### Check an asset:
-```
->>> import lunespy as lp
->>> lp.Asset('DHgwrRvVyqJsepd32YbBqUeDH4GJ1N984X8QoekjgH8J')
-status = Issued
-assetId = DHgwrRvVyqJsepd32YbBqUeDH4GJ1N984X8QoekjgH8J
-issuer = 3PPKF2pH4KMYgsDixjrhnWrPycVHr1Ye37V
-name = LunesCommunity
-description = Lunes community token.
-quantity = 1000000000
-decimals = 2
-reissuable = False
-```
 
 
-### Offline signing and custom timestamps
+## Send Any Assets
 
-#### Offline signing a future transaction:
-```
->>> import lunespy as lp
->>> lp.setOffline()
->>> myAddress=lp.Address(privateKey="F2jVbjrKzjUsZ1AQRdnd8MmxFc85NQz5jwvZX4BXswXv")
->>> recipient=lp.Address("3P8Ya6Ary5gzwnzbBXDp3xjeNG97JEiPcdA")
-# sign a future tx to transfer 100 LUNES to recipient
-# the tx is valid on Jan 1st, 2020 12:00pm
->>> myAddress.sendLunes(recipient, amount=100e8, timestamp=1577880000000)
-{'api-endpoint': '/assets/broadcast/transfer',
- 'api-type': 'POST',
- 'api-data': '{"fee": 100000,
-			   "timestamp": 1577880000000,
-			   "senderPublicKey": "27zdzBa1q46RCMamZ8gw2xrTGypZnbzXs5J1Y2HbUmEv",
-			   "amount": 10000000000,
-			   "attachment": "",
-			   "recipient": "3P8Ya6Ary5gzwnzbBXDp3xjeNG97JEiPcdA"
-			   "signature": "YetPopTJWC4WBPXbneWv9g6YEp6J9g9rquZWjewjdQnFbmaxtXjrRsUu69NZzHebVzUGLrhQiFFoguXJwdUn8BH"}'}
-```
-
-
-## Connecting to a different node or chain
-
-LunesPy supports both mainnet and testnet chains. By default, LunesPy connects to the mainnet RPC server at https://https://lunesnode.lunes.io. It's possible to specify a different server and chain with the setNode() function
+By passing an `asset_id` parameter it is possible to send any asset that has already been `issued` in lunes-blockchain
 
 ```python
-import lunespy as lp
+from lunespy.client.transactions.transfer_asset import TransferAssets
+from lunespy.client.wallet import Account
 
-# connects to a local testnet node
-lp.setNode(node = 'http://127.0.0.1:5555', chain = 'testnet')
+# Generate the wallets
+seed = "My_seed"
+my_wallet = Account(seed=seed, chain="testnet", nonce=0)
+random_wallet = Account(chain='testnet')
 
-# connects to a local mainnet node
-lp.setNode(node = 'http://127.0.0.1:5555', chain = 'mainnet')
+# Get Asset or Token ID
+token = "9ax6usn3TmwdTRoTnn8zr5Kku9qykstYxRkUb4Z1Z2oY"
 
+# Mount a transfer asset Transaction
+tx = TransferAssets(my_wallet, random_wallet, amount=100, asset_id=token)
+
+# Send a transaction
+tx.send
+print(tx.history)
+```
+**Successful**
+```json
+[
+  {
+    "ready": true, 
+    "senderPublicKey": "FYvp88jP2xC21JCQfeSxUkg6qmLSGs5x8TBr5V3pT2NH",
+    "signature": "4DbDKGpykZ6we8VckTNGCeVFhLgiFaaDobcbjXi5vy7wupbxLUMtnkhwRc2HmdGctFTm8URZ8bzVEwxPgbofCzWT",
+    "timestamp": 1631475869750,
+    "recipient": "37cefY8nWHhBTkFLSiSdNyDSg6n9e7G5DF2",
+    "feeAsset": "",
+    "assetId": "9ax6usn3TmwdTRoTnn8zr5Kku9qykstYxRkUb4Z1Z2oY",
+    "amount": 100,
+    "type": 4,
+    "fee": 100000,
+    "send": true,
+    "reason": {
+      "type": 4,
+      "id": "B31BCDgKGr1bisKChb3LF1mL3Wfb1Yaqkvwiv9MargzR",
+      "sender": "37bpECMv85nUr14YEfkyyyWKN2gYgrCfDhX",
+      "senderPublicKey": "FYvp88jP2xC21JCQfeSxUkg6qmLSGs5x8TBr5V3pT2NH",
+      "fee": 100000,
+      "timestamp": 1631475869750,
+      "signature": "4DbDKGpykZ6we8VckTNGCeVFhLgiFaaDobcbjXi5vy7wupbxLUMtnkhwRc2HmdGctFTm8URZ8bzVEwxPgbofCzWT",
+      "recipient": "37cefY8nWHhBTkFLSiSdNyDSg6n9e7G5DF2",
+      "assetId": "9ax6usn3TmwdTRoTnn8zr5Kku9qykstYxRkUb4Z1Z2oY", 
+      "amount": 100,
+      "feeAsset": null
+    }
+  }
+]
 ```
 
+## Issue your Token or New Asset
 
-## License
-Code released under the [MIT License](https://github.com/LunesCommunity/LunesPy/blob/master/LICENSE).
+```python
+Comming Soon...
+```
+
+## Reissue your Token or New Asset
+
+```python
+Comming Soon...
+```
+## Burn your Token or New Asset
+
+```python
+Comming Soon...
+```
+
+## Send your Lease
+
+```python
+Comming Soon...
+```
+
+## Cancel your Lease
+
+```python
+Comming Soon...
+```
+
+## Create new Payment
+
+```python
+Comming Soon...
+```
+
+## Create Alias for your Address
+
+```python
+Comming Soon...
+```
+
+## Send MassTransfer of Lunes
+
+```python
+Comming Soon...
+```
+## Send MassTransfer of any Assets
+
+```python
+Comming Soon...
+```
+
+## Registry your data in Blockchain
+
+```python
+Comming Soon...
+```
+
+## Set Script
+
+```python
+Comming Soon...
+```
+
+## Transfer Script
+
+```python
+Comming Soon...
+```
+
+## Generate your Genesis Trasaction
+
+```python
+Comming Soon...
+```
