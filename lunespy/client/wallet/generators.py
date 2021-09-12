@@ -1,12 +1,27 @@
 from lunespy.utils.crypto.converters import bytes_to_string
 from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import hash_chain
-from lunespy.client.wallet import word_list
-from lunespy.server import CHAIN_ID
+from lunespy.client.wallet.constants import word_list
 import axolotl_curve25519 as curve
 from base58 import b58decode
 from base58 import b58encode
 from os import urandom
+
+
+
+def address_generator(public_key: str, chain_id: str) -> dict:
+    un_hashed_address = chr(1) + str(chain_id) + hash_chain(public_key)[0:20]
+    address_hash = hash_chain(string_to_bytes(un_hashed_address))[0:4]
+    address = b58encode(string_to_bytes(un_hashed_address + address_hash))
+    public_key_b58 = b58encode(public_key)
+    return {
+        'seed': '',
+        'nonce': 0,
+        'private_key': '',
+        'public_key': public_key_b58,
+        'address': address
+    }
+
 
 def new_seed_generator() -> str:
     wordCount = 2048
@@ -23,7 +38,7 @@ def new_seed_generator() -> str:
     return ' '.join(words)
 
 
-def seed_generator(seed: str, nonce: int) -> dict:
+def seed_generator(seed: str, nonce: int, chain_id: str) -> dict:
     from lunespy.utils.crypto.converters import sha256
     import struct
     
@@ -31,65 +46,56 @@ def seed_generator(seed: str, nonce: int) -> dict:
     account_seed_hash = sha256(seed_hash)
     private_key = curve.generatePrivateKey(account_seed_hash)
     public_key = curve.generatePublicKey(private_key)
+    address = address_generator(public_key, chain_id)
     return {
-        'private_key': b58encode(private_key),
-        'public_key': public_key,
+        'seed': seed,
         'nonce': nonce,
-        'seed': seed
+        'private_key': b58encode(private_key),
+        'public_key': b58encode(public_key),
+        'address': address['address'],
     }
 
 
-def private_key_generator(private_key: str) -> dict:
+def private_key_generator(private_key: str, chain_id: str) -> dict:
     private_key_b58 = b58decode(private_key)
     public_key = curve.generatePublicKey(private_key_b58)
+    address = address_generator(public_key, chain_id)
     return {
+        'seed': "",
+        'nonce': 0,
         'private_key': b58encode(private_key_b58),
-        'public_key': public_key,
-        'seed': ""
+        'public_key': b58encode(public_key),
+        'address': address['address']
+
     }
     
 
-def public_key_generator(public_key: str) -> dict:
+def public_key_generator(public_key: str, chain_id: str) -> dict:
     public_key_b58 = b58decode(public_key)
+    address = address_generator(public_key_b58, chain_id)
     return {
+        'seed': "",
+        'nonce': 0,
         'private_key': "",
-        'public_key': public_key_b58
+        'public_key': b58encode(public_key_b58),
+        'address': address['address'],
     }
 
-
-def addres_generator(public_key: str) -> dict:
-    un_hashed_address = chr(1) + str(CHAIN_ID) + hash_chain(public_key)[0:20]
-    address_hash = hash_chain(string_to_bytes(un_hashed_address))[0:4]
-    address = b58encode(string_to_bytes(un_hashed_address + address_hash))
-    public_key_b58 = b58encode(public_key)
-    return {
-        'public_key': public_key_b58,
-        'address': address
-    }
 
 
 def wallet_generator(**data: dict) -> dict:
-    response = {}
-
     if data.get('seed', False):
-        response.update(seed_generator(
-            data['seed'],
-            data['nonce'])
-        )
+        return seed_generator(seed=data['seed'], nonce=data['nonce'], chain_id=data['chain_id'])
 
     elif data.get('private_key', False):
-        response.update( private_key_generator(data['private_key']) )
+        return private_key_generator(private_key=data['private_key'], chain_id=data['chain_id'])
 
     elif data.get('public_key', False):
-        response.update( public_key_generator(data['public_key']) )
+        return public_key_generator(public_key=data['public_key'], chain_id=data['chain_id'])
+
+    elif data.get('address', False):
+        return address_generator(public_key='', chain_id=data['chain_id'])
 
     else:
         seed = new_seed_generator()
-        response.update(seed_generator(
-            seed,
-            data['nonce']
-            )
-        )
-
-    response.update( addres_generator(response['public_key']) )
-    return response
+        return seed_generator(seed=seed, nonce=data['nonce'], chain_id=data['chain_id'])
