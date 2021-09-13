@@ -26,3 +26,15 @@ class Account:
 
     __repr__ = __str__
 
+    def to_json(self, path: str = './') -> str:
+        wallet = {
+            'seed': self.seed,
+            'nonce': self.nonce,
+            'private_key': self.private_key,
+            'public_key': self.public_key,
+            'address': self.address
+        }
+        with open(f'{path}wallet.json', 'w') as file:
+            import json
+            file.write(json.dumps(wallet))
+        return path + 'wallet.json'
