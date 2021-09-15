@@ -1,0 +1,5 @@
+python-axolotl-curve25519
+requests
+pyblake2
+base58
+pytest
