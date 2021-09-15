@@ -1,5 +1,6 @@
 from lunespy.client.wallet.validators import validate_wallet
 
+
 class Account:
     def __init__(self, **wallet: dict):
         validated_wallet = validate_wallet(wallet)
@@ -18,15 +19,18 @@ class Account:
         from lunespy.utils.settings import bcolors
 
         return f"\
-            \nseed\n {bcolors.OKGREEN + '└──' +  self.seed + bcolors.ENDC}\
-            \nnonce\n {bcolors.OKBLUE + '└──' + str(self.nonce) + bcolors.ENDC}\
-            \nprivate key\n {bcolors.OKBLUE + '└──' + self.private_key + bcolors.ENDC}\
-            \npubliv key\n {bcolors.OKBLUE + '└──' + self.public_key + bcolors.ENDC}\
-            \naddress\n {bcolors.OKBLUE + '└──' + self.address + bcolors.ENDC}"
+            \nseed\n {bcolors.OKGREEN + '└── ' +  self.seed + bcolors.ENDC}\
+            \nnonce\n {bcolors.OKBLUE + '└── ' + str(self.nonce) + bcolors.ENDC}\
+            \nprivate key\n {bcolors.OKBLUE + '└── ' + self.private_key + bcolors.ENDC}\
+            \npublic key\n {bcolors.OKBLUE + '└── ' + self.public_key + bcolors.ENDC}\
+            \naddress\n {bcolors.OKBLUE + '└── ' + self.address + bcolors.ENDC}"
 
     __repr__ = __str__
 
-    def to_json(self, path: str = './') -> str:
+    def to_json(self, path: str = './') -> None:
+        from lunespy.utils.settings import bcolors
+        import json
+
         wallet = {
             'seed': self.seed,
             'nonce': self.nonce,
@@ -35,6 +39,5 @@ class Account:
             'address': self.address
         }
         with open(f'{path}wallet.json', 'w') as file:
-            import json
             file.write(json.dumps(wallet))
-        return path + 'wallet.json'
+        print(f"{bcolors.OKGREEN}Your wallet has been saved in `{path}wallet.json`{bcolors.ENDC}")
