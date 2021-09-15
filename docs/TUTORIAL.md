@@ -107,7 +107,7 @@ print(tx.history)
     "type": 4,
     "fee": 100000,
     "send": false,
-    "reason": {
+    "response": {
       "error": 112,
       "message": "State check failed. Reason: Attempt to transfer unavailable funds: Transaction application leads to negative lunes balance to (at least) temporary negative state, current balance equals 0, spends equals -100100, result is -100100",
       "tx": {
@@ -142,7 +142,7 @@ print(tx.history)
     "type": 4,
     "fee": 100000,
     "send": true,
-    "reason": {
+    "response": {
       "type": 4,
       "id": "DFh451K5ot7J8sjobVsrMcAQiFnRESXG6C19UnKsS5Mi",
       "sender": "37bpECMv85nUr14YEfkyyyWKN2gYgrCfDhX",
@@ -257,7 +257,7 @@ print(tx.history)
     "type": 4,
     "fee": 100000,
     "send": true,
-    "reason": {
+    "response": {
       "type": 4,
       "id": "B31BCDgKGr1bisKChb3LF1mL3Wfb1Yaqkvwiv9MargzR",
       "sender": "37bpECMv85nUr14YEfkyyyWKN2gYgrCfDhX",
