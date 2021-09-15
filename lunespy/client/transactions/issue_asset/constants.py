@@ -1,0 +1,3 @@
+BYTE_TYPE_ISSUE = b'\3'
+INT_TYPE_ISSUE = 3
+DEFAULT_ISSUE_FEE = int(1e8) # 1 Lunes
