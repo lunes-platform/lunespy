@@ -1,10 +1,20 @@
 from lunespy.client.transactions.transfer_asset.validators import validate_transfer
 from lunespy.client.transactions.transfer_asset.validators import mount_transfer
 from lunespy.client.transactions.transfer_asset.validators import send_transfer
+from lunespy.client.transactions import BaseTransaction
 from lunespy.client.wallet import Account
 from lunespy.utils.settings import bcolors
 
-class TransferAssets:
+
+class TransferAsset(BaseTransaction):
+    """
+    data_transfer: dict
+        @params amount: int
+        @params timestamp: int
+        @params asset_id: str
+        @params fee_asset: int
+        @params tx_fee: int
+    """
     def __init__(self, sender: Account, receiver: Account, **data_transfer) -> None:
         self.sender: Account = sender
         self.receiver: Account = receiver
