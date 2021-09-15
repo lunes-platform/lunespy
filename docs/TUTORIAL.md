@@ -30,37 +30,46 @@ You can generate a wallet passing your `seed`, `private_key`, `public_key`, `add
 
 Changing the `nonce` is possible generate `4,294,967,295` different wallets with only a `seed`.
 
-**Exemple without nothing**
+**Exemple code**
 ```python
-
 from lunespy.client.wallet import Account
 
+# Generating Wallet
 new_wallet = Account()
 print(new_wallet)
+
+# Saving your wallet
+new_wallet.to_json(path='./')
 ```
 
 ```py
 [output]:
+
 seed
- └──"roast mother supply match result breeze canoe immune spike vague poverty apology found ivory reward"
+ └── "roast mother supply match result breeze canoe immune spike vague poverty apology found ivory reward"
 nonce
  └── 0
 private key
  └── "EUMUHS8StgpYPkNFVLC1yucioN1WAEXLA16XbaTc4i7g"
-publiv key
-└── "8oo2AThLJtRwhBrwsZgdHtZfPpAp2bKhcLT11FbvL6xr"
+public key
+ └── "8oo2AThLJtRwhBrwsZgdHtZfPpAp2bKhcLT11FbvL6xr"
 address
  └── "37p2LHMx3WP3n2thAyBeP3wzidiEmKxjxU9"
+
+"Your wallet has been saved in `./wallet.json`"
 ```
 
 
 ## Send Lunes
 
-Only for send `Lunes` asset you dont must be pass `asset_id` parameter in `TranferAssets`.
+Only for send `Lunes` asset **you dont must be pass `asset_id` parameter** in `TranferAssets`.
+
+The transfer costs **`0.001Lunes`**
+
 
 **Exemple code**
 ```python
-from lunespy.client.transactions.transfer_asset import TransferAssets
+from lunespy.client.transactions.transfer_asset import TransferAsset
 from lunespy.client.wallet import Account
 
 # Generate the wallets
@@ -69,13 +78,21 @@ my_wallet = Account(seed=seed, chain="testnet", nonce=0)
 random_wallet = Account(chain='testnet')
 
 # Mount a transfer asset Transaction
-tx = TransferAssets(my_wallet, random_wallet, amount=100)
+tx = TransferAsset(my_wallet, random_wallet, amount=100)
 
-# Send a Transaction
-tx.send
+# Returns `True` if the data passed is valid
+print(tx.ready)
+
+# Returns the transaction mounted before sending
+print(tx.transaction)
+
+# Send a transfer transaction
+print(tx.send)
+
+# Shows all sent transfers
 print(tx.history)
 ```
-**Failed**
+**If failed**
 ```json
 [
   {
@@ -110,7 +127,7 @@ print(tx.history)
   }
 ]
 ```
-**Successful**
+**If successful**
 ```json
 [
   {
@@ -143,17 +160,74 @@ print(tx.history)
 ```
 
 
+## Issue your Token
+
+**Brief description of what Tokens, Assets and NFT's are**
+
+- **Token** are representations of something real or not, such as identity, value, product, etc...
+- **NFT** are a type of token, non-fractional, that represents the intellectual property of something, such as music, video, photo, etc.
+- **Asset** are tokens that represent some value, which can be fractionable.
+
+Your parameter `name` must be more than 4 and less than 16 characters.
+
+You can choose how many tokens to create by changing the `quantity` parameter.
+
+The `decimal` parameter can be useful to fractionate your asset.
+
+Putting `True` in the `reissuable` parameter will allow you to issue more of the same asset in the future.
+
+The issue Token costs **`1Lunes`**
+
+**Exemple code**
+```python
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.issue_asset import IssueAsset
 
 
-## Send Any Assets
+# Generate the wallet
+seed = 'Your Seed'
+genesis = Account(seed=seed, chain='testnet')
+
+
+# Information of issue your new token
+token_info = {
+  'name': "MyTokenName",
+  'description': "My new experimental token",
+  'quantity': 799,
+  'decimals': 3,
+  'reissueable': False
+}
+
+
+# Mount a issue asset Transaction
+issue = IssueAsset(genesis, **token_info)
+
+
+# Returns `True` if the data passed is valid
+print(tx.ready)
+
+# Returns the transaction mounted before sending
+print(tx.transaction)
+
+# Send a transfer transaction
+print(tx.send)
+
+# Shows all sent transfers
+print(tx.history)
+```
+
+## Send your Tokens
 
 By passing an `asset_id` parameter it is possible to send any asset that has already been `issued` in lunes-blockchain
 
+
+The transfer costs **`0.001Lunes`**
+
 ```python
-from lunespy.client.transactions.transfer_asset import TransferAssets
+from lunespy.client.transactions.transfer_asset import TransferAsset
 from lunespy.client.wallet import Account
 
-# Generate the wallets
+# Generate the wallet
 seed = "My_seed"
 my_wallet = Account(seed=seed, chain="testnet", nonce=0)
 random_wallet = Account(chain='testnet')
@@ -162,7 +236,7 @@ random_wallet = Account(chain='testnet')
 token = "9ax6usn3TmwdTRoTnn8zr5Kku9qykstYxRkUb4Z1Z2oY"
 
 # Mount a transfer asset Transaction
-tx = TransferAssets(my_wallet, random_wallet, amount=100, asset_id=token)
+tx = TransferAsset(my_wallet, random_wallet, amount=100, asset_id=token)
 
 # Send a transaction
 tx.send
@@ -198,12 +272,6 @@ print(tx.history)
     }
   }
 ]
-```
-
-## Issue your Token or New Asset
-
-```python
-Comming Soon...
 ```
 
 ## Reissue your Token or New Asset
