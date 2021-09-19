@@ -50,10 +50,15 @@ def mount_issue(creator: Account, issue_data: dict) -> dict:
 
 
 def validate_issue(creator: Account, issue_data: dict) -> bool:
+    quantity: int = issue_data.get('quantity', -1)
     name: str = issue_data.get('name', '')
 
     if not creator.private_key:
         print(bcolors.FAIL + 'Sender `Account` not have a private key' + bcolors.ENDC)
+        return False
+
+    if quantity < 0:
+        print(bcolors.FAIL + 'Issue_data `quantity` cannot be less than 0' + bcolors.ENDC)
         return False
 
     if len(name) not in range(4, 16 + 1):
