@@ -1,15 +1,17 @@
-class BaseTransaction:
+from abc import ABCMeta, abstractmethod
+
+class BaseTransaction(metaclass=ABCMeta):
     def __init__(self) -> None:
         pass
-
-    @property
+    
+    @abstractmethod
     def ready(self) -> bool:
-        pass
+        raise NotImplementedError
 
-    @property
+    @abstractmethod
     def transaction(self) -> dict:
-        pass
+        raise NotImplementedError
 
-    @property
+    @abstractmethod
     def send(self) -> dict:
-        pass
+        raise NotImplementedError
