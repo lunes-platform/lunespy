@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lunespy"
-version = "0.15.0"
+version = "0.19.1"
 description = "Library for communication with nodes in mainnet or testnet of the lunes-blockchain network"
 authors = ["Lunes Platform <lucas.oliveira@lunes.io>"]
 license = "Apache License, Version 2.0, january 2004"
@@ -8,7 +8,7 @@ license = "Apache License, Version 2.0, january 2004"
 [tool.poetry.dependencies]
 python = "^3.8"
 python-axolotl-curve25519 =  "^0.4.1.post2"
-requests = "^2.26.0"
+requests = "*"
 pyblake2 = "^1.1.2"
 base58 = "^2.1.0"
 
