@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lunespy"
-version = "0.18.0"
+version = "0.19.1"
 description = "Library for communication with nodes in mainnet or testnet of the lunes-blockchain network"
 authors = ["Lunes Platform <lucas.oliveira@lunes.io>"]
 license = "Apache License, Version 2.0, january 2004"
