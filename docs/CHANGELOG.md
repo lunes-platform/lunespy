@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2021-09-19
+- added:  new changelog (@Lucas Oliveira) (ce76fe6)
 - Merge pull request #3 from Lunes-platform/feature/new-architecture (@Lucas Oliveira) (fae914c)
 - changed: new version v0.19.1 (@olivmath) (394c816)
 - fixed: quantity cannot be less than 0 (@olivmath) (43fcee6)

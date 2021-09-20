@@ -23,6 +23,9 @@ Windows:
 ```
 <install_command>
 ``` -->
+## What's new
+Look at the changes [here](./docs/CHANGELOG.md)
+
 
 ## Using LunesPy
 
