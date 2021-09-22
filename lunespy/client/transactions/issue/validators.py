@@ -5,7 +5,6 @@ from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from lunespy.server import NODE_URL
 from datetime import datetime
 from base58 import b58decode
 from requests import post
@@ -69,9 +68,9 @@ def validate_issue(creator: Account, issue_data: dict) -> bool:
 
 
 # todo async
-def send_issue(mount_tx: dict) -> dict:
+def send_issue(mount_tx: dict, node: str) -> dict:
     response = post(
-        f'{NODE_URL}/transactions/broadcast',
+        f'{node}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

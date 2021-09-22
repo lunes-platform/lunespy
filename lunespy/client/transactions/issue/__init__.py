@@ -4,7 +4,7 @@ from lunespy.client.transactions.issue.validators import mount_issue
 from lunespy.client.transactions import BaseTransaction
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-
+from lunespy.server import NODE_URL
 
 class Token(BaseTransaction):
     """
@@ -39,30 +39,37 @@ class Token(BaseTransaction):
             mount_tx = {'ready': False}
             return mount_tx
 
-    @property
-    def send(self) -> dict:
+
+    def send(self, http_node: str='') -> dict:
         mounted_tx = self.transaction
         if mounted_tx['ready']:
-            tx_history = send_issue(mounted_tx)
+            node = http_node if http_node else NODE_URL
+            tx_history = send_issue(mounted_tx, node=node)
             self.history.append(tx_history)
-            self.successful(tx_history['response'])
+            if tx_history['send']:
+                self.successful(tx_history['response'], self.data_issue['token_type'])
+            else:
+                print(bcolors.FAIL + f'Your {self.data_issue["token_type"]} dont issued because:\n', bcolors.ENDC)
+                print(tx_history['response'])   
             return tx_history
         else:
             print(bcolors.FAIL + 'Issue Transaction dont send', bcolors.ENDC)
             return mounted_tx
 
-    def successful(self, asset_issued: dict) -> None:
-        asset_id = asset_issued['assetId']
-        name = asset_issued['name']
-        quantity = asset_issued['quantity']
-        creator = asset_issued['sender']
+    def successful(self, asset_issued: dict, token_type: str) -> None:
         description = asset_issued['description']
         reissuable = asset_issued['reissuable']
+        quantity = asset_issued['quantity']
         decimals = asset_issued['decimals']
         transaction_id = asset_issued['id']
+        asset_id = asset_issued['assetId']
+        creator = asset_issued['sender']
+        name = asset_issued['name']
+        asset_issued.update({'token_type': token_type})
 
         print(f"\
             \nname\n {bcolors.OKGREEN + '└──' +  name + bcolors.ENDC}\
+            \ntype\n {bcolors.OKGREEN + '└──' +  token_type + bcolors.ENDC}\
             \nasset_id\n {bcolors.OKBLUE + '└──' + asset_id + bcolors.ENDC}\
             \nquantity\n {bcolors.OKBLUE + '└──' + str(quantity) + bcolors.ENDC}\
             \ncreator\n {bcolors.OKBLUE + '└──' + creator + bcolors.ENDC}\
@@ -71,8 +78,12 @@ class Token(BaseTransaction):
             \ndecimals\n {bcolors.OKBLUE + '└──' + str(decimals) + bcolors.ENDC}\
             \ntransaction_id\n {bcolors.OKBLUE + '└──' + transaction_id + bcolors.ENDC}\
         ")
+        
+        import json
+        with open(f'./token-{name}.json', 'w') as file:
+            file.write(json.dumps(asset_issued))
 
-        print(f"{bcolors.OKGREEN}Your Asset has been saved in `./asset_info.json`{bcolors.ENDC}")
+        print(f"\n{bcolors.OKGREEN}Your {token_type} has been issued and saved in `./asset_info.json`{bcolors.ENDC}")
 
 
 class Asset(Token):
