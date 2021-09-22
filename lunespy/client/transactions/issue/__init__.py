@@ -81,10 +81,10 @@ class IssueToken(BaseTransaction):
         ")
         
         import json
-        with open(f'./token-{name}.json', 'w') as file:
+        with open(f'./issue-{name}.json', 'w') as file:
             file.write(json.dumps(asset_issued))
 
-        print(f"\n{bcolors.OKGREEN}Your {token_type} has been issued and saved in `./asset_info.json`{bcolors.ENDC}")
+        print(f"\n{bcolors.OKGREEN}Your {token_type} has been issued and saved in `./issue-{name}.json`{bcolors.ENDC}")
 
 
 class IssueAsset(IssueToken):

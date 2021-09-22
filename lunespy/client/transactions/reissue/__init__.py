@@ -70,10 +70,10 @@ class ReissueToken(BaseTransaction):
         ")
         
         import json
-        with open(f'./reissue-token.json', 'w') as file:
+        with open(f'./reissue-{token_type}.json', 'w') as file:
             file.write(json.dumps(asset_reissued))
 
-        print(f"\n{bcolors.OKGREEN}Your {token_type} has been reissued and saved in `./reissuetoken.json`{bcolors.ENDC}")
+        print(f"\n{bcolors.OKGREEN}Your {token_type} has been reissued and saved in `./reissue-{token_type}.json`{bcolors.ENDC}")
 
 
 class ReissueAsset(ReissueToken):
