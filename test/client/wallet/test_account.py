@@ -118,3 +118,22 @@ def test_seed_with_nonce_3():
     assert wallet.private_key == "5MiDw2Sa8PhvJLBfPg272jhLoZsBbZ3uT7p4fNB6X8DJ"
     assert wallet.public_key == "2cwvWpBCtgZURG5WEwzpmnJhzhtNN8T6jJH6G6qamfG6"
     assert wallet.address == "37w8stLd9JQwUKBrBUQr1VryJuhS3RWqEen"
+
+
+def test_all_attr_of_account():
+    seed = "oak display outdoor barely friend spike video defense proud cave lamp oxygen problem traffic exercise"
+    hash_seed = "L79j8bS2SfpjpWZS8oJaqYdczKYun5F1JuQo9uBnAKn97REWjJ2SeoHeEG8Nn6xk7qLaGEHWdtHjVf3emRsuumVKdpaa2zBTRptucQqJ9cs6XDiNsV8XDGh5e1buQmrG6gQFhnWCix"
+    nonce = 0
+    private_key = "7VAsqDQ9PadMbG21fHkbtVHyteuPT26ZspaDQr37scUZ"
+    public_key = "B226T1TgGB23Nc6L2jmowtSWY14dwG9wWEVhpBmBzPkr"
+    address = "37iwu4YZc5umF7u24kMDzgYN55PQy6x3NTm"
+
+    wallet = Account(seed=seed, chain='testnet')
+
+    assert wallet.seed == seed
+    assert wallet.hash_seed == hash_seed
+    assert wallet.nonce == nonce
+    assert wallet.private_key == private_key
+    assert wallet.public_key == public_key
+    assert wallet.address == address
+     

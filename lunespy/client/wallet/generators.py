@@ -15,12 +15,13 @@ def address_generator(public_key: str, chain_id: str) -> dict:
     address = b58encode(string_to_bytes(un_hashed_address + address_hash))
     public_key_b58 = b58encode(public_key)
     return {
-        'seed': '',
+        'seed': "",
+        'hash_seed': "",
         'nonce': 0,
-        'private_key': '',
+        'private_key': "",
         'public_key': public_key_b58.decode(),
         'address': address.decode(),
-        'byte_private_key': b'',
+        'byte_private_key': b"",
         'byte_public_key': public_key_b58,
         'byte_address': address
 
@@ -39,20 +40,21 @@ def new_seed_generator() -> str:
         words.append(word_list[w1])
         words.append(word_list[w2])
         words.append(word_list[w3])
-    return ' '.join(words)
+    return " ".join(words)
 
 
 def seed_generator(seed: str, nonce: int, chain_id: str) -> dict:
     from lunespy.utils.crypto.converters import sha256
     import struct
     
-    seed_hash = hash_chain(struct.pack(">L", nonce) + string_to_bytes(seed))
-    account_seed_hash = sha256(seed_hash)
-    private_key = curve.generatePrivateKey(account_seed_hash)
+    hash_seed = hash_chain(struct.pack(">L", nonce) + string_to_bytes(seed))
+    account_hash_seed = sha256(hash_seed)
+    private_key = curve.generatePrivateKey(account_hash_seed)
     public_key = curve.generatePublicKey(private_key)
     address = address_generator(public_key, chain_id)
     return {
         'seed': seed,
+        'hash_seed': b58encode(seed).decode(),
         'nonce': nonce,
         'private_key': b58encode(private_key).decode(),
         'public_key': b58encode(public_key).decode(),
@@ -69,6 +71,7 @@ def private_key_generator(private_key: str, chain_id: str) -> dict:
     address = address_generator(public_key, chain_id)
     return {
         'seed': "",
+        'hash_seed': "",
         'nonce': 0,
         'private_key': b58encode(private_key_b58).decode(),
         'public_key': b58encode(public_key).decode(),
@@ -85,6 +88,7 @@ def public_key_generator(public_key: str, chain_id: str) -> dict:
     address = address_generator(public_key_b58, chain_id)
     return {
         'seed': "",
+        'hash_seed': "",
         'nonce': 0,
         'private_key': "",
         'public_key': b58encode(public_key_b58).decode(),
@@ -107,7 +111,7 @@ def wallet_generator(**data: dict) -> dict:
         return public_key_generator(public_key=data['public_key'], chain_id=data['chain_id'])
 
     elif data.get('address', False):
-        return address_generator(public_key='', chain_id=data['chain_id'])
+        return address_generator(public_key="", chain_id=data['chain_id'])
 
     else:
         seed = new_seed_generator()

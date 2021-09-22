@@ -18,7 +18,7 @@ def validate_wallet(wallet: dict) -> dict:
 
     if wallet.get('chain', 'mainnet') == 'mainnet':
         chain_id: str = '1'
-    elif wallet['chain'] == 'testnet':
+    else:
         chain_id: str = '0'
 
     if wallet['nonce'] not in range(0, 4294967295 + 1):
@@ -41,6 +41,7 @@ def validate_wallet(wallet: dict) -> dict:
                 'address': wallet['address'],
                 'nonce': 0,
                 'seed': '',
+                'hash_seed': '',
                 'byte_private_key': b'',
                 'byte_public_key': b'',
                 'byte_address': wallet['address'].encode()
