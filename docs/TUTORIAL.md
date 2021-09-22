@@ -181,7 +181,7 @@ The issue Token costs **`1Lunes`**
 **Exemple code**
 ```python
 from lunespy.client.wallet import Account
-from lunespy.client.transactions.issue import Token, Asset, NFT
+from lunespy.client.transactions.issue import IssueToken, IssueAsset, IssueNFT
 
 
 # Generate the wallet
@@ -220,13 +220,13 @@ nft_info = {
 
 
 # Set up the transaction to issue your token
-issue = Token(genesis, **token_info)
+issue = IssueToken(genesis, **token_info)
 
 # OR Set up the transaction to issue your Asset
-issue = Token(genesis, **asset_info)
+issue = IssueAsset(genesis, **asset_info)
 
-# OR Set up the transaction to issue your NFT
-issue = Token(genesis, **nft_info)
+# OR Set up the transaction to issue your IssueNFT
+issue = IssueNFT(genesis, **nft_info)
 
 
 # Returns `True` if the data passed is valid

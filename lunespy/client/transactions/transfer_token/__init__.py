@@ -8,24 +8,24 @@ from lunespy.utils.settings import bcolors
 
 class TransferToken(BaseTransaction):
     """
-    data_transfer: dict
+    transfer_data: dict
         @params fee_asset: int
         @params timestamp: int
         @params asset_id: str
         @params tx_fee: int
         @params amount: int
     """
-    def __init__(self, sender: Account, receiver: Account, **data_transfer) -> None:
+    def __init__(self, sender: Account, receiver: Account, **transfer_data) -> None:
         self.sender: Account = sender
         self.receiver: Account = receiver
-        self.data_transfer: dict = data_transfer
+        self.transfer_data: dict = transfer_data
         self.history: list = []
 
     @property
     def ready(self) -> bool:
         return validate_transfer(
             self.sender,
-            self.data_transfer
+            self.transfer_data
         )
 
     @property
@@ -35,7 +35,7 @@ class TransferToken(BaseTransaction):
             mount_tx.update(mount_transfer(
                 self.sender,
                 self.receiver,
-                self.data_transfer
+                self.transfer_data
                 )
             )
             return mount_tx
