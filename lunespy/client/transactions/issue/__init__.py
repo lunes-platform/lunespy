@@ -78,15 +78,17 @@ class Token(BaseTransaction):
 class Asset(Token):
     def __init__(self,
         creator: Account,
-        **data_nft: dict
+        **data_issue: dict
         ) -> None:
-        super().__init__(creator, **data_nft)
+        data_issue['token_type'] = data_issue['token_type'] if data_issue.get('token_type', False) else 'Asset'
+        super().__init__(creator, **data_issue)
 
 
 class NFT(Asset):
     def __init__(self,
         creator: Account,
-        **data_nft: dict
+        **data_issue: dict
         ) -> None:
-        data_nft['decimals'] = 0
-        super().__init__(creator, **data_nft)
+        data_issue['token_type'] = 'NFT'
+        data_issue['decimals'] = 0
+        super().__init__(creator, **data_issue)
