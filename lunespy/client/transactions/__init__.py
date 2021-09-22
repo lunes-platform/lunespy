@@ -1,9 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 class BaseTransaction(metaclass=ABCMeta):
-    def __init__(self) -> None:
-        pass
-    
+
     @abstractmethod
     def ready(self) -> bool:
         raise NotImplementedError

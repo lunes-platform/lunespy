@@ -15,7 +15,7 @@ def test_without_amount_ready_failed_successful():
     assert tx.ready == False
 
     # Successful
-    tx.data_transfer['amount'] = 10
+    tx.transfer_data['amount'] = 10
     assert tx.ready == True
 
 
@@ -45,6 +45,8 @@ def test_transaction_full_data():
     for i, j in zip(offline_transaction, response.keys()):
         assert i == j
 
+
+# todo a mock
 def test_send_failed_successful():
     """
         should be return False for `send` parameter and dict in `response`

@@ -6,9 +6,9 @@ from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
 from lunespy.server import NODE_URL
 
-class Token(BaseTransaction):
+class IssueToken(BaseTransaction):
     """
-    data_issue: dict
+    issue_data: dict
         @params description: str
         @params reissuable: bool
         @params quantity: int
@@ -16,23 +16,24 @@ class Token(BaseTransaction):
         @params tx_fee: int
         @params name: str
     """
-    def __init__(self, creator: Account, **data_issue: dict) -> None:
+    def __init__(self, creator: Account, **issue_data: dict) -> None:
         self.creator = creator
-        self.data_issue = data_issue
+        self.issue_data = issue_data
+        self.issue_data['token_type'] = 'Token'
         self.history = []
 
     @property
     def ready(self) -> bool:
         return validate_issue(
             self.creator,
-            self.data_issue
+            self.issue_data
         )
 
     @property
     def transaction(self) -> dict:
         if self.ready:
             mount_tx = {'ready': True}
-            mount_tx.update(mount_issue(self.creator, self.data_issue))
+            mount_tx.update(mount_issue(self.creator, self.issue_data))
             return mount_tx
         else:
             print(bcolors.FAIL + 'Issue Transaction bad formed', bcolors.ENDC)
@@ -47,9 +48,9 @@ class Token(BaseTransaction):
             tx_history = send_issue(mounted_tx, node=node)
             self.history.append(tx_history)
             if tx_history['send']:
-                self.successful(tx_history['response'], self.data_issue['token_type'])
+                self.successful(tx_history['response'], self.issue_data['token_type'])
             else:
-                print(bcolors.FAIL + f'Your {self.data_issue["token_type"]} dont issued because:\n', bcolors.ENDC)
+                print(bcolors.FAIL + f'Your {self.issue_data["token_type"]} dont issued because:\n', bcolors.ENDC)
                 print(tx_history['response'])   
             return tx_history
         else:
@@ -86,20 +87,20 @@ class Token(BaseTransaction):
         print(f"\n{bcolors.OKGREEN}Your {token_type} has been issued and saved in `./asset_info.json`{bcolors.ENDC}")
 
 
-class Asset(Token):
+class IssueAsset(IssueToken):
     def __init__(self,
         creator: Account,
-        **data_issue: dict
+        **issue_data: dict
         ) -> None:
-        data_issue['token_type'] = data_issue['token_type'] if data_issue.get('token_type', False) else 'Asset'
-        super().__init__(creator, **data_issue)
+        issue_data['token_type'] = issue_data['token_type'] if issue_data.get('token_type', False) else 'Asset'
+        super().__init__(creator, **issue_data)
 
 
-class NFT(Asset):
+class IssueNFT(IssueAsset):
     def __init__(self,
         creator: Account,
-        **data_issue: dict
+        **issue_data: dict
         ) -> None:
-        data_issue['token_type'] = 'NFT'
-        data_issue['decimals'] = 0
-        super().__init__(creator, **data_issue)
+        issue_data['token_type'] = 'NFT'
+        issue_data['decimals'] = 0
+        super().__init__(creator, **issue_data)
