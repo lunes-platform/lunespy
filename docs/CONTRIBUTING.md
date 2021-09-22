@@ -113,7 +113,7 @@ from os import remove, system as sys
 from datetime import datetime, timedelta
 
 def generate_logs():
-    sys('git log --pretty="- %s (@%an) (%h) [%ai]" > ./logs.txt')
+    sys('git log --pretty="- [%h](%H) %s [%ai]" > ./logs.txt')
 
 def read_logs() -> list:
     with open('./logs.txt', 'r') as file:
