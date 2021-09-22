@@ -1,44 +1,43 @@
-from lunespy.client.transactions.issue_asset import IssueAsset
+from lunespy.client.transactions.issue import Token
 from lunespy.client.wallet import Account
 
-def test_ready_failed_name():
+def test_without_name_ready_failed_successful():
     """
         without a name parameter.
-        should be return False for IssueAsset.ready
+        should be return False for Token.ready
+        else should be return True
     """
     # Failed
-    sender = Account()
-    tx = IssueAsset(sender, quantity=1)
+    creator = Account()
+    tx = Token(creator, quantity=1)
     assert tx.ready == False
 
-def test_ready_failed_quantity():
+    #Successful
+    tx.data_issue['name'] = 'newToken'
+    assert tx.ready == True
+
+def test_without_quantity_ready_failed_successful():
     """
         without a quantity parameter.
-        should be return False for IssueAsset.ready
+        should be return False for Token.ready
+        else should be return True
     """
     # Failed
-    sender = Account()
-    tx = IssueAsset(sender, name='test')
+    creator = Account()
+    tx = Token(creator, name='test')
     assert tx.ready == False
 
-
-def test_ready_success():
-    """
-        with a sender, name and quantity.
-        should be return True for IssueAsset.ready
-    """    
-    # Success
-    sender = Account()
-    tx = IssueAsset(sender, name='test', quantity=10)
+    #Successful
+    tx.data_issue['quantity'] = 1
     assert tx.ready == True
 
 
 def test_transaction_full_data():
     """
-        with a sender, receiver, amount.
-        should be return all keys of offline-transaction for IssueAsset.transaction  
+        with a creator, receiver, amount.
+        should be return all keys of offline-transaction for Token.transaction  
     """
-    sender = Account()
+    creator = Account()
     offline_transaction = [
         'ready',
         'senderPublicKey',
@@ -55,7 +54,7 @@ def test_transaction_full_data():
         'assetId'
     ]
 
-    tx = IssueAsset(sender, name='test', quantity=10)
+    tx = Token(creator, name='test', quantity=10)
     response = tx.transaction
     print(response)
 

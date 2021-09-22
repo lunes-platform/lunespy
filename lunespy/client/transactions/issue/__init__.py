@@ -1,38 +1,38 @@
-from lunespy.client.transactions.issue_asset.validators import validate_issue
-from lunespy.client.transactions.issue_asset.validators import send_issue
-from lunespy.client.transactions.issue_asset.validators import mount_issue
+from lunespy.client.transactions.issue.validators import validate_issue
+from lunespy.client.transactions.issue.validators import send_issue
+from lunespy.client.transactions.issue.validators import mount_issue
 from lunespy.client.transactions import BaseTransaction
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
 
 
-class IssueAsset(BaseTransaction):
+class Token(BaseTransaction):
     """
-    issue_data: dict
-        @params name: str
+    data_issue: dict
         @params description: str
+        @params reissuable: bool
         @params quantity: int
         @params decimals: int
-        @params reissuable: bool
         @params tx_fee: int
+        @params name: str
     """
-    def __init__(self, creator: Account, **issue_data: dict) -> None:
+    def __init__(self, creator: Account, **data_issue: dict) -> None:
         self.creator = creator
-        self.issue_data = issue_data
+        self.data_issue = data_issue
         self.history = []
 
     @property
     def ready(self) -> bool:
         return validate_issue(
             self.creator,
-            self.issue_data
+            self.data_issue
         )
 
     @property
     def transaction(self) -> dict:
         if self.ready:
             mount_tx = {'ready': True}
-            mount_tx.update(mount_issue(self.creator, self.issue_data))
+            mount_tx.update(mount_issue(self.creator, self.data_issue))
             return mount_tx
         else:
             print(bcolors.FAIL + 'Issue Transaction bad formed', bcolors.ENDC)
@@ -73,3 +73,20 @@ class IssueAsset(BaseTransaction):
         ")
 
         print(f"{bcolors.OKGREEN}Your Asset has been saved in `./asset_info.json`{bcolors.ENDC}")
+
+
+class Asset(Token):
+    def __init__(self,
+        creator: Account,
+        **data_nft: dict
+        ) -> None:
+        super().__init__(creator, **data_nft)
+
+
+class NFT(Asset):
+    def __init__(self,
+        creator: Account,
+        **data_nft: dict
+        ) -> None:
+        data_nft['decimals'] = 0
+        super().__init__(creator, **data_nft)
