@@ -10,8 +10,8 @@ The library is driven-transactions on the *lunesnode* architecture:
 
 **classes**
 - Account
-- TransferAssets
-- IssueAsset
+- TransferToken
+- IssueToken
 - Leasing
 - Comming Soon...
 
@@ -39,7 +39,7 @@ new_wallet = Account()
 print(new_wallet)
 
 # Saving your wallet
-new_wallet.to_json(path='./')
+new_wallet.to_json(path="./")
 ```
 
 ```py
@@ -69,16 +69,16 @@ The transfer costs **`0.001Lunes`**
 
 **Exemple code**
 ```python
-from lunespy.client.transactions.transfer_asset import TransferAsset
+from lunespy.client.transactions.transfer_token import TransferToken
 from lunespy.client.wallet import Account
 
 # Generate the wallets
 seed = "My_seed"
 my_wallet = Account(seed=seed, chain="testnet", nonce=0)
-random_wallet = Account(chain='testnet')
+random_wallet = Account(chain="testnet")
 
-# Mount a transfer asset Transaction
-tx = TransferAsset(my_wallet, random_wallet, amount=100)
+# Set up the transaction to send your Lunes
+tx = TransferToken(my_wallet, random_wallet, amount=100)
 
 # Returns `True` if the data passed is valid
 print(tx.ready)
@@ -162,17 +162,17 @@ print(tx.history)
 
 ## Issue your Token
 
-**Brief description of what Tokens, Assets and NFT's are**
+**Brief description of what Tokens, Assets and NFTs are**
 
 - **Token** are representations of something real or not, such as identity, value, product, etc...
-- **NFT** are a type of token, non-fractional, that represents the intellectual property of something, such as music, video, photo, etc.
 - **Asset** are tokens that represent some value, which can be fractionable.
+- **NFT** are a type of token, non-fractional, that represents the intellectual property of something, such as music, video, photo, etc.
 
 Your parameter `name` must be more than 4 and less than 16 characters.
 
 You can choose how many tokens to create by changing the `quantity` parameter.
 
-The `decimal` parameter can be useful to fractionate your asset.
+The `decimal` parameter can be useful to fractionate your token.
 
 Putting `True` in the `reissuable` parameter will allow you to issue more of the same asset in the future.
 
@@ -181,26 +181,52 @@ The issue Token costs **`1Lunes`**
 **Exemple code**
 ```python
 from lunespy.client.wallet import Account
-from lunespy.client.transactions.issue_asset import IssueAsset
+from lunespy.client.transactions.issue import Token, Asset, NFT
 
 
 # Generate the wallet
-seed = 'Your Seed'
-genesis = Account(seed=seed, chain='testnet')
+seed = "Your Seed"
+genesis = Account(seed=seed, chain="testnet")
 
 
 # Information of issue your new token
 token_info = {
-  'name': "MyTokenName",
-  'description': "My new experimental token",
-  'quantity': 799,
-  'decimals': 3,
-  'reissueable': False
+  "name": "MyFlat",
+  "description": "sharing quotes from my apartment",
+  "quantity": 100,
+  "decimals": 0,
+  "reissueable": False
 }
 
 
-# Mount a issue asset Transaction
-issue = IssueAsset(genesis, **token_info)
+# Information of issue your new asset
+asset_info = {
+  "name": "MyDolar",
+  "description": "Asset backed in dolar",
+  "quantity": 20000,
+  "decimals": 2,
+  "reissueable": False
+}
+
+
+# Information of issue your new nft
+nft_info = {
+  "name": "Eleanor",
+  "description": "Tokenizing my Ford Mustang Shelby GT500 1967",
+  "quantity": 1,
+  "decimals": 0,
+  "reissueable": False
+}
+
+
+# Set up the transaction to issue your token
+issue = Token(genesis, **token_info)
+
+# OR Set up the transaction to issue your Asset
+issue = Token(genesis, **asset_info)
+
+# OR Set up the transaction to issue your NFT
+issue = Token(genesis, **nft_info)
 
 
 # Returns `True` if the data passed is valid
@@ -224,19 +250,19 @@ By passing an `asset_id` parameter it is possible to send any asset that has alr
 The transfer costs **`0.001Lunes`**
 
 ```python
-from lunespy.client.transactions.transfer_asset import TransferAsset
+from lunespy.client.transactions.transfer_token import TransferToken
 from lunespy.client.wallet import Account
 
 # Generate the wallet
 seed = "My_seed"
 my_wallet = Account(seed=seed, chain="testnet", nonce=0)
-random_wallet = Account(chain='testnet')
+random_wallet = Account(chain="testnet")
 
 # Get Asset or Token ID
 token = "9ax6usn3TmwdTRoTnn8zr5Kku9qykstYxRkUb4Z1Z2oY"
 
-# Mount a transfer asset Transaction
-tx = TransferAsset(my_wallet, random_wallet, amount=100, asset_id=token)
+# Set up the transaction to transfer your tokens
+tx = TransferToken(my_wallet, random_wallet, amount=100, asset_id=token)
 
 # Send a transaction
 tx.send
