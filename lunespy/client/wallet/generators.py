@@ -1,6 +1,6 @@
 from lunespy.utils.crypto.converters import bytes_to_string
 from lunespy.utils.crypto.converters import string_to_bytes
-from lunespy.utils.crypto.converters import hash_chain
+from lunespy.utils.crypto.converters import hash_network
 from lunespy.client.wallet.constants import word_list
 import axolotl_curve25519 as curve
 from base58 import b58decode
@@ -9,15 +9,17 @@ from os import urandom
 
 
 
-def address_generator(public_key: str, chain_id: str) -> dict:
-    un_hashed_address = chr(1) + str(chain_id) + hash_chain(public_key)[0:20]
-    address_hash = hash_chain(string_to_bytes(un_hashed_address))[0:4]
+def address_generator(public_key: str, network_id: str) -> dict:
+    un_hashed_address = chr(1) + str(network_id) + hash_network(public_key)[0:20]
+    address_hash = hash_network(string_to_bytes(un_hashed_address))[0:4]
     address = b58encode(string_to_bytes(un_hashed_address + address_hash))
     public_key_b58 = b58encode(public_key)
     return {
         'seed': "",
         'hash_seed': "",
         'nonce': 0,
+        'network': 'mainnet' if network_id == '1' else 'testnet',
+        'network_id': network_id,
         'private_key': "",
         'public_key': public_key_b58.decode(),
         'address': address.decode(),
@@ -43,19 +45,21 @@ def new_seed_generator() -> str:
     return " ".join(words)
 
 
-def seed_generator(seed: str, nonce: int, chain_id: str) -> dict:
+def seed_generator(seed: str, nonce: int, network_id: str) -> dict:
     from lunespy.utils.crypto.converters import sha256
     import struct
     
-    hash_seed = hash_chain(struct.pack(">L", nonce) + string_to_bytes(seed))
+    hash_seed = hash_network(struct.pack(">L", nonce) + string_to_bytes(seed))
     account_hash_seed = sha256(hash_seed)
     private_key = curve.generatePrivateKey(account_hash_seed)
     public_key = curve.generatePublicKey(private_key)
-    address = address_generator(public_key, chain_id)
+    address = address_generator(public_key, network_id)
     return {
         'seed': seed,
         'hash_seed': b58encode(seed).decode(),
         'nonce': nonce,
+        'network': 'mainnet' if network_id == '1' else 'testnet',
+        'network_id': network_id,
         'private_key': b58encode(private_key).decode(),
         'public_key': b58encode(public_key).decode(),
         'address': address['address'],
@@ -65,14 +69,16 @@ def seed_generator(seed: str, nonce: int, chain_id: str) -> dict:
     }
 
 
-def private_key_generator(private_key: str, chain_id: str) -> dict:
+def private_key_generator(private_key: str, network_id: str) -> dict:
     private_key_b58 = b58decode(private_key)
     public_key = curve.generatePublicKey(private_key_b58)
-    address = address_generator(public_key, chain_id)
+    address = address_generator(public_key, network_id)
     return {
         'seed': "",
         'hash_seed': "",
         'nonce': 0,
+        'network': 'mainnet' if network_id == '1' else 'testnet',
+        'network_id': network_id,
         'private_key': b58encode(private_key_b58).decode(),
         'public_key': b58encode(public_key).decode(),
         'address': address['address'],
@@ -83,13 +89,15 @@ def private_key_generator(private_key: str, chain_id: str) -> dict:
     }
     
 
-def public_key_generator(public_key: str, chain_id: str) -> dict:
+def public_key_generator(public_key: str, network_id: str) -> dict:
     public_key_b58 = b58decode(public_key)
-    address = address_generator(public_key_b58, chain_id)
+    address = address_generator(public_key_b58, network_id)
     return {
         'seed': "",
         'hash_seed': "",
         'nonce': 0,
+        'network': 'mainnet' if network_id == '1' else 'testnet',
+        'network_id': network_id,
         'private_key': "",
         'public_key': b58encode(public_key_b58).decode(),
         'address': address['address'],
@@ -102,17 +110,17 @@ def public_key_generator(public_key: str, chain_id: str) -> dict:
 
 def wallet_generator(**data: dict) -> dict:
     if data.get('seed', False):
-        return seed_generator(seed=data['seed'], nonce=data['nonce'], chain_id=data['chain_id'])
+        return seed_generator(seed=data['seed'], nonce=data['nonce'], network_id=data['network_id'])
 
     elif data.get('private_key', False):
-        return private_key_generator(private_key=data['private_key'], chain_id=data['chain_id'])
+        return private_key_generator(private_key=data['private_key'], network_id=data['network_id'])
 
     elif data.get('public_key', False):
-        return public_key_generator(public_key=data['public_key'], chain_id=data['chain_id'])
+        return public_key_generator(public_key=data['public_key'], network_id=data['network_id'])
 
     elif data.get('address', False):
-        return address_generator(public_key="", chain_id=data['chain_id'])
+        return address_generator(public_key="", network_id=data['network_id'])
 
     else:
         seed = new_seed_generator()
-        return seed_generator(seed=seed, nonce=data['nonce'], chain_id=data['chain_id'])
+        return seed_generator(seed=seed, nonce=data['nonce'], network_id=data['network_id'])

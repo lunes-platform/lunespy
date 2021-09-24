@@ -1,41 +1,44 @@
-from lunespy.client.transactions.burn import BurnToken
+from lunespy.client.transactions.alias import CreateAlias
 from lunespy.client.wallet import Account
 
 
-def test_without_asset_id_ready_failed_successful():
+def test_without_alias_ready_failed_successful():
     """
-        without a asset_id parameter.
-        should be return False for BurnToken.ready
+        without a alias parameter or a alias with character dont allow.
+        should be return False for CreateAlias.ready
         else should be return True
     """
     # Failed
     creator = Account()
-    tx = BurnToken(creator, quantity=1)
+    tx = CreateAlias(creator)
+    assert tx.ready == False
+
+    # Failed
+    tx.alias_data['alias'] = 'Bahia'
     assert tx.ready == False
 
     #Successful
-    tx.burn_data['asset_id'] = '7npqMwVEAZ9yGgoRB8AwfHXEkCumWgiqdYr8yeTze7Pp'
+    tx.alias_data['alias'] = 'bahia'
     assert tx.ready == True
 
 
 def test_transaction_full_data():
     """
         with a creator, receiver, amount.
-        should be return all keys of offline-transaction for BurnToken.transaction  
+        should be return all keys of offline-transaction for CreateAlias.transaction  
     """
     creator = Account()
     offline_transaction = [
         'ready',
         'senderPublicKey',
         'signature',
-        'assetId',
         'timestamp',
         'type',
-        'quantity',
-        'fee'
+        'fee',
+        'alias',
     ]
 
-    tx = BurnToken(creator, asset_id='test', quantity=10)
+    tx = CreateAlias(creator, alias='bahia')
     response = tx.transaction
     print(response)
 

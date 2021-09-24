@@ -10,10 +10,10 @@ def test_seed():
     """
     seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
 
-    mainnet = Account(seed=seed, chain='mainnet')
+    mainnet = Account(seed=seed, network='mainnet')
     assert mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
 
-    testnet = Account(seed=seed, chain='testnet')
+    testnet = Account(seed=seed, network='testnet')
     assert testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
 
 def test_private_key():
@@ -24,10 +24,10 @@ def test_private_key():
     """
     private_key = "BnafXBSq1VDUdZ1nSjJoxhnQdBv2hk3o6dbV49TD1bzo"
 
-    mainnet = Account(private_key=private_key, chain='mainnet')
+    mainnet = Account(private_key=private_key, network='mainnet')
     assert mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
 
-    testnet = Account(private_key=private_key, chain='testnet')
+    testnet = Account(private_key=private_key, network='testnet')
     assert testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
 
 def test_public_key():
@@ -38,10 +38,10 @@ def test_public_key():
     """
     public_key = "2uuQVr3B5aGgvSJ5BMCw4Cd19tdYdnMGoYnji99aPde4"
 
-    mainnet = Account(public_key=public_key, chain='mainnet')
+    mainnet = Account(public_key=public_key, network='mainnet')
     assert mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
 
-    testnet = Account(public_key=public_key, chain='testnet')
+    testnet = Account(public_key=public_key, network='testnet')
     assert testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
 
 def test_address_mainnet():
@@ -52,11 +52,11 @@ def test_address_mainnet():
     """
     address = "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
 
-    mainnet = Account(address=address, chain='mainnet')
+    mainnet = Account(address=address, network='mainnet')
     assert mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
 
     with raises(InvalidChainAddress):
-        Account(address=address, chain='testnet')
+        Account(address=address, network='testnet')
     
 def test_address_testnet():
     """
@@ -68,11 +68,11 @@ def test_address_testnet():
 
     address = "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
 
-    testnet = Account(address=address, chain='testnet')
+    testnet = Account(address=address, network='testnet')
     assert testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
 
     with raises(InvalidChainAddress):
-            Account(address=address, chain='mainnet')
+            Account(address=address, network='mainnet')
 
 def test_seed_with_nonce_1():
     """
@@ -84,7 +84,7 @@ def test_seed_with_nonce_1():
     """    
     seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
     nonce = 1
-    wallet = Account(seed=seed, nonce=nonce, chain='mainnet')
+    wallet = Account(seed=seed, nonce=nonce, network='mainnet')
     assert wallet.private_key == "BHKyaXmhajKVNfyHszvFbeQvK8zMTHTMMCWjLxUmcwLw"
     assert wallet.public_key == "AMXrxLv1wtnr8EWxvk1hcuujTzh56SiuPGBQqho2ocW2"
     assert wallet.address == "37tD32367v1fiWgW8waw3QTdYTKKGrCV3zw"
@@ -99,7 +99,7 @@ def test_seed_with_nonce_2():
     """
     seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
     nonce = 2
-    wallet = Account(seed=seed, nonce=nonce, chain='mainnet')
+    wallet = Account(seed=seed, nonce=nonce, network='mainnet')
     assert wallet.private_key == "4GSXCGMEvAPrhhTSUHfUfxfieqgpcJN8wsgUYdp82jJL"
     assert wallet.public_key == "6dBW6ZD1GGomCjtjngvRHUJWqixoqk7PpCR6Yv8VAi6y"
     assert wallet.address == "37qYK5eRJEr8a38hUXmxYv9aoQ8NpXH7Aqd"
@@ -114,7 +114,7 @@ def test_seed_with_nonce_3():
     """
     seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
     nonce = 3
-    wallet = Account(seed=seed, nonce=nonce, chain='mainnet')
+    wallet = Account(seed=seed, nonce=nonce, network='mainnet')
     assert wallet.private_key == "5MiDw2Sa8PhvJLBfPg272jhLoZsBbZ3uT7p4fNB6X8DJ"
     assert wallet.public_key == "2cwvWpBCtgZURG5WEwzpmnJhzhtNN8T6jJH6G6qamfG6"
     assert wallet.address == "37w8stLd9JQwUKBrBUQr1VryJuhS3RWqEen"
@@ -124,11 +124,13 @@ def test_all_attr_of_account():
     seed = "oak display outdoor barely friend spike video defense proud cave lamp oxygen problem traffic exercise"
     hash_seed = "L79j8bS2SfpjpWZS8oJaqYdczKYun5F1JuQo9uBnAKn97REWjJ2SeoHeEG8Nn6xk7qLaGEHWdtHjVf3emRsuumVKdpaa2zBTRptucQqJ9cs6XDiNsV8XDGh5e1buQmrG6gQFhnWCix"
     nonce = 0
+    network = 'testnet'
+    network_id = '0'
     private_key = "7VAsqDQ9PadMbG21fHkbtVHyteuPT26ZspaDQr37scUZ"
     public_key = "B226T1TgGB23Nc6L2jmowtSWY14dwG9wWEVhpBmBzPkr"
     address = "37iwu4YZc5umF7u24kMDzgYN55PQy6x3NTm"
 
-    wallet = Account(seed=seed, chain='testnet')
+    wallet = Account(seed=seed, network='testnet')
 
     assert wallet.seed == seed
     assert wallet.hash_seed == hash_seed
@@ -136,4 +138,6 @@ def test_all_attr_of_account():
     assert wallet.private_key == private_key
     assert wallet.public_key == public_key
     assert wallet.address == address
+    assert wallet.network == network
+    assert wallet.network_id == network_id
      

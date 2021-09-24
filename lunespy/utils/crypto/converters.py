@@ -9,7 +9,7 @@ def multirate_padding(used_bytes, align_bytes):
         return [0x01] + ([0x00] * (int(padlen) - 2)) + [0x80]
 
 
-def string_to_bytes(string: str) -> str:
+def string_to_bytes(string: str) -> bytes:
     return string.encode('latin-1')
 
 
@@ -31,7 +31,7 @@ def bytes_to_string(bytes: str, decode: bool=False) -> str:
         )
 
 
-def hash_chain(address: str) -> str:
+def hash_network(address: str) -> str:
     from pyblake2 import blake2b
     from lunespy.utils.crypto.algorithms import KeccakHash
     
