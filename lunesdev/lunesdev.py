@@ -137,7 +137,7 @@ class Wallet:
         self.generate.configure(command=self.generate_wallet)
 
         self.wallet = tk.Label(top)
-        self.wallet.place(relx=0.016, rely=0.455, height=200, width=612)
+        self.wallet.place(relx=0.016, rely=0.455, height=230, width=612)
         self.wallet.configure(activebackground="#f9f9f9")
         self.wallet.configure(anchor='nw')
         self.wallet.configure(font="-family {DejaVu Sans} -size 10")
