@@ -9,37 +9,41 @@ from lunespy.client.wallet.constants import ADDRESS_VERSION
 from lunespy.client.wallet.constants import ADDRESS_LENGTH
 from lunespy.utils.crypto.converters import bytes_to_string
 from lunespy.utils.crypto.converters import string_to_bytes
-from lunespy.utils.crypto.converters import hash_chain
+from lunespy.utils.crypto.converters import hash_network
 from lunespy.server import OFFLINE
 from lunespy.server.address import aliases
 
 def validate_wallet(wallet: dict) -> dict:
     wallet['nonce'] = wallet.get('nonce', 0)
 
-    if wallet.get('chain', 'mainnet') == 'mainnet':
-        chain_id: str = '1'
+    if wallet.get('network', 'mainnet') == 'mainnet':
+        wallet['network_id']: str = '1'
+        wallet['network']: str = 'mainnet'
     else:
-        chain_id: str = '0'
+        wallet['network_id']: str = '0'
+        wallet['network']: str = 'testnet'
 
     if wallet['nonce'] not in range(0, 4294967295 + 1):
         raise InvalidNonce
 
     elif wallet.get('seed', False):
-        return wallet_generator(seed=wallet['seed'], nonce=wallet['nonce'], chain_id=chain_id)
+        return wallet_generator(**wallet)
 
     elif wallet.get('private_key', False):
-        return wallet_generator(private_key=wallet['private_key'], nonce=wallet['nonce'], chain_id=chain_id)
+        return wallet_generator(**wallet)
 
     elif wallet.get('public_key', False):
-        return wallet_generator(public_key=wallet['public_key'], nonce=wallet['nonce'], chain_id=chain_id)
+        return wallet_generator(**wallet)
 
     elif wallet.get('address', False):
-        if validate_address(wallet['address'], chain_id=chain_id):
+        if validate_address(wallet['address'], network_id=wallet['network_id']):
             return {
                 'private_key': '',
                 'public_key': '',
                 'address': wallet['address'],
                 'nonce': 0,
+                'network': wallet['network'],
+                'network_id': wallet['network_id'],
                 'seed': '',
                 'hash_seed': '',
                 'byte_private_key': b'',
@@ -60,22 +64,22 @@ def validate_wallet(wallet: dict) -> dict:
         }
 
     else:
-        return wallet_generator(nonce=wallet['nonce'], chain_id=chain_id)
+        return wallet_generator(**wallet)
 
 
-def validate_address(address: str, chain_id: str) -> bool:
+def validate_address(address: str, network_id: str) -> bool:
     bytes_address = bytes_to_string(address, decode=True)
     checksum = bytes_address[-ADDRESS_CHECKSUM_LENGTH:]
-    chain = hash_chain(string_to_bytes(
+    network = hash_network(string_to_bytes(
         bytes_address[:-ADDRESS_CHECKSUM_LENGTH]
         )
     )[:ADDRESS_CHECKSUM_LENGTH]
 
-    if checksum != chain:
+    if checksum != network:
         raise InvalidChecksumAddress
     elif bytes_address[0] != chr(ADDRESS_VERSION):
         raise InvalidVersionAddress
-    elif bytes_address[1] != chain_id:
+    elif bytes_address[1] != network_id:
         raise InvalidChainAddress
     elif len(bytes_address) != ADDRESS_LENGTH:
         raise InvalidLengthAddress
