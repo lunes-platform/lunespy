@@ -38,8 +38,6 @@ class BurnToken(BaseTransaction):
         self.history.append(tx)
         return tx
 
-  
-
 
 class BurnAsset(BurnToken):
     def __init__(self, burner: Account, **burn_data: dict) -> None:
