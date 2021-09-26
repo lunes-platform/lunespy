@@ -6,19 +6,17 @@ You can install LunesPy using:
 
 ## Documentation
 
-The library is driven-transactions on the *lunesnode* architecture:
+The library is driven-transactions on the *lunesnode* architecture.
 
-**classes**
-- Account
-- TransferToken
-- IssueToken
-- Leasing
-- Comming Soon...
+The transaction concept here will be any type of interaction with the lunes blockchain.
+
+In this way, we can create a transaction to transfer tokens, a transaction to create tokens, a transaction to create a nickname (alias) for our account, etc.
 
 ## Generate a Wallet
 
-A `Wallet` is as `email account` thats have:
+A `Wallet` is `Account` like an `email account`, which instead of having `address@provider` and `password` has:
 - seed
+- network
 - nonce
 - private key
 - public key
@@ -26,7 +24,7 @@ A `Wallet` is as `email account` thats have:
 
 The wallet can be generated for `testnet` or `mainnet`. **This will only change the address**
 
-You can generate a wallet passing your `seed`, `private_key`, `public_key`, `address` as **parameters** or none of that.
+You can generate a wallet passing your `seed`, `private_key`, `public_key`, `address` as **parameters** or none of nothing like that to generate a new one.
 
 Changing the `nonce` is possible generate `4,294,967,295` different wallets with only a `seed`.
 
@@ -38,7 +36,7 @@ from lunespy.client.wallet import Account
 new_wallet = Account()
 print(new_wallet)
 
-# Saving your wallet
+# Saving your wallet as .json
 new_wallet.to_json(path="./")
 ```
 
@@ -49,6 +47,8 @@ seed
  └── "roast mother supply match result breeze canoe immune spike vague poverty apology found ivory reward"
 nonce
  └── 0
+network
+ └── mainnet
 private key
  └── "EUMUHS8StgpYPkNFVLC1yucioN1WAEXLA16XbaTc4i7g"
 public key
@@ -62,20 +62,22 @@ address
 
 ## Send Lunes
 
-Only for send `Lunes` asset **you dont must be pass `asset_id` parameter** in `TranferAssets`.
+Only for send `Lunes` asset **you dont must be pass `asset_id` parameter** in `TranferToken`.
+
+If your Transfer successful, the data will ben saved in .json with a name as `transfer-YOUR_TX_ID.json`
 
 The transfer costs **`0.001Lunes`**
 
 
 **Exemple code**
 ```python
-from lunespy.client.transactions.transfer_token import TransferToken
+from lunespy.client.transactions.transfer import TransferToken
 from lunespy.client.wallet import Account
 
 # Generate the wallets
 seed = "My_seed"
-my_wallet = Account(seed=seed, chain="testnet", nonce=0)
-random_wallet = Account(chain="testnet")
+my_wallet = Account(seed=seed, network="testnet", nonce=0)
+random_wallet = Account(network="testnet")
 
 # Set up the transaction to send your Lunes
 tx = TransferToken(my_wallet, random_wallet, amount=100)
@@ -87,11 +89,45 @@ print(tx.ready)
 print(tx.transaction)
 
 # Send a transfer transaction
-print(tx.send)
+print(tx.send())
+# Your Transaction has been sended and saved in `./transaction-DFh451K5ot7J8sjobVsrMcAQiFnRESXG6C19UnKsS5Mi.json`
 
 # Shows all sent transfers
 print(tx.history)
 ```
+
+**If successful**
+```json
+[
+  {
+    "ready": true,
+    "senderPublicKey": "4SpyrKC8KFq2AF2RjgS6o373vTFrAAwrFmMfYL8PfezE",
+    "signature": "4jD1B37yewcwedSZ6gt8LeVPY8f2i4tn8VjrnhNukCkpTrvm1e5YtrH7Byzj7rYTbB9dMzKzdL5P1E7xR7N89zp9",
+    "timestamp": 1631473467403,
+    "recipient": "37ani1re8pMVYRkHo1xDPtj8kBYyDu3DGkP",
+    "feeAsset": "",
+    "assetId": "",
+    "amount": 100,
+    "type": 4,
+    "fee": 100000,
+    "send": true,
+    "response": {
+      "type": 4,
+      "id": "DFh451K5ot7J8sjobVsrMcAQiFnRESXG6C19UnKsS5Mi",
+      "sender": "37bpECMv85nUr14YEfkyyyWKN2gYgrCfDhX",
+      "senderPublicKey": "FYvp88jP2xC21JCQfeSxUkg6qmLSGs5x8TBr5V3pT2NH",
+      "fee": 100000,
+      "timestamp": 1631473695599,
+      "signature": "2VwHiMtN2CUqJuMiaGqhsM1Qorhz7jMbjGb5wxN9Hb7WnLZXAwPPTEYjht8Ey8FjDt8739EFnuSvwMiwioqJ3XXd",
+      "recipient": "37hqrPGmzzT6xk5GFXbc9u5yYnRmBWSJuTY",
+      "assetId": null,
+      "amount": 100,
+      "feeAsset": null
+    }
+  }
+]
+```
+
 **If failed**
 ```json
 [
@@ -127,38 +163,6 @@ print(tx.history)
   }
 ]
 ```
-**If successful**
-```json
-[
-  {
-    "ready": true,
-    "senderPublicKey": "4SpyrKC8KFq2AF2RjgS6o373vTFrAAwrFmMfYL8PfezE",
-    "signature": "4jD1B37yewcwedSZ6gt8LeVPY8f2i4tn8VjrnhNukCkpTrvm1e5YtrH7Byzj7rYTbB9dMzKzdL5P1E7xR7N89zp9",
-    "timestamp": 1631473467403,
-    "recipient": "37ani1re8pMVYRkHo1xDPtj8kBYyDu3DGkP",
-    "feeAsset": "",
-    "assetId": "",
-    "amount": 100,
-    "type": 4,
-    "fee": 100000,
-    "send": true,
-    "response": {
-      "type": 4,
-      "id": "DFh451K5ot7J8sjobVsrMcAQiFnRESXG6C19UnKsS5Mi",
-      "sender": "37bpECMv85nUr14YEfkyyyWKN2gYgrCfDhX",
-      "senderPublicKey": "FYvp88jP2xC21JCQfeSxUkg6qmLSGs5x8TBr5V3pT2NH",
-      "fee": 100000,
-      "timestamp": 1631473695599,
-      "signature": "2VwHiMtN2CUqJuMiaGqhsM1Qorhz7jMbjGb5wxN9Hb7WnLZXAwPPTEYjht8Ey8FjDt8739EFnuSvwMiwioqJ3XXd",
-      "recipient": "37hqrPGmzzT6xk5GFXbc9u5yYnRmBWSJuTY",
-      "assetId": null,
-      "amount": 100,
-      "feeAsset": null
-    }
-  }
-]
-```
-
 
 ## Issue your Token
 
@@ -186,7 +190,7 @@ from lunespy.client.transactions.issue import IssueToken, IssueAsset, IssueNFT
 
 # Generate the wallet
 seed = "Your Seed"
-genesis = Account(seed=seed, chain="testnet")
+my_wallet = Account(seed=seed, network="testnet")
 
 
 # Information of issue your new token
@@ -220,13 +224,13 @@ nft_info = {
 
 
 # Set up the transaction to issue your token
-issue = IssueToken(genesis, **token_info)
+issue = IssueToken(my_wallet, **token_info)
 
 # OR Set up the transaction to issue your Asset
-issue = IssueAsset(genesis, **asset_info)
+issue = IssueAsset(my_wallet, **asset_info)
 
 # OR Set up the transaction to issue your IssueNFT
-issue = IssueNFT(genesis, **nft_info)
+issue = IssueNFT(my_wallet, **nft_info)
 
 
 # Returns `True` if the data passed is valid
@@ -235,10 +239,10 @@ print(tx.ready)
 # Returns the transaction mounted before sending
 print(tx.transaction)
 
-# Send a transfer transaction
-print(tx.send)
+# Send a issue transaction
+print(tx.send())
 
-# Shows all sent transfers
+# Shows all sent issued
 print(tx.history)
 ```
 
@@ -246,17 +250,16 @@ print(tx.history)
 
 By passing an `asset_id` parameter it is possible to send any asset that has already been `issued` in lunes-blockchain
 
-
 The transfer costs **`0.001Lunes`**
 
 ```python
-from lunespy.client.transactions.transfer_token import TransferToken
+from lunespy.client.transactions.transfer import TransferToken
 from lunespy.client.wallet import Account
 
 # Generate the wallet
 seed = "My_seed"
-my_wallet = Account(seed=seed, chain="testnet", nonce=0)
-random_wallet = Account(chain="testnet")
+my_wallet = Account(seed=seed, network="testnet", nonce=0)
+random_wallet = Account(network="testnet")
 
 # Get Asset or Token ID
 token = "9ax6usn3TmwdTRoTnn8zr5Kku9qykstYxRkUb4Z1Z2oY"
@@ -264,8 +267,8 @@ token = "9ax6usn3TmwdTRoTnn8zr5Kku9qykstYxRkUb4Z1Z2oY"
 # Set up the transaction to transfer your tokens
 tx = TransferToken(my_wallet, random_wallet, amount=100, asset_id=token)
 
-# Send a transaction
-tx.send
+# Send a transfer transaction
+tx.send()
 print(tx.history)
 ```
 **Successful**
@@ -301,38 +304,180 @@ print(tx.history)
 ```
 
 ## Reissue your Token or New Asset
+ 
+If you set `reissuable` to `True` at your Token, Asset or NFT creation time you can issue more of that same Token, Asset or NFT
 
+**Example code**
 ```python
-Comming Soon...
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.reissue import ReissueToken, ReissueAsset, ReissueNFT
+
+
+# Generate the wallet
+seed = "Your Seed"
+my_wallet = Account(seed=seed, network="testnet")
+
+token_info = {
+    'asset_id': 'YOUR_TOKEN_ID',
+    'quantity': 5500,
+    'reissuable': True
+}
+
+# Set up the transaction to reissue more of your Token
+issue = ReissueToken(my_wallet, **token_info)
+
+# Returns `True` if the data passed is valid
+print(tx.ready)
+
+# Returns the transaction mounted before sending
+print(tx.transaction)
+
+# Send a reissue transaction
+print(tx.send())
+
+# Shows all sent reissued
+print(tx.history)
 ```
+
 ## Burn your Token or New Asset
 
+Maybe you want to decrease the amount of Tokens you created.
+For that, you can use the BurnToken, BurnAsset or BurniNG class
+
 ```python
-Comming Soon...
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.burn import BurnToken
+
+
+# Generate the wallet
+seed = "Your Seed"
+my_wallet = Account(seed=seed, network="testnet")
+
+token_info = {
+    'asset_id': 'YOUR_TOKEN_ID',
+    'quantity': 5000
+}
+
+# Set up the transaction to burn more of your Token
+issue = BurnToken(my_wallet, **token_info)
+
+# Returns `True` if the data passed is valid
+print(tx.ready)
+
+# Returns the transaction mounted before sending
+print(tx.transaction)
+
+# Send a burn transaction
+print(tx.send())
+
+# Shows all sent burned
+print(tx.history)
 ```
 
-## Send your Lease
+## Create your Lease
 
+Users can **leasing** their `lunes` to a [LunesNode](https://github.com/Lunes-platform/LunesNode) and get a portion of the LunesNode payment as a reward, without losing full control over their `lunes` in their accounts.
+
+When the user starts **leasing** the tokens, those leased tokens are blocked and remain at the same address with full control of their owner.
+
+The only thing to consider when **leasing** is choosing the right LunesNode operator, as the operator can work efficiently and send different percentages as a reward.
+
+**Exemple code**
 ```python
-Comming Soon...
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.lease import CreateLease
+
+
+# Generate the wallet
+seed = "Your Seed"
+my_wallet = Account(seed=seed, network="testnet")
+
+token_info = {
+    'node_address': 'ADDRESS_OF_A_LUNESNODE',
+    'amount': 5000
+}
+
+# Set up the transaction to lease more of your Token
+issue = CreateLease(my_wallet, **token_info)
+
+# Returns `True` if the data passed is valid
+print(tx.ready)
+
+# Returns the transaction mounted before sending
+print(tx.transaction)
+
+# Send a lease transaction
+print(tx.send())
+
+# Shows all sent leased
+print(tx.history)
 ```
 
 ## Cancel your Lease
 
+For Cancel your lease
+
+**Exemple code**
 ```python
-Comming Soon...
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.cancel import CancelLease
+
+
+# Generate the wallet
+seed = "Your Seed"
+my_wallet = Account(seed=seed, network="testnet")
+
+token_info = {
+    'lease_tx_id': 'TRANSACTION_ID_OF_YOUR_LEASE',
+}
+
+# Set up the transaction to cancel more of your Token
+issue = CancelLease(my_wallet, **token_info)
+
+# Returns `True` if the data passed is valid
+print(tx.ready)
+
+# Returns the transaction mounted before sending
+print(tx.transaction)
+
+# Send a cancel transaction
+print(tx.send())
+
+# Shows all sent canceled
+print(tx.history)
 ```
 
-## Create new Payment
-
-```python
-Comming Soon...
-```
 
 ## Create Alias for your Address
 
+Alias is a short, easy-to-remember `address` name, the alias is unique on the blockchain, an address can have multiple aliases.
+Alias can be used in place of address, the alias cannot be deleted.
+
+**Example code**
 ```python
-Comming Soon...
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.alias import CreateAlias
+
+
+# Generate the wallet
+seed = "Your Seed"
+my_wallet = Account(seed=seed, network="testnet")
+
+
+# Set up the transaction to create a alias for your account
+issue = CreateAlias(my_wallet, alias='brazil_lunes')
+
+# Returns `True` if the data passed is valid
+print(tx.ready)
+
+# Returns the transaction mounted before sending
+print(tx.transaction)
+
+# Send a alias transaction
+print(tx.send())
+
+# Shows all sent alias
+print(tx.history)
 ```
 
 ## Send MassTransfer of Lunes
@@ -346,7 +491,13 @@ Comming Soon...
 Comming Soon...
 ```
 
-## Registry your data in Blockchain
+## Create new Payment
+
+```python
+Comming Soon...
+```
+
+## Registry 
 
 ```python
 Comming Soon...
@@ -364,7 +515,7 @@ Comming Soon...
 Comming Soon...
 ```
 
-## Generate your Genesis Trasaction
+## Genesis Trasaction
 
 ```python
 Comming Soon...
