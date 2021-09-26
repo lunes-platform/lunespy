@@ -2,3 +2,5 @@
 .vscode
 dist
 env
+wallet*
+transaction*
