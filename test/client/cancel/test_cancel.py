@@ -14,7 +14,7 @@ def test_without_lease_ready_failed_successful():
     assert tx.ready == False
 
     #Successful
-    tx.cancel_data['lease_id'] = 'tx'
+    tx.cancel_data['lease_tx_id'] = 'tx'
     assert tx.ready == True
 
 
@@ -35,7 +35,7 @@ def test_transaction_full_data():
         'leaseId'
     ]
 
-    tx = CancelLease(staker, lease_id='tx')
+    tx = CancelLease(staker, lease_tx_id='tx')
     response = tx.transaction
 
     assert response['ready'] == True
