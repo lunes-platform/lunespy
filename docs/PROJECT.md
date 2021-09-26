@@ -3,10 +3,14 @@
     lunespy/
     │   ├── client/
     │   │   ├── wallet/
-    │   │   ├── issue_transaction/
-    │   │   ├── leasing_transaction/
-    │   │   ├── transfer_transaction/
-    │   │   └── ...transaction/
+    │   │   └──transaction/
+    │   │       ├── transfer/
+    │   │       ├── lease/
+    │   │       ├── issue/
+    │   │       ├── reissue/
+    │   │       ├── alias/
+    │   │       ├── burn/
+    │   │       └── .../
     │   │
     │   ├── server/
     │   │   ├── address/
@@ -16,11 +20,19 @@
     │   │
     │   └── utils/
     │       ├── crypto/
+    │       ├── settings/
     │       └── .../
     |
     ├── tests/
     │   ├── client/
-    │   │   └── .../
+    │   │   ├── wallet/
+    │   │   └──transaction/
+    │   │       ├── transfer/
+    │   │       ├── lease/
+    │   │       ├── issue/
+    │   │       ├── reissue/
+    │   │       ├── alias/
+    │   │       └── burn/
     │   │
     │   ├── server/
     │   │   └── .../
@@ -29,7 +41,8 @@
     │       └── .../
     |
     ├── data/
-    │   ├── info.log
+    │   ├── transaction-XYZ.json
+    │   ├── wallet.json
     │   ├── all_wallets.csv
     │   └── rich_list.csv
     │

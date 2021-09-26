@@ -3,7 +3,7 @@
 **The [old version](https://github.com/Lunes-platform/LunesPy/tree/old) is being discontinued, but it can still be used at your own risk and risk.**
 
 Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
-Allows the automation of **sending assets**, **issue end reissue tokens**, **leasing**, **registry**, and **create new wallet**.
+Allows the automation of **sending assets**, **issue end reissue tokens**, **lease**, **registry**, and **create new wallet**.
 <!-- 
 ## Prerequisites
 
