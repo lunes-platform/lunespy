@@ -30,12 +30,13 @@ def test_transaction_full_data():
     creator = Account()
     offline_transaction = [
         'ready',
+        'type',
         'senderPublicKey',
         'signature',
         'timestamp',
-        'type',
         'fee',
-        'alias',
+
+        'alias'
     ]
 
     tx = CreateAlias(creator, alias='bahia')
@@ -43,6 +44,4 @@ def test_transaction_full_data():
     print(response)
 
     assert response['ready'] == True
-
-    for i, j in zip(offline_transaction, response.keys()):
-        assert i == j
+    assert list(response.keys()) == offline_transaction

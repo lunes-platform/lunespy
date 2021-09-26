@@ -3,9 +3,9 @@ from lunespy.client.wallet import Account
 
 def test_without_name_ready_failed_successful():
     """
-        without a name parameter.
-        should be return False for Token.ready
-        else should be return True
+        without a name parameter:
+            - should be return False for Token.ready
+            - else should be return True
     """
     # Failed
     creator = Account()
@@ -18,9 +18,9 @@ def test_without_name_ready_failed_successful():
 
 def test_without_quantity_ready_failed_successful():
     """
-        without a quantity parameter.
-        should be return False for Token.ready
-        else should be return True
+        without a quantity parameter:
+            - should be return False for IssueToken.ready
+            - else should be return True
     """
     # Failed
     creator = Account()
@@ -34,24 +34,23 @@ def test_without_quantity_ready_failed_successful():
 
 def test_transaction_full_data():
     """
-        with a creator, receiver, amount.
-        should be return all keys of offline-transaction for Token.transaction  
+        with a creator, receiver, amount:
+            - should be return all keys of offline-transaction for IssueToken.transaction  
     """
     creator = Account()
     offline_transaction = [
         'ready',
+        'type',
         'senderPublicKey',
         'signature',
+        'timestamp',
+        'fee',
+
         'description',
         'reissuable',
-        'timestamp',
-        'type',
         'decimals',
         'quantity',
-        'fee',
-        'name',
-        'feeAsset',
-        'assetId'
+        'name'
     ]
 
     tx = IssueToken(creator, name='test', quantity=10)
@@ -59,8 +58,7 @@ def test_transaction_full_data():
     print(response)
 
     assert response['ready'] == True
+    assert list(response.keys()) == offline_transaction
 
-    for i, j in zip(offline_transaction, response.keys()):
-        assert i == j
 
 

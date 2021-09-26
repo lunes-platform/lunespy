@@ -2,11 +2,11 @@ from lunespy.client.transactions.reissue import ReissueToken
 from lunespy.client.wallet import Account
 
 
-def test_without_asset_id_ready_failed_successful():
+def test_token_without_asset_id_ready_failed_successful():
     """
-        without a asset_id parameter.
-        should be return False for ReissueToken.ready
-        else should be return True
+        without a asset_id parameter:
+            - should be return False for ReissueToken.ready
+            - else should be return True
     """
     # Failed
     creator = Account()
@@ -18,22 +18,23 @@ def test_without_asset_id_ready_failed_successful():
     assert tx.ready == True
 
 
-def test_transaction_full_data():
+def test_token_transaction_full_data():
     """
-        with a creator, receiver, amount.
-        should be return all keys of offline-transaction for ReissueToken.transaction  
+        with a creator, asset_id and quantity:
+            - should be return all keys of offline-transaction for ReissueToken.transaction  
     """
     creator = Account()
     offline_transaction = [
         'ready',
-        'senderPublicKey',
-        'assetId',
         'type',
-        'reissuable',
+        'senderPublicKey',
         'signature',
         'timestamp',
+        'fee',
+
+        'assetId',
+        'reissuable',
         'quantity',
-        'fee'
     ]
 
     tx = ReissueToken(creator, asset_id='test', quantity=10)
@@ -41,6 +42,4 @@ def test_transaction_full_data():
     print(response)
 
     assert response['ready'] == True
-
-    for i, j in zip(offline_transaction, response.keys()):
-        assert i == j
+    assert list(response.keys()) == offline_transaction

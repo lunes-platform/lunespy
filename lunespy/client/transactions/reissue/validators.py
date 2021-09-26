@@ -18,11 +18,11 @@ def validate_reissue(creator: Account, reissue_data: dict) -> bool:
         return False
 
     if quantity < 0:
-        print(bcolors.FAIL + 'Reissue_data `quantity` cannot be less than 0' + bcolors.ENDC)
+        print(bcolors.FAIL + 'To Reissue the `quantity` cannot be less than 0' + bcolors.ENDC)
         return False
     
     if asset_id == False:
-        print(bcolors.FAIL + 'Reissue_data `asset_id` cannot exists' + bcolors.ENDC)
+        print(bcolors.FAIL + 'To Reissue pass an `asset_id`' + bcolors.ENDC)
         return False
 
     return True
@@ -45,22 +45,23 @@ def mount_reissue(creator: Account, reissue_data: dict) -> dict:
 
     signature: bytes = sign(creator.private_key, bytes_data)
     mount_tx = {
-        "senderPublicKey": creator.public_key,
-        "assetId": asset_id,
         "type": INT_TYPE_REISSUE,
-        "reissuable": reissuable,
+        "senderPublicKey": creator.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
-        "quantity": quantity,
         "fee": reissue_fee,
+
+        "assetId": asset_id,
+        "reissuable": reissuable,
+        "quantity": quantity
     }
     return mount_tx
 
 
 # todo async
-def send_reissue(mount_tx: dict, node: str) -> dict:
+def send_reissue(mount_tx: dict, node_url_address: str) -> dict:
     response = post(
-        f'{node}/transactions/broadcast',
+        f'{node_url_address}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':
@@ -73,5 +74,5 @@ def send_reissue(mount_tx: dict, node: str) -> dict:
         return mount_tx
     else:
         mount_tx['send'] = False
-        mount_tx['response'] = response.json()
+        mount_tx['response'] = response.text
         return mount_tx
