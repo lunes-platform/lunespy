@@ -49,6 +49,6 @@ class Account:
             'public_key': self.public_key,
             'address': self.address
         }
-        with open(f'{path}wallet.json', 'w') as file:
+        with open(f'{path}wallet-{self.network}.json', 'w') as file:
             file.write(json.dumps(wallet))
-        print(f"{bcolors.OKGREEN}Your wallet has been saved in `{path}wallet.json`{bcolors.ENDC}")
+        print(f"{bcolors.OKGREEN}Your wallet has been saved in `{path}wallet-{self.network}.json`{bcolors.ENDC}")
