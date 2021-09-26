@@ -2,5 +2,4 @@
 .vscode
 dist
 env
-wallet*
-transaction*
+*.json
