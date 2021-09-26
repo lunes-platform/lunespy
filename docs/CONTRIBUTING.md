@@ -4,7 +4,7 @@
 
 1 - Create and describe your proposal in an [issue](https://github.com/Lunes-platform/LunesPy/issues/new/choose)
 
-2 - Create a new branch with o pattern `feature/MY_FEATURE` or `fix/MY_BUG`
+2 - Create a new branch with o pattern `isse/MY_FEATURE` or `fix/MY_BUG`
 
 3 - Write your tests BEFORE your code, PULL REQUESTS WITHOUT TEST WILL BE REJECTED
 

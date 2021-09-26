@@ -8,10 +8,11 @@ from lunespy.server import NODE_URL
 
 class ReissueToken(BaseTransaction):
     """
-    data_reissue: dict
+    reissue_data: dict
+        reissuable: bool
+        reissue_fee: int
         asset_id: str
         quantity: int
-        reissue_fee: int
     """
     def __init__(self, creator: Account, **reissue_data: dict) -> None:
         super().__init__('Reissue Token', reissue_data)
