@@ -1,6 +1,15 @@
 # Changelog
 
 ## 2021-09-26
+- [8e7e154](8e7e154bf87a9e790ef5c653b901f4251d0dc0ee) Merge pull request #22 from Lunes-platform/issue/docs
+- [00e60bd](00e60bd4fea9ab7095aa681ba056fdf4fe895c42) issued: add docs
+- [13e435c](13e435c986fc11f1dbc201c3f6e3821bfbee1603) fixed(lease): rename parameter
+- [fba4adf](fba4adf03ccc6f989b2ced1efe28156b71c614d4) fixed: add again cancel lease
+- [6535fac](6535fac8308c4102ebc78e81eeed9971487c02a6) changed: specify a network of wallet
+- [61e1790](61e1790869e5427157d25c3bc29f910e04ff5f76) changed: lint formater
+- [93923c2](93923c22188a9f2ad3303e13811d29aaa44f207c) fixed: add again lease
+- [59574dd](59574dd851db09673f498d24556e4ae193ea7907) issued: refactor contributing
+- [6e236f8](6e236f84f914623868d040e4846b61e7d42d491c) changed: update version, changelog and ignore
 - [40b7d97](40b7d972deea0473032818afd88f2b2490a36479) merge `/feature/leasing` to `main`
 - [4004fc4](4004fc41f45194009ddbc012549c09a5e409e992) added(cancel): cancel lease enable
 - [79d47fa](79d47faf014357ebe9b3fd1f4b0176ce3f0e5c29) merge `feature/refactor` to `main`
