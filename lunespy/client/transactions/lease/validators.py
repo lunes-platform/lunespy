@@ -50,9 +50,9 @@ def validate_lease(staker: Account, lease_data: dict) -> bool:
 
 
 # todo async
-def send_lease(mount_tx: dict, node: str) -> dict:
+def send_lease(mount_tx: dict, node_url_address: str) -> dict:
     response = post(
-        f'{node}/transactions/broadcast',
+        f'{node_url_address}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':
