@@ -34,15 +34,16 @@ def mount_issue(creator: Account, issue_data: dict) -> dict:
 
     signature: bytes = sign(creator.private_key, bytes_data)
     mount_tx = {
+        "type": INT_TYPE_ISSUE,
         "senderPublicKey": creator.public_key,
         "signature": signature.decode(),
+        "timestamp": timestamp,
+        "fee": issue_fee,
+        
         "description": description,
         "reissuable": reissuable,
-        "timestamp": timestamp,
-        "type": INT_TYPE_ISSUE,
         "decimals": decimals,
         "quantity": quantity,
-        "fee": issue_fee,
         "name": name
     }
     return mount_tx
@@ -53,11 +54,11 @@ def validate_issue(creator: Account, issue_data: dict) -> bool:
     name: str = issue_data.get('name', '')
 
     if not creator.private_key:
-        print(bcolors.FAIL + 'Sender `Account` not have a private key' + bcolors.ENDC)
+        print(bcolors.FAIL + 'Creator `Account` not have a private key' + bcolors.ENDC)
         return False
 
     if quantity < 0:
-        print(bcolors.FAIL + 'Issue_data `quantity` cannot be less than 0' + bcolors.ENDC)
+        print(bcolors.FAIL + 'To Issue the `quantity` cannot be less than 0' + bcolors.ENDC)
         return False
 
     if len(name) not in range(4, 16 + 1):
@@ -68,9 +69,9 @@ def validate_issue(creator: Account, issue_data: dict) -> bool:
 
 
 # todo async
-def send_issue(mount_tx: dict, node: str) -> dict:
+def send_issue(mount_tx: dict, node_url_address: str) -> dict:
     response = post(
-        f'{node}/transactions/broadcast',
+        f'{node_url_address}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':
@@ -83,5 +84,5 @@ def send_issue(mount_tx: dict, node: str) -> dict:
         return mount_tx
     else:
         mount_tx['send'] = False
-        mount_tx['response'] = response.json()
+        mount_tx['response'] = response.text
         return mount_tx
