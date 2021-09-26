@@ -27,13 +27,14 @@ def mount_burn(burner: Account, burn_data: dict) -> dict:
 
     signature: bytes = sign(burner.private_key, bytes_data)
     mount_tx = {
+        "type": INT_TYPE_BURN,
         "senderPublicKey": burner.public_key,
         "signature": signature.decode(),
-        "assetId": asset_id,
         "timestamp": timestamp,
-        "type": INT_TYPE_BURN,
-        "quantity": quantity,
         "fee": burn_fee,
+
+        "assetId": asset_id,
+        "quantity": quantity
     }
     return mount_tx
 
@@ -58,9 +59,9 @@ def validate_burn(burner: Account, burn_data: dict) -> bool:
 
 
 # todo async
-def send_burn(mount_tx: dict, node: str) -> dict:
+def send_burn(mount_tx: dict, node_url_address: str) -> dict:
     response = post(
-        f'{node}/transactions/broadcast',
+        f'{node_url_address}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

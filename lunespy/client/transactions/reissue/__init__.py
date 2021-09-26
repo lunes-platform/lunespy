@@ -4,17 +4,17 @@ from lunespy.client.transactions.reissue.validators import mount_reissue
 from lunespy.client.transactions.reissue.validators import send_reissue
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-
+from lunespy.server import NODE_URL
 
 class ReissueToken(BaseTransaction):
     """
     data_reissue: dict
-        @params asset_id: str, 
-        @params quantity: int, 
-        @params reissuable: bool, 
-        @params tx_fee: int
+        asset_id: str
+        quantity: int
+        reissue_fee: int
     """
     def __init__(self, creator: Account, **reissue_data: dict) -> None:
+        super().__init__('Reissue Token', reissue_data)
         self.creator = creator
         self.reissue_data = reissue_data
         self.reissue_data['token_type'] = 'Token'
@@ -24,72 +24,29 @@ class ReissueToken(BaseTransaction):
     def ready(self) -> bool:
         return validate_reissue(self.creator, self.reissue_data)
     
-
     @property
     def transaction(self) -> dict:
-        if self.ready:
-            mount_tx = {'ready': True}
-            mount_tx.update(mount_reissue(self.creator, self.reissue_data))
-            return mount_tx
-        else:
-            print(bcolors.FAIL + 'Reissue Transaction bad formed', bcolors.ENDC)
-            mount_tx = {'ready': False}
-            return mount_tx
+        return super().transaction(
+            mount_tx=mount_reissue,
+            creator=self.creator,
+            reissue_data=self.reissue_data)
 
-    def send(self, http_node: str='') -> dict:
-        mounted_tx = self.transaction
-        if mounted_tx['ready']:
-            node = http_node if http_node else NODE_URL
-            tx_history = send_reissue(mounted_tx, node=node)
-            self.history.append(tx_history)
-            if tx_history['send']:
-                self.successful(tx_history['response'], self.reissue_data['token_type'])
-            else:
-                print(bcolors.FAIL + f'Your {self.reissue_data["token_type"]} dont reissued because:\n', bcolors.ENDC)
-                print(tx_history['response'])   
-            return tx_history
-        else:
-            print(bcolors.FAIL + 'Reissue Transaction dont send', bcolors.ENDC)
-            return mounted_tx
-
-    def successful(self, asset_reissued: dict, token_type: str) -> None:
-        reissuable = asset_reissued['reissuable']
-        quantity = asset_reissued['quantity']
-        transaction_id = asset_reissued['id']
-        asset_id = asset_reissued['assetId']
-        creator = asset_reissued['sender']
-        asset_reissued.update({'token_type': token_type})
-
-        print(f"\
-            \ntype\n {bcolors.OKGREEN + '└──' +  token_type + bcolors.ENDC}\
-            \nasset_id\n {bcolors.OKBLUE + '└──' + asset_id + bcolors.ENDC}\
-            \nquantity\n {bcolors.OKBLUE + '└──' + str(quantity) + bcolors.ENDC}\
-            \ncreator\n {bcolors.OKBLUE + '└──' + creator + bcolors.ENDC}\
-            \nreissuable\n {bcolors.OKBLUE + '└──' + str(reissuable) + bcolors.ENDC}\
-            \ntransaction_id\n {bcolors.OKBLUE + '└──' + transaction_id + bcolors.ENDC}\
-        ")
-        
-        import json
-        with open(f'./reissue-{token_type}.json', 'w') as file:
-            file.write(json.dumps(asset_reissued))
-
-        print(f"\n{bcolors.OKGREEN}Your {token_type} has been reissued and saved in `./reissue-{token_type}.json`{bcolors.ENDC}")
+    def send(self, node_url_address: str = NODE_URL) -> dict:
+        tx = super().send(send_reissue, node_url_address)
+        self.history.append(tx)
+        return tx
 
 
 class ReissueAsset(ReissueToken):
-    def __init__(self,
-        creator: Account,
-        **reissue_data: dict
-        ) -> None:
-        reissue_data['token_type'] = reissue_data['token_type'] if reissue_data.get('token_type', False) else 'Asset'
-        super().__init__(creator, **reissue_data)
+    def __init__(self, creator: Account, **reissue_data: dict) -> None:
+        reissue_data['token_type'] = 'Asset'
+        BaseTransaction.__init__(self, tx_type='Reissue Asset', tx_data=reissue_data)
+        ReissueToken.__init__(self, creator=creator, **reissue_data)
 
 
-class ReissueNFT(ReissueAsset):
-    def __init__(self,
-        creator: Account,
-        **reissue_data: dict
-        ) -> None:
+class ReissueNFT(ReissueToken):
+    def __init__(self, creator: Account, **reissue_data: dict) -> None:
         reissue_data['token_type'] = 'NFT'
         reissue_data['decimals'] = 0
-        super().__init__(creator, **reissue_data)
+        BaseTransaction.__init__(self, tx_type='Reissue NFT', tx_data=reissue_data)
+        ReissueToken.__init__(self, creator=creator, **reissue_data)

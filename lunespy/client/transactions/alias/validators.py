@@ -55,20 +55,21 @@ def mount_alias(creator: Account, alias_data: dict) -> dict:
     signature: bytes = sign(creator.private_key, bytes_data)
 
     mount_tx = {
+        "type": INT_TYPE_ALIAS,
         "senderPublicKey": creator.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
-        "type": INT_TYPE_ALIAS,
         "fee": alias_fee,
+
         "alias": alias
     }
     return mount_tx
 
-def send_alias(mount_tx: dict, node: str) -> dict:
+def send_alias(mount_tx: dict, node_url_address: str) -> dict:
     
     
     response = post(
-        f'{node}/transactions/broadcast',
+        f'{node_url_address}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':
