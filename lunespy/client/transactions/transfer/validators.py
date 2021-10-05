@@ -10,9 +10,13 @@ from requests import post
 import struct
 
 
+def lunes_to_unes(lunes: int) -> int:
+    return int(lunes * 10e7)
+
+
 def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> dict:
     timestamp: int = transfer_data.get('timestamp', int(datetime.now().timestamp() * 1000))
-    amount: int = transfer_data['amount']
+    amount: int = lunes_to_unes(transfer_data['amount'])
     transfer_fee: int = transfer_data.get('transfer_fee', DEFAULT_TRANSFER_FEE)
     asset_id: str = transfer_data.get('asset_id', "")
     asset_fee: str = transfer_data.get('asset_fee', "")
