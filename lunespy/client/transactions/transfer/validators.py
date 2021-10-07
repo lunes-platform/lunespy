@@ -1,6 +1,7 @@
 from lunespy.client.transactions.transfer.constants import DEFAULT_TRANSFER_FEE
 from lunespy.client.transactions.transfer.constants import BYTE_TYPE_TRANSFER
 from lunespy.client.transactions.transfer.constants import INT_TYPE_TRANSFER
+from lunespy.client.wallet.validators import validate_address
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
@@ -45,11 +46,13 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
     return mount_tx
 
 
-def validate_transfer(sender: Account, transfer_data: dict) -> bool:
+def validate_transfer(sender: Account, receiver: Account, transfer_data: dict) -> bool:
     amount: int = transfer_data.get('amount', -1)
 
     if not sender.private_key:
         print(bcolors.FAIL + 'Sender `Account` not have a private key' + bcolors.ENDC)
+        return False
+    elif not validate_address(receiver.address, sender.network_id):
         return False
     elif amount <= 0:
         print(bcolors.FAIL + 'You dont pass `amount` param' + bcolors.ENDC)

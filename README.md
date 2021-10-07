@@ -24,12 +24,12 @@ Windows:
 <install_command>
 ``` -->
 ## What's new
-Look at the changes [here](./docs/CHANGELOG.md)
+Look at the changes [here](./CHANGELOG.md)
 
 
 ## Using LunesPy
 
-To use LunesPy, follow these [tutorial](./docs/TUTORIAL.md)
+To use LunesPy, follow these [tutorial](./TUTORIAL.md)
 
 ## Contributing to LunesPy
 

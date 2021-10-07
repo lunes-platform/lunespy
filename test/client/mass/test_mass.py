@@ -1,8 +1,7 @@
-from lunespy.client.transactions.transfer import TransferToken
+from lunespy.client.transactions.mass import MassTransferToken
 from lunespy.client.wallet.errors import InvalidChainAddress
 from lunespy.client.wallet import Account
 from pytest import raises
-
 
 def test_ready_between_different_networks():
     """
@@ -11,32 +10,38 @@ def test_ready_between_different_networks():
         else should be return True
     """
     sender_mainnet = Account(network='mainnet')    
-    receiver_testnet = Account(network='testnet')
+    receivers_list = [
+        { 'receiver': Account(network='testnet').address, 'amount': 100 }
+        for tx in range(4)
+    ]
 
     with raises(InvalidChainAddress):
-        tx = TransferToken(sender_mainnet, receiver_testnet, amount=1)
+        tx = MassTransferToken(sender_mainnet, receivers_list)
         tx.ready
 
     sender_testnet = Account(network='testnet')
-    tx = TransferToken(sender_testnet, receiver_testnet, amount=1)
+    tx = MassTransferToken(sender_testnet, receivers_list)
     assert tx.ready == True
 
 
 def test_ready_without_amount_failed_successful():
     """
-        with a sender, receiver and amount:
-            - should be return True for TransaferToken.ready
-        without a amount parameter:
-            - should be return False for TransaferToken.ready
+        with amount less or iqual than 0:
+            should be return `False` in MassTransferToken.ready
+        else should be return True
     """
+
     # Failed
     sender = Account()
-    receiver = Account()
-    tx = TransferToken(sender, receiver)
+    receivers_list = [
+        { 'receiver': Account().address, 'amount': tx }
+        for tx in range(4)
+    ]
+    tx = MassTransferToken(sender, receivers_list)
     assert tx.ready == False
 
     # Successful
-    tx.transfer_data['amount'] = 10
+    tx.receivers_list[0]['amount'] = 10
     assert tx.ready == True
 
 
@@ -46,7 +51,10 @@ def test_transaction_full_data():
             - should be return all keys of offline_transaction for TransaferToken.transaction  
     """
     sender = Account()
-    receiver = Account()
+    receivers_list = [
+        { 'receiver': Account().address, 'amount': 10 }
+        for tx in range(4)
+    ]
     offline_transaction = [
         'ready',
         'type',
@@ -55,11 +63,12 @@ def test_transaction_full_data():
         'timestamp',
         'fee',
 
-        'recipient',
-        'feeAsset',
+        'version',
         'assetId',
-        'amount']
-    tx = TransferToken(sender, receiver, amount=10)
+        'transfers',
+        'proofs'
+    ]
+    tx = MassTransferToken(sender, receivers_list)
     response = tx.transaction
 
     assert response['ready'] == True

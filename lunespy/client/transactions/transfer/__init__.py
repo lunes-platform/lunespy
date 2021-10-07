@@ -24,7 +24,7 @@ class TransferToken(BaseTransaction):
 
     @property
     def ready(self) -> bool:
-        return validate_transfer(self.sender,self.transfer_data)
+        return validate_transfer(self.sender, self.receiver, self.transfer_data)
 
     @property
     def transaction(self) -> dict:
