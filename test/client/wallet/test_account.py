@@ -144,12 +144,12 @@ def test_all_attributes_of_account():
 
     wallet = Account(seed=seed, network='testnet')
 
-    assert wallet.seed == seed
-    assert wallet.hash_seed == hash_seed
-    assert wallet.nonce == nonce
     assert wallet.private_key == private_key
-    assert wallet.public_key == public_key
-    assert wallet.address == address
-    assert wallet.network == network
     assert wallet.network_id == network_id
+    assert wallet.public_key == public_key
+    assert wallet.hash_seed == hash_seed
+    assert wallet.network == network
+    assert wallet.address == address
+    assert wallet.nonce == nonce
+    assert wallet.seed == seed
      
