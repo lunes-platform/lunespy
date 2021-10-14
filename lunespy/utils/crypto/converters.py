@@ -32,7 +32,7 @@ def bytes_to_string(bytes: str, decode: bool=False) -> str:
 
 
 def hash_network(address: str) -> str:
-    from pyblake2 import blake2b
+    from hashlib import blake2b
     from lunespy.utils.crypto.algorithms import KeccakHash
     
     keccak256 = KeccakHash()
@@ -45,7 +45,7 @@ def hash_network(address: str) -> str:
     return y
 
 
-def sign(privateKey: str, message: bytes) -> bytes:
+def sign(private_key: str, message: bytes) -> bytes:
     import axolotl_curve25519 as curve
     from base58 import b58encode
     from base58 import b58decode
@@ -55,7 +55,7 @@ def sign(privateKey: str, message: bytes) -> bytes:
     return b58encode(
         curve.calculateSignature(
             random64,
-            b58decode( privateKey ),
+            b58decode( private_key ),
             message
         )
     )
