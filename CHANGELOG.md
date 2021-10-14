@@ -1,6 +1,25 @@
 # Changelog
 
+## 2021-10-13
+- [ac48c16](ac48c16d0ad33182421d8b43f70c8e3d22c6fa53) removed(crypto): pyblack2b dependency
+- [30eaebe](30eaebe8da85a5bb9d875cb90e0956dc01d0edc2) added(server): get rich_list
+
+## 2021-10-09
+- [d06151b](d06151b4b11e2f967a003503d1ea556e9e60c0dd) changed: update poetry version
+
+## 2021-10-07
+- [3d9de2a](3d9de2ae6b527b264e2d25b7ab218674f3b557ff) Merge branch 'issued/send-mass-transfer-of-token' into 'main'
+- [7979bbf](7979bbf31a00f0ee873028330b38099a61e53ea8) issued(mass): Mass Transfer Token
+- [eb1f1af](eb1f1af31c424874a4f17f3c004e749fd5342181) added(transfer): test between  different network
+
+## 2021-10-05
+- [49ac56b](49ac56b4e4a43c79297311f1fa7b46bc3559bc4b) changed: refactor directory
+- [7433426](7433426a9d244b6169d1e103291758058751f679) Merge branch 'issue/re-calculate-a-amount-to-10' into 'main'
+- [e3ed2d6](e3ed2d6f8a6781518fce09e6404e35f51a89519f) issued: function for convert lunes to unes
+
 ## 2021-09-26
+- [88da2c7](88da2c78d457d4c5d265ed4b6cdf2a2810fd1799) changed: update poetry file
+- [adbfb7e](adbfb7e8e909270fdde902d42d9a693fce2ac2a9) changed: update changelog
 - [8e7e154](8e7e154bf87a9e790ef5c653b901f4251d0dc0ee) Merge pull request #22 from Lunes-platform/issue/docs
 - [00e60bd](00e60bd4fea9ab7095aa681ba056fdf4fe895c42) issued: add docs
 - [13e435c](13e435c986fc11f1dbc201c3f6e3821bfbee1603) fixed(lease): rename parameter
