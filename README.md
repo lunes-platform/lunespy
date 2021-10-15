@@ -29,11 +29,11 @@ Look at the changes [here](./CHANGELOG.md)
 
 ## Using LunesPy
 
-To use LunesPy, follow these [tutorial](./TUTORIAL.md)
+To use LunesPy, follow these [tutorial](./docs/TUTORIAL.md)
 
 ## Contributing to LunesPy
 
-To contribute to LunesPy, follow these [step](./docs/CONTRIBUTING.md)
+To contribute to LunesPy, follow these [step](./CONTRIBUTING.md)
 
 ## Contributors
 
