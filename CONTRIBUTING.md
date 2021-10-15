@@ -4,17 +4,18 @@
 
 1 - Create and describe your proposal in an [issue](https://github.com/Lunes-platform/LunesPy/issues/new/choose)
 
-2 - Create a new branch with o pattern `isse/MY_FEATURE` or `fix/MY_BUG`
+2 - Create a new branch with o pattern `isse/MY_NEW_FEATURE`
 
-3 - Write your tests BEFORE your code, PULL REQUESTS WITHOUT TEST WILL BE REJECTED
+3 - Create a new [pull request](https://github.com/Lunes-platform/LunesPy/compare) for add your changes in `main` branch
 
-4 - Commit your code using we coventional commit, COMMITS OUTSIDE THE CONVENTIONAL WILL BE REJECTED
+4 - Write tests for your code
 
-5 - Write a docs for your changes, PULL REQUESTS WITHOUT DOCS WILL BE REJECTED
+5 - Commit your code using we coventional commit
 
-6 - Generete a new CHANGELOG with yours commit using the script python below 
+6 - Write a docs for your changes
 
-7 - Commit your change and create a new [pull request](https://github.com/Lunes-platform/LunesPy/compare) for add your changes in `main` branch
+7 - Finally, update the CHANGELOG  
+
 
 
 ## Conventional Commit and Semmantic Version
