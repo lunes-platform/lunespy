@@ -1,4 +1,4 @@
-image: python:alpine3.14
+image: olivmath/alpyne:0.1
 
 stages:
     - test
