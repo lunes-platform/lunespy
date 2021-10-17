@@ -55,12 +55,3 @@ if __name__ == '__main__':
     }
 
     create_merge_request(body)
-
-$CI_SERVER_URL 
-"AUTO MERGE $CI_COMMIT_BRANCH to test-ci"
-"<h1>Merging because test passed</h1><br>-> <h2>$CI_COMMIT_MESSAGE</h2>"
-$GITLAB_USER_ID
-$CI_PROJECT_ID
-$CI_COMMIT_BRANCH
-"test-ci"
-$TOKEN
