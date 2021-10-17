@@ -1,4 +1,4 @@
-image: olivmath/alpyne:0.1
+image: registry.lunes.io/blockchain/production/lunespy:latest
 
 stages:
     - test
