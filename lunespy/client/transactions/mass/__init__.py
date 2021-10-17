@@ -8,6 +8,11 @@ from lunespy.server import NODE_URL
 
 class MassTransferToken(BaseTransaction):
     """
+    receivers_list: list
+        tx: dict
+            receiver: str
+            amount: float
+
     transfer_data: dict
         timestamp: int
         asset_id: str
