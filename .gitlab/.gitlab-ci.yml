@@ -24,14 +24,14 @@ CreateAutoMR:
       - job: "CreateReportTests"
     script:
         - python3 ./script/auto-MR.py \
-        $CI_SERVER_URL \
-        "AUTO MERGE $CI_COMMIT_BRANCH to test-ci" \
-        "<h1>Merging because test passed</h1><br>-> <h2>$CI_COMMIT_MESSAGE</h2>" \
-        $GITLAB_USER_ID \
-        $CI_PROJECT_ID \
-        $CI_COMMIT_BRANCH \
-        "main" \
-        $TOKEN
+            $CI_SERVER_URL \
+            "AUTO MERGE $CI_COMMIT_BRANCH to test-ci" \
+            "<h1>Merging because test passed</h1><br>-> <h2>$CI_COMMIT_MESSAGE</h2>" \
+            $GITLAB_USER_ID \
+            $CI_PROJECT_ID \
+            $CI_COMMIT_BRANCH \
+            "main" \
+            $TOKEN
 
 PublishPackage:
     only:
