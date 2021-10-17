@@ -1,0 +1,8 @@
+image: python:alpine3.14
+
+before_script:
+    - pip install -r requeriments.txt
+
+tests_and_report:
+    script:
+        - python -m pytest -vv
