@@ -18,13 +18,15 @@ CreateReportTests:
         when: always
         reports:
             junit: report.xml
+    after_script:
+      - py3clean .
 
 CreateAutoMR:
     stage: test
     needs:
       - job: "CreateReportTests"
     script:
-        - python3 ./scripts/auto-MR.py \
+        - python3 ./.gitlab/scripts/auto-MR.py \
             $CI_SERVER_URL \
             "AUTO MERGE $CI_COMMIT_BRANCH to test-ci" \
             "<h1>Merging because test passed</h1><br>-> <h2>$CI_COMMIT_MESSAGE</h2>" \
