@@ -1,8 +1,24 @@
 image: python:alpine3.14
 
+stages:
+    - test
+    - deploy
+
 before_script:
     - pip install -r requeriments.txt
 
-tests_and_report:
+CreateReportTests:
+    stage: test
     script:
-        - python -m pytest -vv
+        - python -m pytest --junitxml=report.xml
+    artifacts:
+        when: always
+        reports:
+            junit: report.xml
+
+PublishPackage:
+    stage: deploy
+    script:
+        - echo "Successfully Published Package "
+        #- poetry build
+        #- poetry publish
