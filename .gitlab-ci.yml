@@ -13,7 +13,7 @@ CreateReportTests:
             - pre-prod
     stage: test
     script:
-        - python -m pytest --junitxml=report.xml
+        - python3 -m pytest --junitxml=report.xml
     artifacts:
         when: always
         reports:
