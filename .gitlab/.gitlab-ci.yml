@@ -20,10 +20,11 @@ CreateReportTests:
             junit: report.xml
 
 CreateAutoMR:
+    stage: test
     needs:
       - job: "CreateReportTests"
     script:
-        - python3 ./script/auto-MR.py \
+        - python3 ./scripts/auto-MR.py \
             $CI_SERVER_URL \
             "AUTO MERGE $CI_COMMIT_BRANCH to test-ci" \
             "<h1>Merging because test passed</h1><br>-> <h2>$CI_COMMIT_MESSAGE</h2>" \

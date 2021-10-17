@@ -3,3 +3,4 @@
 dist
 env
 *.json
+sample*
