@@ -1,0 +1,32 @@
+image: olivmath/alpyne:0.1
+
+stages:
+    - test
+    - deploy
+
+before_script:
+    - pip install -r requeriments.txt
+
+CreateReportTests:
+    only:
+        refs:
+            - pre-prod
+    stage: test
+    script:
+        - python -m pytest --junitxml=report.xml
+    artifacts:
+        when: always
+        reports:
+            junit: report.xml
+
+PublishPackage:
+    needs:
+        - job: "CreateReportTests"
+    only:
+        refs:
+            - main
+    stage: deploy
+    script:
+        - echo "Successfully Published Package "
+        #- poetry build
+        #- poetry publish
