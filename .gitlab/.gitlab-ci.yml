@@ -2,16 +2,17 @@ image: registry.lunes.io/blockchain/production/lunespy:latest
 
 stages:
     - test
+    - merge
     - deploy
 
 before_script:
     - pip install -r requeriments.txt
 
 CreateReportTests:
+    stage: test
     only:
         refs:
             - pre-prod
-    stage: test
     script:
         - python3 -m pytest --junitxml=report.xml
     artifacts:
@@ -22,7 +23,7 @@ CreateReportTests:
       - py3clean .
 
 CreateAutoMR:
-    stage: test
+    stage: merge
     needs:
       - job: "CreateReportTests"
     script:
