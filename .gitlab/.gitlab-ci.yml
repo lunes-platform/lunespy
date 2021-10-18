@@ -1,4 +1,4 @@
-image: olivmath/alpyne:0.1
+image: registry.lunes.io/blockchain/production/lunespy:latest
 
 stages:
     - test
@@ -8,20 +8,21 @@ before_script:
     - pip install -r requeriments.txt
 
 CreateReportTests:
+    stage: test
     only:
         refs:
-            - pre-prod
-    stage: test
+            - main
     script:
-        - python -m pytest --junitxml=report.xml
+        - python3 -m pytest --junitxml=report.xml
     artifacts:
         when: always
         reports:
             junit: report.xml
+    after_script:
+      - py3clean .
+
 
 PublishPackage:
-    needs:
-        - job: "CreateReportTests"
     only:
         refs:
             - main
