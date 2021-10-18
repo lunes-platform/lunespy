@@ -51,7 +51,11 @@ if __name__ == '__main__':
         'target_branch',
         'gitlab_token']
     body: dict = {
-        key: value for key, value in zip(required_params, sys.argv[1:])
+        key: value
+        for key, value in zip(
+            required_params, sys.argv[1:]
+        )
     }
 
+    print(body)
     create_merge_request(body)
