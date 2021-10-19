@@ -83,3 +83,49 @@ def rich_list(**kargs: dict) -> dict:
             "rich_list.json",
             report)
     return report
+
+
+from lunespy.client.transactions.mass import MassTransferToken
+
+
+def node_leased_list_addres(node_address: str) -> list:
+    return [
+
+    ]
+   
+
+def reward_amount(node_address: str, time_interval: int, dividend: int) -> float:
+    # pegar as taxas do periodo
+    # calcula a porcentagem
+    pass
+
+
+def address_score(node_address: str, address: str) -> int:
+    total_lease = balance(node_address)
+    lease = balance(address)
+    response = int(
+        ( lease / (total_lease - lease) ) * 100
+    )
+    return response
+
+
+def distributing_lease_dividend(leaser: Account, time_interval: int, list_address: list, dividend: int) -> dict:
+    if len(list_address) > 100:
+        def listasMenores(lst, n):
+            for i in range(0, len(lst), n):
+                yield lst[i:i + n]
+            return lst
+    else:
+        list_address = [
+            {
+                "receiver": address
+                "amount": reward_amount(leaser, time_interval, dividend) * address_score(address)
+            }
+            for address in list_address
+        ]
+    tx = MassTransferToken(leaser, list_adress).send()
+
+
+fee = 10
+list_address = node_leased_list_addres(node_address)
+distributing_lease_dividend(node, time_interval, list_address, fee)
