@@ -482,41 +482,87 @@ print(tx.history)
 
 ## Send MassTransfer of Lunes
 
+With the feature of sending **mass transfers** it is possible to save time and money.
+The total cost for this type of transaction is given by `0.001 + 0.0005 * n`, where `n` is the number of total transactions, it is possible to make up to 100 transfers in just 1 transaction.
+
+Compared to common transfers:
+
+Tx | MassTransfer | Transfer 
+--- | ---  | ---  |
+1    | 0.0015  | 0.0010
+2    | 0.0020  | 0.0020
+3    | 0.0025  | 0.0030
+... |... |... |
+98   | 0.0050  |  0.0098
+99   | 0.0055  |  0.0099
+100  | 0.0051  |  0.0100
+
+![graph](./graph.png)
+
+**Example code**
 ```python
-Comming Soon...
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.mass import MassTransferToken
+
+sender = Account(
+    seed="whip wave witness family famous hundred dog east inner brief develop intact retreat result coyote",
+    nonce=1,
+    network='testnet')
+
+
+list_of_address = [
+    {'receiver': '37TVfJowBmXGLPaMvTDZFRMq1Ng1mEjDGPj', 'amount': 100}, 
+    {'receiver': '37Xr3Pyo7iF66Nwtty5wFjU5m7mJTZArg2b', 'amount': 100},
+    {'receiver': '37Ua2WqMK5nejKi49AGNhpVX638i3iDHYhV', 'amount': 100},
+    {'receiver': '37Vj7YmwS2VLxe5McLt3ki1byTbqcLj7o8A', 'amount': 100},
+    {'receiver': '37aUDmQ7Y64dNYwjnW6cMgN7fvyKC6wQBuM', 'amount': 100}
+]
+
+tx = MassTransferToken(sender, list_of_address)
+tx.send()
 ```
 ## Send MassTransfer of any Assets
 
+It is also possible to use this transfer type to send any type of tokens by passing the `asset_id` parameter
+
+**Example code**
+```python
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.mass import MassTransferToken
+from lunespy.client.transactions.issue import IssueToken
+
+sender = Account(
+    seed="whip wave witness family famous hundred dog east inner brief develop intact retreat result coyote",
+    network='testnet')
+
+token_data = {
+    "description": "My new Token",
+    "reissuable": False,
+    "quantity": 100000,
+    "decimals": 0,
+    "name": "NewToken",
+}
+tx_issue = IssueToken(sender, **token_data)
+tx_issue.send("http://127.0.0.1:5555")
+
+token_id = tx_issue.history[0]['response']['assetId']
+z
+
+list_of_address = [
+    {'receiver': '37TVfJowBmXGLPaMvTDZFRMq1Ng1mEjDGPj', 'amount': 100}, 
+    {'receiver': '37Xr3Pyo7iF66Nwtty5wFjU5m7mJTZArg2b', 'amount': 100},
+    {'receiver': '37Ua2WqMK5nejKi49AGNhpVX638i3iDHYhV', 'amount': 100},
+    {'receiver': '37Vj7YmwS2VLxe5McLt3ki1byTbqcLj7o8A', 'amount': 100},
+    {'receiver': '37aUDmQ7Y64dNYwjnW6cMgN7fvyKC6wQBuM', 'amount': 100}
+]
+
+tx = MassTransferToken(sender, list_of_address, asset_id=token_id)
+tx.send("http://127.0.0.1:5555")
+```
+
+## Exchange
+
 ```python
 Comming Soon...
 ```
-
-## Create new Payment
-
-```python
-Comming Soon...
-```
-
-## Registry 
-
-```python
-Comming Soon...
-```
-
-## Set Script
-
-```python
-Comming Soon...
-```
-
-## Transfer Script
-
-```python
-Comming Soon...
-```
-
-## Genesis Trasaction
-
-```python
-Comming Soon...
-```
+asset_id
