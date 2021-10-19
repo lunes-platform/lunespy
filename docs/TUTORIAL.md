@@ -21,7 +21,7 @@ In this way, we can create a transaction to transfer tokens, a transaction to cr
 3. [Burn Tokens](#burnToken)
 3. [Create Alias](#createAlias)
 2. [Send Mass Transfer Lunes](#massTransferLunes)
-2. [Send Mass Transfer Tokens](#massTransferTokens)
+2. [Send Mass Transfer Tokens](#massTransferToken)
 3. [Exchange](#exchange)
 
 
@@ -561,9 +561,9 @@ print(tx.history)
 </details>
 
 ---
-<div id='massTransfer'/>
+<div id='massTransferLunes'/>
 
-## Send MassTransfer
+## Send Lunes with MassTransfer
 
 Only for send `Lunes` asset **you dont must be pass `asset_id` parameter** in `MassTranferToken`.
 
@@ -609,6 +609,11 @@ tx = MassTransferToken(sender, list_of_address)
 tx.send()
 ```
 </details>
+
+---
+<div id='massTransferToken'/>
+
+## Send Any Token with MassTransfer
 
 Mass Transfer can only be made for one type of token at a time.
 It is **not possible** to send different tokens to multiple addresses using the same Mass Transfer Transaction.
@@ -659,3 +664,4 @@ tx.send("http://127.0.0.1:5555")
 ```python
 Comming Soon...
 ```
+s
