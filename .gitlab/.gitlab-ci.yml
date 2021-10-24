@@ -19,8 +19,7 @@ CreateReportTests:
         reports:
             junit: report.xml
     after_script:
-      - py3clean .
-
+        - py3clean .
 
 PublishPackage:
     only:
@@ -29,6 +28,7 @@ PublishPackage:
     stage: deploy
     script:
         - echo "Successfully Published Package "
-        #- poetry build
-        #- poetry publish
-        #- git push github 
+        - poetry build
+        - poetry publish
+        - git remote add github https://github.com/lunes-platform/lunespy
+        - git push main github
