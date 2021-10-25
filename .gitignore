@@ -1,6 +1,7 @@
-*cache*
 .vscode
 dist
 env
-*.json
 sample*
+*cache*
+*.json
+*.xml

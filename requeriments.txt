@@ -2,3 +2,4 @@ python-axolotl-curve25519
 requests
 base58
 pytest
+poetry
