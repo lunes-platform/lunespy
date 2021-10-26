@@ -1,6 +1,4 @@
-from lunespy.client.transactions.transfer.constants import DEFAULT_TRANSFER_FEE
-from lunespy.client.transactions.transfer.constants import BYTE_TYPE_TRANSFER
-from lunespy.client.transactions.transfer.constants import INT_TYPE_TRANSFER
+from lunespy.client.transactions.constants import TransferType
 from lunespy.client.wallet.validators import validate_address
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
@@ -17,10 +15,10 @@ def lunes_to_unes(lunes: int) -> int:
 
 def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> dict:
     timestamp: int = transfer_data.get('timestamp', int(datetime.now().timestamp() * 1000))
-    amount: int = lunes_to_unes(transfer_data['amount'])
     transfer_fee: int = transfer_data.get('transfer_fee', TransferType.fee.value)
-    asset_id: str = transfer_data.get('asset_id', "")
+    amount: int = lunes_to_unes(transfer_data['amount'])
     asset_fee: str = transfer_data.get('asset_fee', "")
+    asset_id: str = transfer_data.get('asset_id', "")
 
     bytes_data: bytes = TransferType.type_byte.value + \
         b58decode(sender.public_key) + \

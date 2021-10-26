@@ -1,6 +1,4 @@
-from lunespy.client.transactions.issue.constants import DEFAULT_ISSUE_FEE
-from lunespy.client.transactions.issue.constants import BYTE_TYPE_ISSUE
-from lunespy.client.transactions.issue.constants import INT_TYPE_ISSUE
+from lunespy.client.transactions.constants import IssueType
 from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
@@ -13,14 +11,14 @@ import struct
 
 def mount_issue(creator: Account, issue_data: dict) -> dict:
     timestamp: int = issue_data.get('timestamp', int(datetime.now().timestamp() * 1000))
-    issue_fee: int = issue_data.get('issue_fee', DEFAULT_ISSUE_FEE)
+    issue_fee: int = issue_data.get('issue_fee', IssueType.fee.value)
     reissuable: bool = issue_data.get('reissuable', False)
     description: str = issue_data.get('description', '')
     quantity: int = issue_data.get('quantity', 0)
     decimals: str = issue_data.get('decimals', 0)
     name: str = issue_data.get('name', '')
 
-    bytes_data: bytes = BYTE_TYPE_ISSUE + \
+    bytes_data: bytes = IssueType.type_byte.value + \
         b58decode(creator.public_key) + \
         struct.pack(">H", len(name)) + \
         string_to_bytes(name) + \
@@ -34,7 +32,7 @@ def mount_issue(creator: Account, issue_data: dict) -> dict:
 
     signature: bytes = sign(creator.private_key, bytes_data)
     mount_tx = {
-        "type": INT_TYPE_ISSUE,
+        "type": IssueType.type_int.value,
         "senderPublicKey": creator.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

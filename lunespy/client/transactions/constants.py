@@ -46,7 +46,7 @@ class CancelLeaseType(Enum):
 class AliasType(Enum):
     type_int = 10
     type_byte = b'0xa'
-    mount_bytes = b'\x02'
+    mount = b'\x02'
     fee = int(1e5)
 
 

@@ -1,9 +1,7 @@
-from lunespy.client.transactions.burn.constants import DEFAULT_BURN_FEE
-from lunespy.client.transactions.burn.constants import BYTE_TYPE_BURN
-from lunespy.client.transactions.burn.constants import INT_TYPE_BURN
-from lunespy.utils.crypto.converters import string_to_bytes
-from lunespy.utils.crypto.converters import sign
 from lunespy.utils.crypto.converters import bytes_to_string
+from lunespy.utils.crypto.converters import string_to_bytes
+from lunespy.client.transactions.constants import BurnType
+from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
 from datetime import datetime
@@ -14,11 +12,11 @@ import struct
 
 def mount_burn(burner: Account, burn_data: dict) -> dict:
     timestamp: int = burn_data.get('timestamp', int(datetime.now().timestamp() * 1000))
-    burn_fee: int = burn_data.get('burn_fee', DEFAULT_BURN_FEE)
+    burn_fee: int = burn_data.get('burn_fee', BurnType.fee.value)
     quantity: int = burn_data.get('quantity', 0)
     asset_id: int = burn_data['asset_id']
 
-    bytes_data: bytes = BYTE_TYPE_BURN + \
+    bytes_data: bytes = BurnType.type_byte.value + \
         b58decode(burner.public_key) + \
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
@@ -27,7 +25,7 @@ def mount_burn(burner: Account, burn_data: dict) -> dict:
 
     signature: bytes = sign(burner.private_key, bytes_data)
     mount_tx = {
-        "type": INT_TYPE_BURN,
+        "type": BurnType.type_int.value,
         "senderPublicKey": burner.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

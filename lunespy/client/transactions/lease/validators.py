@@ -1,6 +1,4 @@
-from lunespy.client.transactions.lease.constants import DEFAULT_CREATE_LEASE_FEE
-from lunespy.client.transactions.lease.constants import BYTE_TYPE_CREATE_LEASE
-from lunespy.client.transactions.lease.constants import INT_TYPE_CREATE_LEASE
+from lunespy.client.transactions.constants import LeaseType
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
@@ -14,9 +12,9 @@ import struct
 def mount_lease(staker: Account, validator_address: str, lease_data: dict) -> dict:
     timestamp: int = lease_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     amount: int = lease_data['amount']
-    lease_fee: int = lease_data.get('lease_fee', DEFAULT_CREATE_LEASE_FEE)    
+    lease_fee: int = lease_data.get('lease_fee', LeaseType.fee.value)
 
-    bytes_data: bytes = BYTE_TYPE_CREATE_LEASE + \
+    bytes_data: bytes = LeaseType.type_byte.value + \
         b58decode(staker.public_key) + \
         b58decode(validator_address) + \
         struct.pack(">Q", amount) + \
@@ -25,7 +23,7 @@ def mount_lease(staker: Account, validator_address: str, lease_data: dict) -> di
 
     signature: bytes = sign(staker.private_key, bytes_data)
     mount_tx: dict = {
-        "type": INT_TYPE_CREATE_LEASE,
+        "type": LeaseType.type_int.value,
         "senderPublicKey": staker.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
