@@ -18,11 +18,11 @@ def lunes_to_unes(lunes: int) -> int:
 def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> dict:
     timestamp: int = transfer_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     amount: int = lunes_to_unes(transfer_data['amount'])
-    transfer_fee: int = transfer_data.get('transfer_fee', DEFAULT_TRANSFER_FEE)
+    transfer_fee: int = transfer_data.get('transfer_fee', TransferType.fee.value)
     asset_id: str = transfer_data.get('asset_id', "")
     asset_fee: str = transfer_data.get('asset_fee', "")
 
-    bytes_data: bytes = BYTE_TYPE_TRANSFER + \
+    bytes_data: bytes = TransferType.type_byte.value + \
         b58decode(sender.public_key) + \
         (b'\1' + b58decode(asset_id) if asset_id != "" else b'\0') + \
         (b'\1' + b58decode(asset_fee) if asset_fee != "" else b'\0') + \
@@ -32,12 +32,12 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
         b58decode(receiver.address)
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx: dict = {
-        "type": INT_TYPE_TRANSFER,
+        "type": TransferType.type_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": transfer_fee,
-        
+
         "recipient": receiver.address,
         "feeAsset": asset_fee,
         "assetId": asset_id,
@@ -61,9 +61,9 @@ def validate_transfer(sender: Account, receiver: Account, transfer_data: dict) -
 
 
 # todo async
-def send_transfer(mount_tx: dict, node_url_address: str) -> dict:
+def send_transfer(mount_tx: dict, node_url: str) -> dict:
     response = post(
-        f'{node_url_address}/transactions/broadcast',
+        f'{node_url}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

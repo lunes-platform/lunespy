@@ -34,7 +34,7 @@ class TransferToken(BaseTransaction):
             receiver=self.receiver,
             transfer_data=self.transfer_data)
 
-    def send(self, node_url_address: str=NODE_URL) -> dict:
-        tx = super().send(send_transfer, node_url_address)
+    def send(self, node_url: str=NODE_URL) -> dict:
+        tx = super().send(send_transfer, node_url)
         self.history.append(tx)
         return tx
