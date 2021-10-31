@@ -4,14 +4,10 @@ stages:
     - test
     - deploy
 
-before_script:
-    - pip install -r requeriments.txt
-
 CreateReportTests:
     stage: test
-    only:
-        refs:
-            - main
+    except:
+        - main
     script:
         - python3 -m pytest -vv --junitxml=report.xml
     artifacts:
