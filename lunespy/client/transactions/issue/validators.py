@@ -11,7 +11,7 @@ from requests import post
 import struct
 
 
-def mount_issue(creator: Account, issue_data: dict) -> dict:
+def mount_issue(sender: Account, issue_data: dict) -> dict:
     timestamp: int = issue_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     issue_fee: int = issue_data.get('issue_fee', DEFAULT_ISSUE_FEE)
     reissuable: bool = issue_data.get('reissuable', False)
@@ -21,7 +21,7 @@ def mount_issue(creator: Account, issue_data: dict) -> dict:
     name: str = issue_data.get('name', '')
 
     bytes_data: bytes = BYTE_TYPE_ISSUE + \
-        b58decode(creator.public_key) + \
+        b58decode(sender.public_key) + \
         struct.pack(">H", len(name)) + \
         string_to_bytes(name) + \
         struct.pack(">H", len(description)) + \
@@ -32,10 +32,10 @@ def mount_issue(creator: Account, issue_data: dict) -> dict:
         struct.pack(">Q", issue_fee) + \
         struct.pack(">Q", timestamp)
 
-    signature: bytes = sign(creator.private_key, bytes_data)
+    signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
         "type": INT_TYPE_ISSUE,
-        "senderPublicKey": creator.public_key,
+        "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": issue_fee,
@@ -49,11 +49,11 @@ def mount_issue(creator: Account, issue_data: dict) -> dict:
     return mount_tx
 
 
-def validate_issue(creator: Account, issue_data: dict) -> bool:
+def validate_issue(sender: Account, issue_data: dict) -> bool:
     quantity: int = issue_data.get('quantity', -1)
     name: str = issue_data.get('name', '')
 
-    if not creator.private_key:
+    if not sender.private_key:
         print(bcolors.FAIL + 'Creator `Account` not have a private key' + bcolors.ENDC)
         return False
 
@@ -69,9 +69,9 @@ def validate_issue(creator: Account, issue_data: dict) -> bool:
 
 
 # todo async
-def send_issue(mount_tx: dict, node_url_address: str) -> dict:
+def send_issue(mount_tx: dict, node_url: str) -> dict:
     response = post(
-        f'{node_url_address}/transactions/broadcast',
+        f'{node_url}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

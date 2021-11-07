@@ -1,5 +1,6 @@
 from lunespy.client.transactions.low_level import save_transaction
-from lunespy.client.transactions.low_level import log_transaction
+from lunespy.client.transactions.low_level import log_transaction                                                  
+from lunespy.server import MAINNET_NODE_URL, TESTNET_NODE_URL
 from lunespy.utils.settings import bcolors
 from abc import ABCMeta, abstractmethod
 
@@ -24,10 +25,16 @@ class BaseTransaction(metaclass=ABCMeta):
             return {'ready': False}
 
 
-    def send(self, send_tx, node_url_address: str) -> dict:
+    def send(self, send_tx, node_url: str) -> dict:
+        if node_url == None:
+            if self.sender.network == 'mainnet':
+                node_url = MAINNET_NODE_URL
+            else:
+                node_url = TESTNET_NODE_URL
+
         mounted_tx = self.transaction
         if mounted_tx['ready']:
-            tx_response = send_tx(mounted_tx, node_url_address=node_url_address)
+            tx_response = send_tx(mounted_tx, node_url=node_url)
             if tx_response['send']:
                 self.show(**tx_response)
                 return tx_response

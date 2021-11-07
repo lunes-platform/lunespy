@@ -10,8 +10,6 @@ from lunespy.client.wallet.constants import ADDRESS_LENGTH
 from lunespy.utils.crypto.converters import bytes_to_string
 from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import hash_network
-from lunespy.server import OFFLINE
-from lunespy.server.address import aliases
 
 def validate_wallet(wallet: dict) -> dict:
     wallet['nonce'] = wallet.get('nonce', 0)
@@ -51,7 +49,9 @@ def validate_wallet(wallet: dict) -> dict:
                 'byte_address': wallet['address'].encode()
             }
 
-    elif wallet.get('alias') and not OFFLINE:
+    elif wallet.get('alias'):
+        from lunespy.server.address import aliases
+
         return {
             'private_key': '',
             'public_key': '',

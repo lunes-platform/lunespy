@@ -43,12 +43,14 @@ class Account:
         import json
 
         wallet = {
-            'seed': self.seed,
-            'nonce': self.nonce,
-            'private_key': self.private_key,
-            'public_key': self.public_key,
-            'address': self.address
-        }
+            "seed":self.seed,
+            "hash_seed":self.hash_seed,
+            "nonce":self.nonce,
+            "network":self.network,
+            "private_key":self.private_key,
+            "public_key":self.public_key,
+            "address":self.address
+            }
         with open(f'{path}wallet-{self.network}.json', 'w') as file:
             file.write(json.dumps(wallet))
         print(f"{bcolors.OKGREEN}Your wallet has been saved in `{path}wallet-{self.network}.json`{bcolors.ENDC}")

@@ -1,12 +1,18 @@
 [tool.poetry]
 name = "lunespy"
-version = "1.14.1"
+version = "1.16.9"
 description = "Library for communication with nodes in mainnet or testnet of the lunes-blockchain network"
-authors = ["Lunes Platform <lucas.oliveira@lunes.io>"]
-license = "Apache License, Version 2.0, january 2004"
+authors = [
+    "Lunes Platform <lucas.oliveira@lunes.io>"
+]
+license = "Apache-2.0"
 readme = "README.md"
-documentation = "https://github.com/lunes-platform/LunesPy/blob/main/docs/TUTORIAL.md" 
-keywords = ["cryptocurrency", "lunes", "blockchain"]
+documentation = "https://github.com/lunes-platform/lunespy/blob/main/docs/TUTORIAL.md" 
+keywords = [
+    "cryptocurrency",
+    "lunes",
+    "blockchain"
+]
 
 [tool.poetry.dependencies]
 python-axolotl-curve25519 = "^0.4.1.post2"
@@ -20,3 +26,6 @@ pytest = "^6.2.5"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+log = "lunespy.utils:generate_log"

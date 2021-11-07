@@ -12,6 +12,21 @@ The transaction concept here will be any type of interaction with the lunes bloc
 
 In this way, we can create a transaction to transfer tokens, a transaction to create tokens, a transaction to create a nickname (alias) for our account, etc.
 
+# Table of Contents
+1. [Generate a Wallet](#generateWallet)
+2. [Send Lunes](#sendLunes)
+3. [Issue Tokens](#issueToken)
+2. [Send Tokens](#sendToken)
+3. [Reissue Tokens](#reissueToken)
+3. [Burn Tokens](#burnToken)
+3. [Create Alias](#createAlias)
+2. [Send Mass Transfer Lunes](#massTransferLunes)
+2. [Send Mass Transfer Tokens](#massTransferToken)
+3. [Exchange](#exchange)
+
+
+<div id='generateWallet'/>
+
 ## Generate a Wallet
 
 A `Wallet` is `Account` like an `email account`, which instead of having `address@provider` and `password` has:
@@ -28,7 +43,9 @@ You can generate a wallet passing your `seed`, `private_key`, `public_key`, `add
 
 Changing the `nonce` is possible generate `4,294,967,295` different wallets with only a `seed`.
 
-**Exemple code**
+<details>
+  <summary>Example code</summary>
+
 ```python
 from lunespy.client.wallet import Account
 
@@ -58,7 +75,10 @@ address
 
 "Your wallet has been saved in `./wallet.json`"
 ```
+</details>
 
+---
+<div id='sendLunes'/>
 
 ## Send Lunes
 
@@ -68,8 +88,9 @@ If your Transfer successful, the data will ben saved in .json with a name as `tr
 
 The transfer costs **`0.001Lunes`**
 
+<details>
+  <summary>Example code</summary>
 
-**Exemple code**
 ```python
 from lunespy.client.transactions.transfer import TransferToken
 from lunespy.client.wallet import Account
@@ -95,9 +116,14 @@ print(tx.send())
 # Shows all sent transfers
 print(tx.history)
 ```
+</details>
 
-**If successful**
+<details>
+  <summary>Successful Response</summary>
+
 ```json
+[output]:
+
 [
   {
     "ready": true,
@@ -127,9 +153,13 @@ print(tx.history)
   }
 ]
 ```
+</details>
+<details>
+  <summary>Failed Response</summary>
 
-**If failed**
 ```json
+[output]:
+
 [
   {
     "ready": true,
@@ -163,6 +193,10 @@ print(tx.history)
   }
 ]
 ```
+</details>
+
+---
+<div id='issueToken'/>
 
 ## Issue your Token
 
@@ -182,7 +216,9 @@ Putting `True` in the `reissuable` parameter will allow you to issue more of the
 
 The issue Token costs **`1Lunes`**
 
-**Exemple code**
+<details>
+  <summary>Example code</summary>
+
 ```python
 from lunespy.client.wallet import Account
 from lunespy.client.transactions.issue import IssueToken, IssueAsset, IssueNFT
@@ -245,12 +281,19 @@ print(tx.send())
 # Shows all sent issued
 print(tx.history)
 ```
+</details>
+
+---
+<div id='sendToken'/>
 
 ## Send your Tokens
 
 By passing an `asset_id` parameter it is possible to send any asset that has already been `issued` in lunes-blockchain
 
 The transfer costs **`0.001Lunes`**
+
+<details>
+  <summary>Example code</summary>
 
 ```python
 from lunespy.client.transactions.transfer import TransferToken
@@ -271,8 +314,14 @@ tx = TransferToken(my_wallet, random_wallet, amount=100, asset_id=token)
 tx.send()
 print(tx.history)
 ```
-**Successful**
+</details>
+
+<details>
+  <summary>Successful Response</summary>
+
 ```json
+[output]:
+
 [
   {
     "ready": true, 
@@ -302,12 +351,18 @@ print(tx.history)
   }
 ]
 ```
+</details>
+
+---
+<div id='reissueToken'/>
 
 ## Reissue your Token or New Asset
  
 If you set `reissuable` to `True` at your Token, Asset or NFT creation time you can issue more of that same Token, Asset or NFT
 
-**Example code**
+<details>
+  <summary>Example code</summary>
+
 ```python
 from lunespy.client.wallet import Account
 from lunespy.client.transactions.reissue import ReissueToken, ReissueAsset, ReissueNFT
@@ -338,11 +393,18 @@ print(tx.send())
 # Shows all sent reissued
 print(tx.history)
 ```
+</details>
+
+---
+<div id='burnToken'/>
 
 ## Burn your Token or New Asset
 
 Maybe you want to decrease the amount of Tokens you created.
 For that, you can use the BurnToken, BurnAsset or BurniNG class
+
+<details>
+  <summary>Example code</summary>
 
 ```python
 from lunespy.client.wallet import Account
@@ -373,6 +435,10 @@ print(tx.send())
 # Shows all sent burned
 print(tx.history)
 ```
+</details>
+
+---
+<div id='createLease'/>
 
 ## Create your Lease
 
@@ -382,7 +448,9 @@ When the user starts **leasing** the tokens, those leased tokens are blocked and
 
 The only thing to consider when **leasing** is choosing the right LunesNode operator, as the operator can work efficiently and send different percentages as a reward.
 
-**Exemple code**
+<details>
+  <summary>Example code</summary>
+
 ```python
 from lunespy.client.wallet import Account
 from lunespy.client.transactions.lease import CreateLease
@@ -412,12 +480,18 @@ print(tx.send())
 # Shows all sent leased
 print(tx.history)
 ```
+</details>
+
+---
+<div id='cancelLease'/>
 
 ## Cancel your Lease
 
 For Cancel your lease
 
-**Exemple code**
+<details>
+  <summary>Example code</summary>
+
 ```python
 from lunespy.client.wallet import Account
 from lunespy.client.transactions.cancel import CancelLease
@@ -446,14 +520,19 @@ print(tx.send())
 # Shows all sent canceled
 print(tx.history)
 ```
+</details>
 
+---
+<div id='createAlias'/>
 
 ## Create Alias for your Address
 
 Alias is a short, easy-to-remember `address` name, the alias is unique on the blockchain, an address can have multiple aliases.
 Alias can be used in place of address, the alias cannot be deleted.
 
-**Example code**
+<details>
+  <summary>Example code</summary>
+
 ```python
 from lunespy.client.wallet import Account
 from lunespy.client.transactions.alias import CreateAlias
@@ -479,44 +558,110 @@ print(tx.send())
 # Shows all sent alias
 print(tx.history)
 ```
+</details>
 
-## Send MassTransfer of Lunes
+---
+<div id='massTransferLunes'/>
+
+## Send Lunes with MassTransfer
+
+Only for send `Lunes` asset **you dont must be pass `asset_id` parameter** in `MassTranferToken`.
+
+With the feature of sending **mass transfers** it is possible to save time and money.
+The total cost for this type of transaction is given by `0.001 + 0.0005 * n`, where `n` is the number of total transactions, it is possible to make up to 100 transfers in just 1 transaction.
+
+Compared to common transfers:
+
+Tx | MassTransfer | Transfer 
+--- | ---  | ---  |
+1    | 0.0015  | 0.0010
+2    | 0.0020  | 0.0020
+3    | 0.0025  | 0.0030
+... |... |... |
+98   | 0.0050  |  0.0098
+99   | 0.0055  |  0.0099
+100  | 0.0051  |  0.0100
+
+![graph](./graph.png)
+
+<details>
+  <summary>Example code</summary>
+
+```python
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.mass import MassTransferToken
+
+sender = Account(
+    seed="whip wave witness family famous hundred dog east inner brief develop intact retreat result coyote",
+    nonce=1,
+    network='testnet')
+
+
+list_of_address = [
+    {'receiver': '37TVfJowBmXGLPaMvTDZFRMq1Ng1mEjDGPj', 'amount': 100}, 
+    {'receiver': '37Xr3Pyo7iF66Nwtty5wFjU5m7mJTZArg2b', 'amount': 100},
+    {'receiver': '37Ua2WqMK5nejKi49AGNhpVX638i3iDHYhV', 'amount': 100},
+    {'receiver': '37Vj7YmwS2VLxe5McLt3ki1byTbqcLj7o8A', 'amount': 100},
+    {'receiver': '37aUDmQ7Y64dNYwjnW6cMgN7fvyKC6wQBuM', 'amount': 100}
+]
+
+tx = MassTransferToken(sender, list_of_address)
+tx.send()
+```
+</details>
+
+---
+<div id='massTransferToken'/>
+
+## Send Any Token with MassTransfer
+
+Mass Transfer can only be made for one type of token at a time.
+It is **not possible** to send different tokens to multiple addresses using the same Mass Transfer Transaction.
+
+It is also possible to use this transfer type to send any type of tokens by passing the `asset_id` parameter
+
+<details>
+  <summary>Example code</summary>
+
+```python
+from lunespy.client.wallet import Account
+from lunespy.client.transactions.mass import MassTransferToken
+from lunespy.client.transactions.issue import IssueToken
+
+sender = Account(
+    seed="whip wave witness family famous hundred dog east inner brief develop intact retreat result coyote",
+    network='testnet')
+
+token_data = {
+    "description": "My new Token",
+    "reissuable": False,
+    "quantity": 100000,
+    "decimals": 0,
+    "name": "NewToken",
+}
+tx_issue = IssueToken(sender, **token_data)
+tx_issue.send("http://127.0.0.1:5555")
+token_id = tx_issue.history[0]['response']['assetId']
+
+list_of_address = [
+    {'receiver': '37TVfJowBmXGLPaMvTDZFRMq1Ng1mEjDGPj', 'amount': 100}, 
+    {'receiver': '37Xr3Pyo7iF66Nwtty5wFjU5m7mJTZArg2b', 'amount': 100},
+    {'receiver': '37Ua2WqMK5nejKi49AGNhpVX638i3iDHYhV', 'amount': 100},
+    {'receiver': '37Vj7YmwS2VLxe5McLt3ki1byTbqcLj7o8A', 'amount': 100},
+    {'receiver': '37aUDmQ7Y64dNYwjnW6cMgN7fvyKC6wQBuM', 'amount': 100}
+]
+
+tx = MassTransferToken(sender, list_of_address, asset_id=token_id)
+tx.send("http://127.0.0.1:5555")
+```
+</details>
+
+---
+<div id='exchange'/>
+
+## Exchange
 
 ```python
 Comming Soon...
 ```
-## Send MassTransfer of any Assets
-
-```python
-Comming Soon...
-```
-
-## Create new Payment
-
-```python
-Comming Soon...
-```
-
-## Registry 
-
-```python
-Comming Soon...
-```
-
-## Set Script
-
-```python
-Comming Soon...
-```
-
-## Transfer Script
-
-```python
-Comming Soon...
-```
-
-## Genesis Trasaction
-
-```python
-Comming Soon...
-```
+s

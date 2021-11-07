@@ -6,8 +6,8 @@ def test_nft_ready():
         with decimals parameter iquals or more than :
             - should be return tx.issue_data['decimals'] iquals 0
     """
-    creator = Account()
-    tx = IssueNFT(creator, name="NFT!", quantity=1, decimals=10)
+    sender = Account()
+    tx = IssueNFT(sender, name="NFT!", quantity=1, decimals=10)
     assert tx.issue_data['decimals'] == 0
 
 
@@ -18,8 +18,8 @@ def test_without_name_ready_failed_successful():
             - else should be return True
     """
     # Failed
-    creator = Account()
-    tx = IssueNFT(creator, quantity=1)
+    sender = Account()
+    tx = IssueNFT(sender, quantity=1)
     assert tx.ready == False
 
     #Successful
@@ -33,8 +33,8 @@ def test_without_quantity_ready_failed_successful():
             - else should be return True
     """
     # Failed
-    creator = Account()
-    tx = IssueNFT(creator, name='newNFT')
+    sender = Account()
+    tx = IssueNFT(sender, name='newNFT')
     assert tx.ready == False
 
     #Successful
@@ -44,10 +44,10 @@ def test_without_quantity_ready_failed_successful():
 
 def test_transaction_full_data():
     """
-        with a creator, receiver, amount:
+        with a sender, receiver, amount:
             - should be return all keys of offline-transaction for Token.transaction  
     """
-    creator = Account()
+    sender = Account()
     offline_transaction = [
         'ready',
         'type',
@@ -63,7 +63,7 @@ def test_transaction_full_data():
         'name'
     ]
 
-    tx = IssueNFT(creator, name='test', quantity=10)
+    tx = IssueNFT(sender, name='test', quantity=10)
     response = tx.transaction
     print(response)
 
