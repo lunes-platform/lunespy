@@ -61,9 +61,9 @@ def validate_transfer(sender: Account, receiver: Account, transfer_data: dict) -
 
 
 # todo async
-def send_transfer(mount_tx: dict, node_url_address: str) -> dict:
+def send_transfer(mount_tx: dict, node_url: str) -> dict:
     response = post(
-        f'{node_url_address}/transactions/broadcast',
+        f'{node_url}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

@@ -9,8 +9,8 @@ def test_without_asset_id_ready_failed_successful():
         else should be return True
     """
     # Failed
-    creator = Account()
-    tx = BurnToken(creator, quantity=1)
+    sender = Account()
+    tx = BurnToken(sender, quantity=1)
     assert tx.ready == False
 
     #Successful
@@ -20,10 +20,10 @@ def test_without_asset_id_ready_failed_successful():
 
 def test_transaction_full_data():
     """
-        with a creator, receiver, amount.
+        with a sender, receiver, amount.
         should be return all keys of offline-transaction for BurnToken.transaction  
     """
-    creator = Account()
+    sender = Account()
     offline_transaction = [
         'ready',
         'type',
@@ -36,7 +36,7 @@ def test_transaction_full_data():
         'quantity',
     ]
 
-    tx = BurnToken(creator, asset_id='test', quantity=10)
+    tx = BurnToken(sender, asset_id='test', quantity=10)
     response = tx.transaction
     print(response)
 

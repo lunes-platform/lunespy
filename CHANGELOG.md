@@ -1,7 +1,69 @@
 # Changelog
 
+## 2021-11-07
+- [9e89bad](9e89badcdcac0425147278ae7034b2aac51b79b1) added: url to mainet and testnet
+- [fd71277](fd71277ba76a057922764dcea4e23f1e65032999) Merge branch '41-make-a-templates-from-issues-and-merge-requests' into 'main'
+
+## 2021-11-06
+- [cb02a9c](cb02a9c81ada34f5757c3e506e0236d069f8c01f) added: templates for gitlab
+
+## 2021-10-31
+- [f3ef03e](f3ef03e678ce9710367b9d509971232d2bc3bcf8) changed: update ci
+
+## 2021-10-24
+- [44c5f66](44c5f66b4d30fe68860c2f65029ae1e939e35bc3) changed: update deploy in github
+- [f834c37](f834c37dac30699c8cdb10c316ffcfe5b782dbe5) changed: update repository url github
+
+## 2021-10-19
+- [0bb2d6e](0bb2d6ef3c13ea98a0407045652c6d5c367712d5) fixed: merged pull and push
+- [f676998](f676998ac41913a4390d57c8e1136140646833eb) fixed: circular import
+- [9bcbedb](9bcbedba08b35a45ba904b1fb128998e86681b62) fixed: collapse section mass transfer
+- [0f12640](0f12640d48160cf759b0d008a07e020ac7e4a5fa) merged: `issue/add-doc-for-mass-transaction` to `main`
+- [77d89c2](77d89c288c8f8a13e97e817db86192a276a9eca4) added: table of content
+- [73cd933](73cd933e68ebc8aef1f08e8ea0715da47915a172) merged: 'issue/add-doc-for-mass-transaction' to 'main'
+- [1c0e460](1c0e460430271fbfbdab824f1c26794b666452f8) fixed: commit wrong branch
+- [d53184b](d53184b84e2ae49f731a45fb4f219c89b4ce44ef) issued: doc of masstransfer
+
+## 2021-10-18
+- [5148610](5148610fe6d353f45ac5fa7d0f9d7adb03ad35e2) added: save progress
+- [d17f464](d17f464998d411efe1617d382557293ccec4a1c0) merged: 'issue/add-get-block-from-height' into 'main'
+- [0ee07de](0ee07deaec3eeed6cceb1dd3a21c931e90b2bbbb) fixed: correct name for variables
+- [6b8e008](6b8e0081dea5059165bc054ed1bb42f59ded635e) merged: 'pre-prod' into 'main'
+- [08210fb](08210fb468480b6fbca785dbcedc5162af996195) fixed: changed approach
+- [576832c](576832c82a67dc618fd6d4adeb60799acb915866) fixed: stage wrong
+
+## 2021-10-17
+- [9bff9d4](9bff9d4f9ec9cee3e2a3f3ea48fc96dec8b06108) fixed: show debug for auo-MR
+- [af941f0](af941f011b73afd83fc4adf4591761ff6d7c2101) fixed: correct way
+- [a22cd63](a22cd6360a918e40eb31dc7b2af8f56b69437c0a) fixed: script auto-MR(2)
+- [6016498](6016498fea8bd6d0f6a45f2a59d3176e1effd80d) fixed: script auto-MR
+- [d214db2](d214db23f800d7f8d3c17aa645adbd3f2134c451) fixed: path of gitlab-ci-cd
+- [c595ca4](c595ca4d45d4fb68e88a76c30ed2b6c74d95afee) fixed: error yaml lint
+- [88ef142](88ef14271bc599e069c4a7bfbd5c7c4e184452c9) added:  auto-MR in pipeline
+- [8cdc3c5](8cdc3c58820ffbaa6ce6b64270a811057cada071) fixed: add ci/cd link
+- [5402e2d](5402e2dfed1eed70a0ea8aa81f86a89136140906) added: move ci/cd to .gitlab dir
+- [2c8ab95](2c8ab95108214ac26ccec515aa135fc70127ce04) fixed: [python] command not found
+- [6124e33](6124e338f109daa3d8027f5a4a854e61193d4673) added: dockerfile
+- [abf765e](abf765e63e6610a23546a5fc05b569014bd62874) fixed: merged issue/add-auto-deploy to pre-prod
+- [70bc780](70bc780687f445e1875da83c62549cedb8d37c53) merged: `issue/add-auto-deploy` to `main`
+- [b5bc6f8](b5bc6f86d35060949b3653c0c7c52b5b95d1e5a2) Update .gitlab-ci.yml file
+- [b56578d](b56578d5b27217304d78f2f094bd08f2ce296262) fixed: change image to olivmath/alpyne:0.1
+- [c6ac74d](c6ac74dc9ae4dc35fc7b486bc594ed53e5c3f2ca) added: get block from height
+- [23cde8f](23cde8fcbdc43d05fd07287c68980a1df02f5fbf) merged: `issue/get-transaction-id` to `main`
+- [aaf7ffc](aaf7ffcd86a21982ba47c23261fff352c61841ce) fixed: end line
+- [563aadc](563aadc6a5266b3968ae7c0b0fc2c16ba7b975c8) added: get transaction id
+- [da8fb67](da8fb6766ba252eaae0a5015c84f3ae937144c7c) changed: .gitlab-ci.yml file
+- [8b91f04](8b91f04cd73af4baa8010eca88ccf96e1c33c17a) changed: .gitlab-ci.yml file
+- [eeaf3ed](eeaf3ed639dbc370bbffd48a5d33d2e1978b4c0f) fixed: ONLINE import not found
+- [743e595](743e595f5b6e7f7257fbb5be41b1ef4587d21aa6) added: .gitlab-ci.yml file
+
+## 2021-10-15
+- [0d777b9](0d777b9bd22f4a63cea48738ee9cb663d0b9b154) changed: update readme and contributing
+- [d9a987e](d9a987e217ec49a2aa2a6bb68ba8d229cb0b76d6) fixed(readme): path of links
+
 ## 2021-10-13
-- [ac48c16](ac48c16d0ad33182421d8b43f70c8e3d22c6fa53) removed(crypto): pyblack2b dependency
+- [80128f6](80128f69fc8379b88e353b53455a6f8b8a94ddd2) changed(release): ipdate infos
+- [d12431f](d12431f9c731979dcaf20e142a8197253055b64c) removed(crypto): pyblack2b dependency
 - [30eaebe](30eaebe8da85a5bb9d875cb90e0956dc01d0edc2) added(server): get rich_list
 
 ## 2021-10-09
