@@ -9,8 +9,8 @@ def test_token_without_asset_id_ready_failed_successful():
             - else should be return True
     """
     # Failed
-    creator = Account()
-    tx = ReissueToken(creator, quantity=1)
+    sender = Account()
+    tx = ReissueToken(sender, quantity=1)
     assert tx.ready == False
 
     #Successful
@@ -20,10 +20,10 @@ def test_token_without_asset_id_ready_failed_successful():
 
 def test_token_transaction_full_data():
     """
-        with a creator, asset_id and quantity:
+        with a sender, asset_id and quantity:
             - should be return all keys of offline-transaction for ReissueToken.transaction  
     """
-    creator = Account()
+    sender = Account()
     offline_transaction = [
         'ready',
         'type',
@@ -37,7 +37,7 @@ def test_token_transaction_full_data():
         'quantity',
     ]
 
-    tx = ReissueToken(creator, asset_id='test', quantity=10)
+    tx = ReissueToken(sender, asset_id='test', quantity=10)
     response = tx.transaction
     print(response)
 

@@ -1,5 +1,5 @@
 from lunespy.server import TOTAL_SUPPLY
-from lunespy.server import NODE_URL
+
 from lunespy.utils import export_dict
 from lunespy.client.wallet import Account
 from requests import get
@@ -21,8 +21,8 @@ def all_address_balance(node_ip: str, node_api_key: str) -> dict:
     return all_address
 
 
-def balance(address: str) -> int:
-    response = get(f'{NODE_URL}/addresses/balance/{address}')
+def balance(address: str, node_url: str) -> int:
+    response = get(f'{node_url}/addresses/balance/{address}')
     if response.ok:
         return response.json()['balance']
     else:
