@@ -9,8 +9,8 @@ def test_without_alias_ready_failed_successful():
         else should be return True
     """
     # Failed
-    creator = Account()
-    tx = CreateAlias(creator)
+    sender = Account()
+    tx = CreateAlias(sender)
     assert tx.ready == False
 
     # Failed
@@ -24,10 +24,10 @@ def test_without_alias_ready_failed_successful():
 
 def test_transaction_full_data():
     """
-        with a creator, receiver, amount.
+        with a sender, receiver, amount.
         should be return all keys of offline-transaction for CreateAlias.transaction  
     """
-    creator = Account()
+    sender = Account()
     offline_transaction = [
         'ready',
         'type',
@@ -39,7 +39,7 @@ def test_transaction_full_data():
         'alias'
     ]
 
-    tx = CreateAlias(creator, alias='bahia')
+    tx = CreateAlias(sender, alias='bahia')
     response = tx.transaction
     print(response)
 

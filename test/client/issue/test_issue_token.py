@@ -8,8 +8,8 @@ def test_without_name_ready_failed_successful():
             - else should be return True
     """
     # Failed
-    creator = Account()
-    tx = IssueToken(creator, quantity=1)
+    sender = Account()
+    tx = IssueToken(sender, quantity=1)
     assert tx.ready == False
 
     #Successful
@@ -23,8 +23,8 @@ def test_without_quantity_ready_failed_successful():
             - else should be return True
     """
     # Failed
-    creator = Account()
-    tx = IssueToken(creator, name='test')
+    sender = Account()
+    tx = IssueToken(sender, name='test')
     assert tx.ready == False
 
     #Successful
@@ -34,10 +34,10 @@ def test_without_quantity_ready_failed_successful():
 
 def test_transaction_full_data():
     """
-        with a creator, receiver, amount:
+        with a sender, receiver, amount:
             - should be return all keys of offline-transaction for IssueToken.transaction  
     """
-    creator = Account()
+    sender = Account()
     offline_transaction = [
         'ready',
         'type',
@@ -53,7 +53,7 @@ def test_transaction_full_data():
         'name'
     ]
 
-    tx = IssueToken(creator, name='test', quantity=10)
+    tx = IssueToken(sender, name='test', quantity=10)
     response = tx.transaction
     print(response)
 

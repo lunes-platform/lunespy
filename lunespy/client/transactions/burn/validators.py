@@ -12,23 +12,23 @@ from requests import post
 import struct
 
 
-def mount_burn(burner: Account, burn_data: dict) -> dict:
+def mount_burn(sender: Account, burn_data: dict) -> dict:
     timestamp: int = burn_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     burn_fee: int = burn_data.get('burn_fee', DEFAULT_BURN_FEE)
     quantity: int = burn_data.get('quantity', 0)
     asset_id: int = burn_data['asset_id']
 
     bytes_data: bytes = BYTE_TYPE_BURN + \
-        b58decode(burner.public_key) + \
+        b58decode(sender.public_key) + \
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
         struct.pack(">Q", burn_fee) + \
         struct.pack(">Q", timestamp)
 
-    signature: bytes = sign(burner.private_key, bytes_data)
+    signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
         "type": INT_TYPE_BURN,
-        "senderPublicKey": burner.public_key,
+        "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": burn_fee,
@@ -39,11 +39,11 @@ def mount_burn(burner: Account, burn_data: dict) -> dict:
     return mount_tx
 
 
-def validate_burn(burner: Account, burn_data: dict) -> bool:
+def validate_burn(sender: Account, burn_data: dict) -> bool:
     quantity: int = burn_data.get('quantity', -1)
     asset_id: str = burn_data.get('asset_id', False)
 
-    if not burner.private_key:
+    if not sender.private_key:
         print(bcolors.FAIL + 'Burner `Account` not have a private key' + bcolors.ENDC)
         return False
 
@@ -59,9 +59,9 @@ def validate_burn(burner: Account, burn_data: dict) -> bool:
 
 
 # todo async
-def send_burn(mount_tx: dict, node_url_address: str) -> dict:
+def send_burn(mount_tx: dict, node_url: str) -> dict:
     response = post(
-        f'{node_url_address}/transactions/broadcast',
+        f'{node_url}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

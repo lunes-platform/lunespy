@@ -9,8 +9,8 @@ def test_without_lease_ready_failed_successful():
         else should be return True
     """
     # Failed
-    staker = Account()
-    tx = CancelLease(staker)
+    sender = Account()
+    tx = CancelLease(sender)
     assert tx.ready == False
 
     #Successful
@@ -20,10 +20,10 @@ def test_without_lease_ready_failed_successful():
 
 def test_transaction_full_data():
     """
-        with a staker, validator_address, amount.
+        with a sender, validator_address, amount.
         should be return all keys of offline-transaction for CancelLease.transaction  
     """
-    staker = Account()
+    sender = Account()
     offline_transaction = [
         'ready',
         'type',
@@ -35,7 +35,7 @@ def test_transaction_full_data():
         'leaseId'
     ]
 
-    tx = CancelLease(staker, lease_tx_id='tx')
+    tx = CancelLease(sender, lease_tx_id='tx')
     response = tx.transaction
 
     assert response['ready'] == True

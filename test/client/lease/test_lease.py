@@ -8,9 +8,9 @@ def test_without_lease_ready_failed_successful():
             - else should be return True
     """
     # Failed
-    creator = Account()
+    sender = Account()
     validator_address = Account()
-    tx = CreateLease(creator, validator_address, amount=0)
+    tx = CreateLease(sender, validator_address, amount=0)
     assert tx.ready == False
 
     #Successful
@@ -20,10 +20,10 @@ def test_without_lease_ready_failed_successful():
 
 def test_transaction_full_data():
     """
-        with a creator, validator_address, amount:
+        with a sender, validator_address, amount:
             - should be return all keys of offline-transaction for CreateLease.transaction  
     """
-    creator = Account()
+    sender = Account()
     validator_address = Account().address
     offline_transaction = [
         'ready',
@@ -37,7 +37,7 @@ def test_transaction_full_data():
         'amount'
     ]
 
-    tx = CreateLease(creator, validator_address, amount=1)
+    tx = CreateLease(sender, validator_address, amount=1)
     response = tx.transaction
     print(response)
 
