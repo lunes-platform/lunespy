@@ -6,12 +6,12 @@ Library for communication with nodes in mainnet or testnet of the lunes-blockcha
 Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
 
 
-## [What's new?](./CHANGELOG.md)
+## [What's new?](https://github.com/lunes-platform/lunespy/blob/main/CHANGELOG.md)
 
 
-## [How to use LunesPy?](./docs/TUTORIAL.md)
+## [How to use LunesPy?](https://github.com/lunes-platform/lunespy/blob/main/docs/TUTORIAL.md)
 
-## [Want to contribute to LunesPy?](./CONTRIBUTING.md)
+## [Want to contribute to LunesPy?](https://github.com/lunes-platform/lunespy/blob/main/CONTRIBUTING.md)
 
 ## Contributors
 
@@ -27,4 +27,4 @@ If you want to contact me you can reach me at <lucas.oliveira@lunes.io>.
 
 ## License
 
-[Apache License Version 2.0](./LICENSE).
+[Apache License Version 2.0](https://github.com/lunes-platform/lunespy/blob/main/LICENSE).
