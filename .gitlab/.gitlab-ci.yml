@@ -1,13 +1,13 @@
 image: registry.lunes.io/blockchain/production/lunespy:latest
 
 stages:
-    - test
     - deploy
 
 CreateReportTests:
-    stage: test
-    except:
-        - main
+    stage: deploy
+    only:
+        refs:
+            - main
     script:
         - python3 -m pytest -vv --junitxml=report.xml
     artifacts:
@@ -16,15 +16,3 @@ CreateReportTests:
             junit: report.xml
     after_script:
         - py3clean .
-
-PublishPackage:
-    only:
-        refs:
-            - main
-    stage: deploy
-    script:
-        - echo "Successfully Published Package "
-        - git remote add github https://github.com/lunes-platform/lunespy
-        - git push main github
-        - poetry build
-        - poetry publish -u $PYPIUSR -p $PYPIPWD
