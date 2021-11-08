@@ -33,7 +33,7 @@ def mount_reissue(sender: Account, reissue_data: dict) -> dict:
     asset_id = reissue_data['asset_id']
     quantity = reissue_data['quantity']
 
-    bytes_data = ReissueType.type_byte.value + \
+    bytes_data = ReissueType.to_byte.value + \
         b58decode(sender.public_key) + \
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
@@ -43,7 +43,7 @@ def mount_reissue(sender: Account, reissue_data: dict) -> dict:
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
-        "type": ReissueType.type_int.value,
+        "type": ReissueType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

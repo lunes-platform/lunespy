@@ -20,7 +20,7 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
     asset_fee: str = transfer_data.get('asset_fee', "")
     asset_id: str = transfer_data.get('asset_id', "")
 
-    bytes_data: bytes = TransferType.type_byte.value + \
+    bytes_data: bytes = TransferType.to_byte.value + \
         b58decode(sender.public_key) + \
         (b'\1' + b58decode(asset_id) if asset_id != "" else b'\0') + \
         (b'\1' + b58decode(asset_fee) if asset_fee != "" else b'\0') + \
@@ -30,7 +30,7 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
         b58decode(receiver.address)
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx: dict = {
-        "type": TransferType.type_int.value,
+        "type": TransferType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

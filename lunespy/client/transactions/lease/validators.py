@@ -14,7 +14,7 @@ def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> di
     amount: int = lease_data['amount']
     lease_fee: int = lease_data.get('lease_fee', LeaseType.fee.value)
 
-    bytes_data: bytes = LeaseType.type_byte.value + \
+    bytes_data: bytes = LeaseType.to_byte.value + \
         b58decode(sender.public_key) + \
         b58decode(validator_address) + \
         struct.pack(">Q", amount) + \
@@ -23,7 +23,7 @@ def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> di
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx: dict = {
-        "type": LeaseType.type_int.value,
+        "type": LeaseType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

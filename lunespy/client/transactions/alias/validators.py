@@ -42,7 +42,7 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
         struct.pack(">H", len(alias)) + \
         string_to_bytes(alias)
 
-    bytes_data = AliasType.type_byte.value + \
+    bytes_data = AliasType.to_byte.value + \
         b58decode(sender.public_key) + \
         struct.pack(">H", len(aliasWithNetwork)) + \
         aliasWithNetwork + \
@@ -52,7 +52,7 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
     signature: bytes = sign(sender.private_key, bytes_data)
 
     mount_tx = {
-        "type": AliasType.type_int.value,
+        "type": AliasType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

@@ -30,7 +30,7 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
         map(hash_transfer, receivers_list)
     )
 
-    bytes_data: bytes = MassType.type_byte.value + \
+    bytes_data: bytes = MassType.to_byte.value + \
             b'\1' + \
             b58decode(sender.public_key) + \
             (b'\1' + b58decode(asset_id) if asset_id != "" else b'\0') + \
@@ -42,7 +42,7 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
     signature: bytes = sign(sender.private_key, bytes_data)
 
     data = {
-        "type": MassType.type_int.value,
+        "type": MassType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

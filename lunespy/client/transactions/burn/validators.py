@@ -16,7 +16,7 @@ def mount_burn(sender: Account, burn_data: dict) -> dict:
     quantity: int = burn_data.get('quantity', 0)
     asset_id: int = burn_data['asset_id']
 
-    bytes_data: bytes = BurnType.type_byte.value + \
+    bytes_data: bytes = BurnType.to_byte.value + \
         b58decode(sender.public_key) + \
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
@@ -25,7 +25,7 @@ def mount_burn(sender: Account, burn_data: dict) -> dict:
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
-        "type": BurnType.type_int.value,
+        "type": BurnType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

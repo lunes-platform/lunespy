@@ -14,7 +14,7 @@ def mount_cancel(sender: Account, cancel_data: dict) -> dict:
     timestamp: int = cancel_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     cancel_fee: int = cancel_data.get('cancel_fee', CancelLeaseType.fee.value)
 
-    bytes_data: bytes = CancelLeaseType.type_byte.value + \
+    bytes_data: bytes = CancelLeaseType.to_byte.value + \
         b58decode(sender.public_key) + \
         struct.pack(">Q", cancel_fee) + \
         struct.pack(">Q", timestamp) + \
@@ -22,7 +22,7 @@ def mount_cancel(sender: Account, cancel_data: dict) -> dict:
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx: dict = {
-        "type":CancelLeaseType.type_int.value,
+        "type":CancelLeaseType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
