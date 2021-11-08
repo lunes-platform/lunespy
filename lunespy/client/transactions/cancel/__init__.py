@@ -31,7 +31,7 @@ class CancelLease(BaseTransaction):
             sender=self.sender,
             cancel_data=self.cancel_data)
 
-    def send(self, node_url: str) -> dict:
+    def send(self, node_url: str = None) -> dict:
         tx = super().send(send_cancel, node_url)
         self.history.append(tx)
         return tx

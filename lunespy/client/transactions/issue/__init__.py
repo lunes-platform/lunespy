@@ -35,7 +35,7 @@ class IssueToken(BaseTransaction):
             sender=self.sender,
             issue_data=self.issue_data)
 
-    def send(self, node_url: str ) -> dict:
+    def send(self, node_url: str = None) -> dict:
         tx = super().send(send_issue, node_url)
         self.history.append(tx)
         return tx

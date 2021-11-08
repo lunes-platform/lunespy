@@ -30,7 +30,7 @@ class CreateAlias(BaseTransaction):
             sender=self.sender,
             alias_data=self.alias_data)
 
-    def send(self, node_url: str) -> dict:
+    def send(self, node_url: str = None) -> dict:
         tx = super().send(send_alias, node_url)
         self.history.append(tx)
         return tx

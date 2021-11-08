@@ -34,7 +34,7 @@ class CreateLease(BaseTransaction):
             validator_address=self.validator_address,
             lease_data=self.lease_data)
 
-    def send(self, node_url: str) -> dict:
+    def send(self, node_url: str = None) -> dict:
         tx = super().send(send_lease, node_url)
         self.history.append(tx)
         return tx

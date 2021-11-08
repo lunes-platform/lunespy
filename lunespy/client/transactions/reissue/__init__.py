@@ -32,7 +32,7 @@ class ReissueToken(BaseTransaction):
             sender=self.sender,
             reissue_data=self.reissue_data)
 
-    def send(self, node_url: str ) -> dict:
+    def send(self, node_url: str = None) -> dict:
         tx = super().send(send_reissue, node_url)
         self.history.append(tx)
         return tx
