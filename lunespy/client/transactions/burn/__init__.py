@@ -32,7 +32,7 @@ class BurnToken(BaseTransaction):
             sender=self.sender,
             burn_data=self.burn_data)
 
-    def send(self, node_url: str) -> dict:
+    def send(self, node_url: str = None) -> dict:
         tx = super().send(send_burn, node_url)
         self.history.append(tx)
         return tx
