@@ -8,11 +8,11 @@ from base58 import b58decode
 from requests import post
 import struct
 
-def validate_alias(creator: Account, alias_data: dict) -> bool:
+def validate_alias(sender: Account, alias_data: dict) -> bool:
     alias: int = alias_data.get('alias', False)
     valid_alias_characters =  "-.0123456789@_abcdefghijklmnopqrstuvwxyz"
 
-    if not creator.private_key:
+    if not sender.private_key:
         print(bcolors.FAIL + 'Sender `Account` not have a private key' + bcolors.ENDC)
         return False
 
@@ -30,30 +30,41 @@ def validate_alias(creator: Account, alias_data: dict) -> bool:
     
     return True
 
-def mount_alias(creator: Account, alias_data: dict) -> dict:
+def mount_alias(sender: Account, alias_data: dict) -> dict:
     timestamp: int = alias_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     alias_fee: int = alias_data.get('alias_fee', AliasType.fee.value)
     alias: str = alias_data['alias']
     alias_lenght: int = len(alias)
+<<<<<<< HEAD
     network_id: str = creator.network_id
 
     aliasWithNetwork = AliasType.mount.value +\
+=======
+    network_id: str = sender.network_id
+    
+    aliasWithNetwork = b'\x02' +\
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         string_to_bytes(str(network_id)) + \
         struct.pack(">H", len(alias)) + \
         string_to_bytes(alias)
 
     bytes_data = b'\x0a' + \
-        b58decode(creator.public_key) + \
+        b58decode(sender.public_key) + \
         struct.pack(">H", len(aliasWithNetwork)) + \
         aliasWithNetwork + \
         struct.pack(">Q", alias_fee) + \
         struct.pack(">Q", timestamp)
 
-    signature: bytes = sign(creator.private_key, bytes_data)
+    signature: bytes = sign(sender.private_key, bytes_data)
 
     mount_tx = {
+<<<<<<< HEAD
         "type": AliasType.type_byte.value,
         "senderPublicKey": creator.public_key,
+=======
+        "type": INT_TYPE_ALIAS,
+        "senderPublicKey": sender.public_key,
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": alias_fee,
@@ -62,11 +73,11 @@ def mount_alias(creator: Account, alias_data: dict) -> dict:
     }
     return mount_tx
 
-def send_alias(mount_tx: dict, node_url_address: str) -> dict:
+def send_alias(mount_tx: dict, node_url: str) -> dict:
     
     
     response = post(
-        f'{node_url_address}/transactions/broadcast',
+        f'{node_url}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

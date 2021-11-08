@@ -2,28 +2,38 @@ from lunespy.client.transactions.constants import CancelLeaseType
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from lunespy.server import NODE_URL
+
 from datetime import datetime
 from base58 import b58decode
 from requests import post
 import struct
 
 
-def mount_cancel(staker: Account, cancel_data: dict) -> dict:
+def mount_cancel(sender: Account, cancel_data: dict) -> dict:
     lease_tx_id: str = cancel_data['lease_tx_id']
     timestamp: int = cancel_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     cancel_fee: int = cancel_data.get('cancel_fee', CancelLeaseType.fee.value)
 
+<<<<<<< HEAD:lunespy/client/transactions/cancel_lease/validators.py
     bytes_data: bytes = CancelLeaseType.type_byte.value + \
         b58decode(staker.public_key) + \
+=======
+    bytes_data: bytes = BYTE_TYPE_CANCEL_LEASE + \
+        b58decode(sender.public_key) + \
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973:lunespy/client/transactions/cancel/validators.py
         struct.pack(">Q", cancel_fee) + \
         struct.pack(">Q", timestamp) + \
         b58decode(lease_tx_id)
 
-    signature: bytes = sign(staker.private_key, bytes_data)
+    signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx: dict = {
+<<<<<<< HEAD:lunespy/client/transactions/cancel_lease/validators.py
         "type": CancelLeaseType.type_int.value,
         "senderPublicKey": staker.public_key,
+=======
+        "type": INT_TYPE_CANCEL_LEASE,
+        "senderPublicKey": sender.public_key,
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973:lunespy/client/transactions/cancel/validators.py
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": cancel_fee,
@@ -33,11 +43,11 @@ def mount_cancel(staker: Account, cancel_data: dict) -> dict:
     return mount_tx
 
 
-def validate_cancel(staker: Account, cancel_data: dict) -> bool:
+def validate_cancel(sender: Account, cancel_data: dict) -> bool:
     amount: int = cancel_data.get('amount', -1)
     lease_tx_id: str = cancel_data.get('lease_tx_id', '')
 
-    if not staker.private_key:
+    if not sender.private_key:
         print(bcolors.FAIL + 'Staker `Account` not have a private key' + bcolors.ENDC)
         return False
     elif lease_tx_id == '':
@@ -47,9 +57,9 @@ def validate_cancel(staker: Account, cancel_data: dict) -> bool:
 
 
 # todo async
-def send_cancel(mount_tx: dict, node_url_address: str) -> dict:
+def send_cancel(mount_tx: dict, node_url: str) -> dict:
     response = post(
-        f'{node_url_address}/transactions/broadcast',
+        f'{node_url}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

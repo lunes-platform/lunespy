@@ -3,8 +3,6 @@ from lunespy.client.transactions.transfer.validators import mount_transfer
 from lunespy.client.transactions.transfer.validators import send_transfer
 from lunespy.client.transactions import BaseTransaction
 from lunespy.client.wallet import Account
-from lunespy.utils.settings import bcolors
-from lunespy.server import NODE_URL
 
 class TransferToken(BaseTransaction):
     """
@@ -34,7 +32,11 @@ class TransferToken(BaseTransaction):
             receiver=self.receiver,
             transfer_data=self.transfer_data)
 
+<<<<<<< HEAD
     def send(self, node_url: str=NODE_URL) -> dict:
+=======
+    def send(self, node_url: str = None) -> dict:
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         tx = super().send(send_transfer, node_url)
         self.history.append(tx)
         return tx

@@ -3,7 +3,7 @@ from lunespy.client.transactions.cancel_lease.validators import mount_cancel
 from lunespy.client.transactions.cancel_lease.validators import send_cancel
 from lunespy.client.transactions import BaseTransaction
 from lunespy.client.wallet import Account
-from lunespy.server import NODE_URL
+
 
 class CancelLease(BaseTransaction):
     """
@@ -12,26 +12,26 @@ class CancelLease(BaseTransaction):
         cancel_fee: int
         timestamp: int
     """
-    def __init__(self, staker: Account, **cancel_data: dict) -> None:
+    def __init__(self, sender: Account, **cancel_data: dict) -> None:
         super().__init__('Create Lease', cancel_data)
-        self.staker: Account = staker
+        self.sender: Account = sender
         self.cancel_data: dict = cancel_data
         self.history: list = []
 
     
     @property
     def ready(self) -> bool:
-        return validate_cancel(self.staker, self.cancel_data)
+        return validate_cancel(self.sender, self.cancel_data)
 
 
     @property
     def transaction(self) -> dict:
         return super().transaction(
             mount_tx=mount_cancel,
-            staker=self.staker,
+            sender=self.sender,
             cancel_data=self.cancel_data)
 
-    def send(self, node_url_address: str=NODE_URL) -> dict:
-        tx = super().send(send_cancel, node_url_address)
+    def send(self, node_url: str = None) -> dict:
+        tx = super().send(send_cancel, node_url)
         self.history.append(tx)
         return tx

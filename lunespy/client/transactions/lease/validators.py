@@ -2,29 +2,39 @@ from lunespy.client.transactions.constants import LeaseType
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from lunespy.server import NODE_URL
+
 from datetime import datetime
 from base58 import b58decode
 from requests import post
 import struct
 
 
-def mount_lease(staker: Account, validator_address: str, lease_data: dict) -> dict:
+def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> dict:
     timestamp: int = lease_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     amount: int = lease_data['amount']
     lease_fee: int = lease_data.get('lease_fee', LeaseType.fee.value)
 
+<<<<<<< HEAD
     bytes_data: bytes = LeaseType.type_byte.value + \
         b58decode(staker.public_key) + \
+=======
+    bytes_data: bytes = BYTE_TYPE_CREATE_LEASE + \
+        b58decode(sender.public_key) + \
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         b58decode(validator_address) + \
         struct.pack(">Q", amount) + \
         struct.pack(">Q", lease_fee) + \
         struct.pack(">Q", timestamp)
 
-    signature: bytes = sign(staker.private_key, bytes_data)
+    signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx: dict = {
+<<<<<<< HEAD
         "type": LeaseType.type_int.value,
         "senderPublicKey": staker.public_key,
+=======
+        "type": INT_TYPE_CREATE_LEASE,
+        "senderPublicKey": sender.public_key,
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": lease_fee,
@@ -35,10 +45,10 @@ def mount_lease(staker: Account, validator_address: str, lease_data: dict) -> di
     return mount_tx
 
 
-def validate_lease(staker: Account, lease_data: dict) -> bool:
+def validate_lease(sender: Account, lease_data: dict) -> bool:
     amount: int = lease_data.get('amount', -1)
 
-    if not staker.private_key:
+    if not sender.private_key:
         print(bcolors.FAIL + 'Staker `Account` not have a private key' + bcolors.ENDC)
         return False
     elif amount <= 0:
@@ -48,9 +58,9 @@ def validate_lease(staker: Account, lease_data: dict) -> bool:
 
 
 # todo async
-def send_lease(mount_tx: dict, node_url_address: str) -> dict:
+def send_lease(mount_tx: dict, node_url: str) -> dict:
     response = post(
-        f'{node_url_address}/transactions/broadcast',
+        f'{node_url}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

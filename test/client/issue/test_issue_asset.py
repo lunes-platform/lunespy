@@ -19,8 +19,8 @@ def test_without_name_ready_failed_successful():
             - else should be return True
     """
     # Failed
-    creator = Account()
-    tx = IssueAsset(creator, quantity=1)
+    sender = Account()
+    tx = IssueAsset(sender, quantity=1)
     assert tx.ready == False
 
     #Successful
@@ -34,8 +34,8 @@ def test_without_quantity_ready_failed_successful():
             - else should be return True
     """
     # Failed
-    creator = Account()
-    tx = IssueAsset(creator, name='newNFT')
+    sender = Account()
+    tx = IssueAsset(sender, name='newNFT')
     assert tx.ready == False
 
     #Successful
@@ -45,10 +45,10 @@ def test_without_quantity_ready_failed_successful():
 
 def test_transaction_full_data():
     """
-        with a creator, receiver, amount:
+        with a sender, receiver, amount:
             - should be return all keys of offline-transaction for Token.transaction  
     """
-    creator = Account()
+    sender = Account()
     offline_transaction = [
         'ready',
         'type',
@@ -64,7 +64,7 @@ def test_transaction_full_data():
         'name'
     ]
 
-    tx = IssueAsset(creator, name='test', quantity=10)
+    tx = IssueAsset(sender, name='test', quantity=10)
     response = tx.transaction
     print(response)
 

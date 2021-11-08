@@ -7,11 +7,11 @@ from base58 import b58decode
 from requests import post
 import struct
 
-def validate_reissue(creator: Account, reissue_data: dict) -> bool:
+def validate_reissue(sender: Account, reissue_data: dict) -> bool:
     quantity: int = reissue_data.get('quantity', -1)
     asset_id: str = reissue_data.get('asset_id', False)
 
-    if not creator.private_key:
+    if not sender.private_key:
         print(bcolors.FAIL + 'Creator `Account` not have a private key' + bcolors.ENDC)
         return False
 
@@ -26,25 +26,40 @@ def validate_reissue(creator: Account, reissue_data: dict) -> bool:
     return True
 
 
+<<<<<<< HEAD
 def mount_reissue(creator: Account, reissue_data: dict) -> dict:
     reissue_fee = reissue_data.get('reissue_fee', ReissueType.type_int.value)
+=======
+def mount_reissue(sender: Account, reissue_data: dict) -> dict:
+    reissue_fee = reissue_data.get('reissue_fee', DEFAULT_REISSUE_FEE)
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
     timestamp = reissue_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     reissuable = reissue_data.get('reissuable', False)
     asset_id = reissue_data['asset_id']
     quantity = reissue_data['quantity']
 
+<<<<<<< HEAD
     bytes_data = ReissueType.type_byte.value + \
         b58decode(creator.public_key) + \
+=======
+    bytes_data = BYTE_TYPE_REISSUE + \
+        b58decode(sender.public_key) + \
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
         (b'\1' if reissuable else b'\0') + \
         struct.pack(">Q",reissue_fee) + \
         struct.pack(">Q", timestamp)
 
-    signature: bytes = sign(creator.private_key, bytes_data)
+    signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
+<<<<<<< HEAD
         "type": ReissueType.type_int.value,
         "senderPublicKey": creator.public_key,
+=======
+        "type": INT_TYPE_REISSUE,
+        "senderPublicKey": sender.public_key,
+>>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": reissue_fee,
@@ -57,9 +72,9 @@ def mount_reissue(creator: Account, reissue_data: dict) -> dict:
 
 
 # todo async
-def send_reissue(mount_tx: dict, node_url_address: str) -> dict:
+def send_reissue(mount_tx: dict, node_url: str) -> dict:
     response = post(
-        f'{node_url_address}/transactions/broadcast',
+        f'{node_url}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':

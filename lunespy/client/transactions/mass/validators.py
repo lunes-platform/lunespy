@@ -79,9 +79,9 @@ def validate_mass_transfer(sender: Account, receivers_list: list):
     return True
 
 
-def send_mass_transfer(mount_tx: dict, node_url_address: str) -> dict:
+def send_mass_transfer(mount_tx: dict, node_url: str) -> dict:
     response = post(
-        f'{node_url_address}/transactions/broadcast',
+        f'{node_url}/transactions/broadcast',
         json=mount_tx,
         headers={
             'content-type':
