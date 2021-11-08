@@ -35,20 +35,14 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
     alias_fee: int = alias_data.get('alias_fee', AliasType.fee.value)
     alias: str = alias_data['alias']
     alias_lenght: int = len(alias)
-<<<<<<< HEAD
-    network_id: str = creator.network_id
-
-    aliasWithNetwork = AliasType.mount.value +\
-=======
     network_id: str = sender.network_id
     
-    aliasWithNetwork = b'\x02' +\
->>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
+    aliasWithNetwork = AliasType.mount.value +\
         string_to_bytes(str(network_id)) + \
         struct.pack(">H", len(alias)) + \
         string_to_bytes(alias)
 
-    bytes_data = b'\x0a' + \
+    bytes_data = AliasType.type_byte.value + \
         b58decode(sender.public_key) + \
         struct.pack(">H", len(aliasWithNetwork)) + \
         aliasWithNetwork + \
@@ -58,13 +52,8 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
     signature: bytes = sign(sender.private_key, bytes_data)
 
     mount_tx = {
-<<<<<<< HEAD
-        "type": AliasType.type_byte.value,
-        "senderPublicKey": creator.public_key,
-=======
-        "type": INT_TYPE_ALIAS,
+        "type": AliasType.type_int.value,
         "senderPublicKey": sender.public_key,
->>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": alias_fee,

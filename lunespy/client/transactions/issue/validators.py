@@ -18,13 +18,8 @@ def mount_issue(sender: Account, issue_data: dict) -> dict:
     decimals: str = issue_data.get('decimals', 0)
     name: str = issue_data.get('name', '')
 
-<<<<<<< HEAD
     bytes_data: bytes = IssueType.type_byte.value + \
-        b58decode(creator.public_key) + \
-=======
-    bytes_data: bytes = BYTE_TYPE_ISSUE + \
         b58decode(sender.public_key) + \
->>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         struct.pack(">H", len(name)) + \
         string_to_bytes(name) + \
         struct.pack(">H", len(description)) + \
@@ -37,13 +32,8 @@ def mount_issue(sender: Account, issue_data: dict) -> dict:
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
-<<<<<<< HEAD
         "type": IssueType.type_int.value,
-        "senderPublicKey": creator.public_key,
-=======
-        "type": INT_TYPE_ISSUE,
         "senderPublicKey": sender.public_key,
->>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": issue_fee,

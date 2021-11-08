@@ -26,25 +26,15 @@ def validate_reissue(sender: Account, reissue_data: dict) -> bool:
     return True
 
 
-<<<<<<< HEAD
-def mount_reissue(creator: Account, reissue_data: dict) -> dict:
-    reissue_fee = reissue_data.get('reissue_fee', ReissueType.type_int.value)
-=======
 def mount_reissue(sender: Account, reissue_data: dict) -> dict:
-    reissue_fee = reissue_data.get('reissue_fee', DEFAULT_REISSUE_FEE)
->>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
+    reissue_fee = reissue_data.get('reissue_fee', ReissueType.fee.value)
     timestamp = reissue_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     reissuable = reissue_data.get('reissuable', False)
     asset_id = reissue_data['asset_id']
     quantity = reissue_data['quantity']
 
-<<<<<<< HEAD
     bytes_data = ReissueType.type_byte.value + \
-        b58decode(creator.public_key) + \
-=======
-    bytes_data = BYTE_TYPE_REISSUE + \
         b58decode(sender.public_key) + \
->>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
         (b'\1' if reissuable else b'\0') + \
@@ -53,13 +43,8 @@ def mount_reissue(sender: Account, reissue_data: dict) -> dict:
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
-<<<<<<< HEAD
         "type": ReissueType.type_int.value,
-        "senderPublicKey": creator.public_key,
-=======
-        "type": INT_TYPE_REISSUE,
         "senderPublicKey": sender.public_key,
->>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": reissue_fee,

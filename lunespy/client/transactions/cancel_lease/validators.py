@@ -14,26 +14,16 @@ def mount_cancel(sender: Account, cancel_data: dict) -> dict:
     timestamp: int = cancel_data.get('timestamp', int(datetime.now().timestamp() * 1000))
     cancel_fee: int = cancel_data.get('cancel_fee', CancelLeaseType.fee.value)
 
-<<<<<<< HEAD:lunespy/client/transactions/cancel_lease/validators.py
     bytes_data: bytes = CancelLeaseType.type_byte.value + \
-        b58decode(staker.public_key) + \
-=======
-    bytes_data: bytes = BYTE_TYPE_CANCEL_LEASE + \
         b58decode(sender.public_key) + \
->>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973:lunespy/client/transactions/cancel/validators.py
         struct.pack(">Q", cancel_fee) + \
         struct.pack(">Q", timestamp) + \
         b58decode(lease_tx_id)
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx: dict = {
-<<<<<<< HEAD:lunespy/client/transactions/cancel_lease/validators.py
-        "type": CancelLeaseType.type_int.value,
-        "senderPublicKey": staker.public_key,
-=======
-        "type": INT_TYPE_CANCEL_LEASE,
+        "type":CancelLeaseType.type_int.value,
         "senderPublicKey": sender.public_key,
->>>>>>> 7a8b7a98cf48f34cba15898d9528f974f0f6d973:lunespy/client/transactions/cancel/validators.py
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": cancel_fee,
