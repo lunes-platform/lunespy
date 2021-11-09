@@ -33,7 +33,6 @@ def range_block(node_url: str, start_block: int, end_block: int) -> dict:
         }
 
 
-def last_block(node_url: str) -> dict:
     full_url = f'https://{node_url}/blocks/last'
     response = get(full_url)
 
