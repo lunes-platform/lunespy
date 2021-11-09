@@ -94,3 +94,19 @@ def balance_for_especify_asset_from_address(node_url: str, address: str, asset_i
             'status': 'error',
             'response': response.text
         }
+
+
+def all_peers_conected(node_url: str) -> dict:
+    full_url = f'https://{node_url}/peers/all'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
