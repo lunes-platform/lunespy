@@ -65,10 +65,26 @@ def asset_distribution(node_url: str, asset_id: str) -> dict:
         }
 
 
-def balance_asset_from_address(node_url:str, adress_id: str) -> dict:
-    full_url = f'https://{node_url}/assets/balance/{adress_id}'
+def balance_asset_from_address(node_url: str, adress: str) -> dict:
+    full_url = f'https://{node_url}/assets/balance/{adress}'
     response = get(full_url)
     
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
+
+
+def balance_for_especify_asset_from_address(node_url: str, address: str, asset_id: str) -> dict:
+    full_url = f'https://{node_url}/assets/balance/{address}/{asset_id}'
+    response = get(full_url)
+
     if response.ok:
         return {
             'status': 'ok',
