@@ -48,3 +48,19 @@ def last_block(node_url: str) -> dict:
                 'status': 'error',
                 'response': response.text
             }
+
+
+def asset_distribution(node_url: str, asset_id: str) -> dict:
+    full_url = f'https://{node_url}/assets/{asset_id}/distribution'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
