@@ -25,7 +25,7 @@ class BurnType(Enum):
     fee = int(1e5)
 
 
-class MatcherType(Enum):
+class LunexType(Enum):
     to_int = 7
     to_byte = b'0x7'
     fee = int(1e5)
