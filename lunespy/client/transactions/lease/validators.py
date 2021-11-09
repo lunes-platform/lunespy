@@ -3,14 +3,14 @@ from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
 
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
 
 
 def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> dict:
-    timestamp: int = lease_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    timestamp: int = lease_data.get('timestamp', int(now() * 1000))
     amount: int = lease_data['amount']
     lease_fee: int = lease_data.get('lease_fee', LeaseType.fee.value)
 

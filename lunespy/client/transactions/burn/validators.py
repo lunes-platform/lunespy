@@ -4,14 +4,14 @@ from lunespy.client.transactions.constants import BurnType
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
 
 
 def mount_burn(sender: Account, burn_data: dict) -> dict:
-    timestamp: int = burn_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    timestamp: int = burn_data.get('timestamp', int(now() * 1000))
     burn_fee: int = burn_data.get('burn_fee', BurnType.fee.value)
     quantity: int = burn_data.get('quantity', 0)
     asset_id: int = burn_data['asset_id']

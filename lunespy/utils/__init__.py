@@ -1,26 +1,21 @@
-import json
-
 def export_dict(path: str, name: str, dict: dict) -> bool:
+    import json
+    
     full_path = f"{path}/{name}"
     with open(full_path, 'w') as file:
         file.write(json.dumps(dict))
 
-def generate_log():        
-    from os import remove, system as sys
-    from datetime import datetime, timedelta
 
-    def generate_logs():
-        sys('git log --pretty="- [%h](%H) %s [%ai]" > ./logs.txt')
+def generate_log() -> None:
+    from subprocess import check_output
 
-    def read_logs() -> list:
-        with open('./logs.txt', 'r') as file:
-            logs = file.readlines()
-
-        remove("./logs.txt")
-        return logs
-
-
-    def edit_logs(logs: list) -> list:
+    def get_logs() -> list:
+        return check_output(
+            'git log --pretty="- [%h](%H) %s [%ai]"',
+            shell=True
+        ).decode().split('\n')
+    
+    def logs_to_changelog(logs: list) -> list:
         range_date = {}
         for line in logs:
             range_date[line[-27:-17]] = []
@@ -37,12 +32,20 @@ def generate_log():
         
         return changelog
 
-    def save_changelog(changelog: list):
-        with open('./CHANGELOG.md', 'w') as file:
+    def save_changelog(changelog: list) -> None:
+        with open('./docs/CHANGELOG.md', 'w') as file:
             file.writelines(changelog)
 
+    save_changelog(
+        logs_to_changelog(
+            get_logs()
+            )
+    )
 
-    generate_logs()
-    logs = read_logs()
-    changelog = edit_logs(logs)
-    save_changelog(changelog)
+
+def now():
+    from time import time
+
+    return int(
+        time() * 1000
+    )

@@ -3,7 +3,7 @@ from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
 
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
@@ -11,7 +11,7 @@ import struct
 
 def mount_cancel(sender: Account, cancel_data: dict) -> dict:
     lease_tx_id: str = cancel_data['lease_tx_id']
-    timestamp: int = cancel_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    timestamp: int = cancel_data.get('timestamp', int(now() * 1000))
     cancel_fee: int = cancel_data.get('cancel_fee', CancelLeaseType.fee.value)
 
     bytes_data: bytes = CancelLeaseType.to_byte.value + \

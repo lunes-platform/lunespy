@@ -3,14 +3,14 @@ from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
 
 
 def mount_issue(sender: Account, issue_data: dict) -> dict:
-    timestamp: int = issue_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    timestamp: int = issue_data.get('timestamp', int(now() * 1000))
     issue_fee: int = issue_data.get('issue_fee', IssueType.fee.value)
     reissuable: bool = issue_data.get('reissuable', False)
     description: str = issue_data.get('description', '')

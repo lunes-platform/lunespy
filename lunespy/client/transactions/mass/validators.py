@@ -4,7 +4,7 @@ from lunespy.client.transactions.constants import MassType
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
@@ -17,7 +17,7 @@ def lunes_to_unes(lunes: int) -> int:
 
 def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_data: dict) -> dict:
     mass_transfer_fee: int = TransferType.fee.value + len(receivers_list) * MassType.fee.value
-    timestamp: int = mass_transfer_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    timestamp: int = mass_transfer_data.get('timestamp', int(now() * 1000))
     asset_id: str = mass_transfer_data.get('asset_id', "")
     receivers_list: list = [
         {'receiver': tx['receiver'], 'amount': lunes_to_unes(tx['amount'])}

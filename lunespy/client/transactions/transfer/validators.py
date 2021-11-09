@@ -3,7 +3,7 @@ from lunespy.client.wallet.validators import validate_address
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
@@ -14,7 +14,7 @@ def lunes_to_unes(lunes: int) -> int:
 
 
 def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> dict:
-    timestamp: int = transfer_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    timestamp: int = transfer_data.get('timestamp', int(now() * 1000))
     transfer_fee: int = transfer_data.get('transfer_fee', TransferType.fee.value)
     amount: int = lunes_to_unes(transfer_data['amount'])
     asset_fee: str = transfer_data.get('asset_fee', "")

@@ -3,7 +3,7 @@ from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
@@ -31,7 +31,7 @@ def validate_alias(sender: Account, alias_data: dict) -> bool:
     return True
 
 def mount_alias(sender: Account, alias_data: dict) -> dict:
-    timestamp: int = alias_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    timestamp: int = alias_data.get('timestamp', int(now() * 1000))
     alias_fee: int = alias_data.get('alias_fee', AliasType.fee.value)
     alias: str = alias_data['alias']
     alias_lenght: int = len(alias)
