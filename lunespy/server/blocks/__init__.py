@@ -1,3 +1,4 @@
+from typing import Text
 from requests import get 
 
 
@@ -31,3 +32,19 @@ def range_block(node_url: str, start_block: int, end_block: int) -> dict:
             'status': 'error',
             'response': response.text
         }
+
+
+def last_block(node_url: str) -> dict:
+    full_url = f'https://{node_url}/blocks/last'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+                'status': 'error',
+                'response': response.text
+            }
