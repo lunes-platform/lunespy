@@ -110,3 +110,19 @@ def all_peers_conected(node_url: str) -> dict:
             'status': 'error',
             'response': response.text
         }
+
+
+def node_version(node_url:str) -> dict:
+    full_url = f'https://{node_url}/utils/lunesnode/version'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
