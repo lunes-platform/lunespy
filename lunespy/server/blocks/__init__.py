@@ -126,3 +126,19 @@ def node_version(node_url:str) -> dict:
             'status': 'error',
             'response': response.text
         }
+
+
+def unconfirmed_transaction(node_url:str) -> dict:
+    full_url = f'https://{node_url}/transactions/unconfirmed'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'stauts': 'error',
+            'response': response.text
+        }
