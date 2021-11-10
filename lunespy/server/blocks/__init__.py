@@ -158,3 +158,19 @@ def transactions_from_address(node_url: str, address: str, limit_transactions: i
             'status': 'ok',
             'response': response.text
         }
+
+
+def blocks_generated_by_specified_address(node_url: str, address: str, start_block: int, end_block: int) -> dict:
+    full_url = f'https://{node_url}/blocks/address/{address}/{start_block}/{end_block}'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
