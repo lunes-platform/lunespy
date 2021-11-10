@@ -112,7 +112,7 @@ def all_peers_conected(node_url: str) -> dict:
         }
 
 
-def node_version(node_url:str) -> dict:
+def node_version(node_url: str) -> dict:
     full_url = f'https://{node_url}/utils/lunesnode/version'
     response = get(full_url)
 
@@ -128,7 +128,7 @@ def node_version(node_url:str) -> dict:
         }
 
 
-def unconfirmed_transaction(node_url:str) -> dict:
+def unconfirmed_transaction(node_url: str) -> dict:
     full_url = f'https://{node_url}/transactions/unconfirmed'
     response = get(full_url)
 
@@ -140,5 +140,21 @@ def unconfirmed_transaction(node_url:str) -> dict:
     else:
         return {
             'stauts': 'error',
+            'response': response.text
+        }
+
+
+def transactions_from_address(node_url: str, address: str, limit_transactions: int) -> dict:
+    full_url = f'https://{node_url}/transactions/address/{address}/limit/{limit_transactions}'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else: 
+        return {
+            'status': 'ok',
             'response': response.text
         }
