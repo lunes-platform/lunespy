@@ -7,6 +7,7 @@ from base58 import b58decode
 from requests import post
 import struct
 
+
 def validate_reissue(sender: Account, reissue_data: dict) -> bool:
     quantity: int = reissue_data.get('quantity', -1)
     asset_id: str = reissue_data.get('asset_id', False)
@@ -18,7 +19,7 @@ def validate_reissue(sender: Account, reissue_data: dict) -> bool:
     if quantity < 0:
         print(bcolors.FAIL + 'To Reissue the `quantity` cannot be less than 0' + bcolors.ENDC)
         return False
-    
+
     if asset_id == False:
         print(bcolors.FAIL + 'To Reissue pass an `asset_id`' + bcolors.ENDC)
         return False

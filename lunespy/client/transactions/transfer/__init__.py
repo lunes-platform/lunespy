@@ -4,6 +4,7 @@ from lunespy.client.transactions.transfer.validators import send_transfer
 from lunespy.client.transactions import BaseTransaction
 from lunespy.client.wallet import Account
 
+
 class TransferToken(BaseTransaction):
     """
     transfer_data: dict

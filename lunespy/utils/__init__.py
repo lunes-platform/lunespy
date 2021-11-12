@@ -43,7 +43,7 @@ def generate_log() -> None:
     )
 
 
-def now():
+def now() -> int:
     from time import time
 
     return int(

@@ -37,7 +37,7 @@ def mount_issue(sender: Account, issue_data: dict) -> dict:
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": issue_fee,
-        
+
         "description": description,
         "reissuable": reissuable,
         "decimals": decimals,

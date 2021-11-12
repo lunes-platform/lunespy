@@ -6,7 +6,7 @@ from lunespy.client.wallet import Account
 from lunespy.utils import now
 from base58 import b58decode
 from requests import post
-import struct
+from struct import pack
 
 
 def lunes_to_unes(lunes: int) -> int:
@@ -24,12 +24,12 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
         b58decode(sender.public_key) + \
         (b'\1' + b58decode(asset_id) if asset_id != "" else b'\0') + \
         (b'\1' + b58decode(asset_fee) if asset_fee != "" else b'\0') + \
-        struct.pack(">Q", timestamp) + \
-        struct.pack(">Q", amount) + \
-        struct.pack(">Q", transfer_fee) + \
+        pack(">Q", timestamp) + \
+        pack(">Q", amount) + \
+        pack(">Q", transfer_fee) + \
         b58decode(receiver.address)
     signature: bytes = sign(sender.private_key, bytes_data)
-    mount_tx: dict = {
+    return {
         "type": TransferType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
@@ -41,7 +41,6 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
         "assetId": asset_id,
         "amount": amount,
     }
-    return mount_tx
 
 
 def validate_transfer(sender: Account, receiver: Account, transfer_data: dict) -> bool:
@@ -69,10 +68,14 @@ def send_transfer(mount_tx: dict, node_url: str) -> dict:
         })
 
     if response.ok:
-        mount_tx['send'] = True
-        mount_tx['response'] = response.json()
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx
     else:
-        mount_tx['send'] = False
-        mount_tx['response'] = response.text
+        mount_tx.update({
+            'send': False,
+            'response': response.text
+        })
         return mount_tx
