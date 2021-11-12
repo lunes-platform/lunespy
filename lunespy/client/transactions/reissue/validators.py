@@ -1,10 +1,8 @@
-from lunespy.client.transactions.reissue.constants import DEFAULT_REISSUE_FEE
-from lunespy.client.transactions.reissue.constants import BYTE_TYPE_REISSUE
-from lunespy.client.transactions.reissue.constants import INT_TYPE_REISSUE
+from lunespy.client.transactions.constants import ReissueType
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
@@ -20,7 +18,7 @@ def validate_reissue(sender: Account, reissue_data: dict) -> bool:
     if quantity < 0:
         print(bcolors.FAIL + 'To Reissue the `quantity` cannot be less than 0' + bcolors.ENDC)
         return False
-    
+
     if asset_id == False:
         print(bcolors.FAIL + 'To Reissue pass an `asset_id`' + bcolors.ENDC)
         return False
@@ -29,13 +27,13 @@ def validate_reissue(sender: Account, reissue_data: dict) -> bool:
 
 
 def mount_reissue(sender: Account, reissue_data: dict) -> dict:
-    reissue_fee = reissue_data.get('reissue_fee', DEFAULT_REISSUE_FEE)
-    timestamp = reissue_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    reissue_fee = reissue_data.get('reissue_fee', ReissueType.fee.value)
+    timestamp = reissue_data.get('timestamp', int(now() * 1000))
     reissuable = reissue_data.get('reissuable', False)
     asset_id = reissue_data['asset_id']
     quantity = reissue_data['quantity']
 
-    bytes_data = BYTE_TYPE_REISSUE + \
+    bytes_data = ReissueType.to_byte.value + \
         b58decode(sender.public_key) + \
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
@@ -45,7 +43,7 @@ def mount_reissue(sender: Account, reissue_data: dict) -> dict:
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
-        "type": INT_TYPE_REISSUE,
+        "type": ReissueType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

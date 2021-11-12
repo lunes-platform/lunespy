@@ -1,12 +1,9 @@
-from lunespy.client.transactions.alias.constants import DEFAULT_ALIAS_FEE
-from lunespy.client.transactions.alias.constants import BYTE_MOUNT_ALIAS
-from lunespy.client.transactions.alias.constants import BYTE_TYPE_ALIAS
-from lunespy.client.transactions.alias.constants import INT_TYPE_ALIAS
+from lunespy.client.transactions.constants import AliasType
 from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
@@ -34,18 +31,18 @@ def validate_alias(sender: Account, alias_data: dict) -> bool:
     return True
 
 def mount_alias(sender: Account, alias_data: dict) -> dict:
-    timestamp: int = alias_data.get('timestamp', int(datetime.now().timestamp() * 1000))
-    alias_fee: int = alias_data.get('alias_fee', DEFAULT_ALIAS_FEE)
+    timestamp: int = alias_data.get('timestamp', int(now() * 1000))
+    alias_fee: int = alias_data.get('alias_fee', AliasType.fee.value)
     alias: str = alias_data['alias']
     alias_lenght: int = len(alias)
     network_id: str = sender.network_id
     
-    aliasWithNetwork = b'\x02' +\
+    aliasWithNetwork = AliasType.mount.value +\
         string_to_bytes(str(network_id)) + \
         struct.pack(">H", len(alias)) + \
         string_to_bytes(alias)
 
-    bytes_data = b'\x0a' + \
+    bytes_data = AliasType.to_byte.value + \
         b58decode(sender.public_key) + \
         struct.pack(">H", len(aliasWithNetwork)) + \
         aliasWithNetwork + \
@@ -55,7 +52,7 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
     signature: bytes = sign(sender.private_key, bytes_data)
 
     mount_tx = {
-        "type": INT_TYPE_ALIAS,
+        "type": AliasType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

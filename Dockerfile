@@ -1,5 +1,6 @@
-FROM ubuntu:latest
+FROM python:3.10.0-alpine3.14
 
-RUN apt-get update -y
-RUN apt-get install python3 -y
-RUN apt-get install python3-pip -y
+RUN apk --update --upgrade add gcc musl-dev jpeg-dev zlib-dev libffi-dev cairo-dev pango-dev gdk-pixbuf-dev
+RUN apk add curl git openssh
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt

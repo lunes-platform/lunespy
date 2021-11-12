@@ -1,11 +1,9 @@
-from lunespy.client.transactions.cancel.constants import DEFAULT_CANCEL_LEASE_FEE
-from lunespy.client.transactions.cancel.constants import BYTE_TYPE_CANCEL_LEASE
-from lunespy.client.transactions.cancel.constants import INT_TYPE_CANCEL_LEASE
+from lunespy.client.transactions.constants import CancelLeaseType
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
 
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
@@ -13,10 +11,10 @@ import struct
 
 def mount_cancel(sender: Account, cancel_data: dict) -> dict:
     lease_tx_id: str = cancel_data['lease_tx_id']
-    timestamp: int = cancel_data.get('timestamp', int(datetime.now().timestamp() * 1000))
-    cancel_fee: int = cancel_data.get('cancel_fee', DEFAULT_CANCEL_LEASE_FEE)    
+    timestamp: int = cancel_data.get('timestamp', int(now() * 1000))
+    cancel_fee: int = cancel_data.get('cancel_fee', CancelLeaseType.fee.value)
 
-    bytes_data: bytes = BYTE_TYPE_CANCEL_LEASE + \
+    bytes_data: bytes = CancelLeaseType.to_byte.value + \
         b58decode(sender.public_key) + \
         struct.pack(">Q", cancel_fee) + \
         struct.pack(">Q", timestamp) + \
@@ -24,7 +22,7 @@ def mount_cancel(sender: Account, cancel_data: dict) -> dict:
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx: dict = {
-        "type": INT_TYPE_CANCEL_LEASE,
+        "type":CancelLeaseType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,

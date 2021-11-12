@@ -1,3 +1,3 @@
-MAINNET_NODE_URL: str = 'http://5.196.155.34:5555'
-TESTNET_NODE_URL: str = 'http://5.196.155.46:5555'
-TOTAL_SUPPLY: int = 150728537.61498705
+MAINNET_NODE_URL: str = 'https://lunesnode.lunes.io'
+TESTNET_NODE_URL: str = 'https://lunesnode-testnet.lunes.io'
+TOTAL_SUPPLY: float = 150_728_537.61498705

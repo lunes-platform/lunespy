@@ -1,14 +1,12 @@
-from lunespy.client.transactions.transfer.constants import DEFAULT_TRANSFER_FEE
-from lunespy.client.transactions.transfer.constants import BYTE_TYPE_TRANSFER
-from lunespy.client.transactions.transfer.constants import INT_TYPE_TRANSFER
+from lunespy.client.transactions.constants import TransferType
 from lunespy.client.wallet.validators import validate_address
 from lunespy.utils.crypto.converters import sign
 from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
-import struct
+from struct import pack
 
 
 def lunes_to_unes(lunes: int) -> int:
@@ -16,34 +14,33 @@ def lunes_to_unes(lunes: int) -> int:
 
 
 def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> dict:
-    timestamp: int = transfer_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    timestamp: int = transfer_data.get('timestamp', int(now() * 1000))
+    transfer_fee: int = transfer_data.get('transfer_fee', TransferType.fee.value)
     amount: int = lunes_to_unes(transfer_data['amount'])
-    transfer_fee: int = transfer_data.get('transfer_fee', DEFAULT_TRANSFER_FEE)
-    asset_id: str = transfer_data.get('asset_id', "")
     asset_fee: str = transfer_data.get('asset_fee', "")
+    asset_id: str = transfer_data.get('asset_id', "")
 
-    bytes_data: bytes = BYTE_TYPE_TRANSFER + \
+    bytes_data: bytes = TransferType.to_byte.value + \
         b58decode(sender.public_key) + \
         (b'\1' + b58decode(asset_id) if asset_id != "" else b'\0') + \
         (b'\1' + b58decode(asset_fee) if asset_fee != "" else b'\0') + \
-        struct.pack(">Q", timestamp) + \
-        struct.pack(">Q", amount) + \
-        struct.pack(">Q", transfer_fee) + \
+        pack(">Q", timestamp) + \
+        pack(">Q", amount) + \
+        pack(">Q", transfer_fee) + \
         b58decode(receiver.address)
     signature: bytes = sign(sender.private_key, bytes_data)
-    mount_tx: dict = {
-        "type": INT_TYPE_TRANSFER,
+    return {
+        "type": TransferType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": transfer_fee,
-        
+
         "recipient": receiver.address,
         "feeAsset": asset_fee,
         "assetId": asset_id,
         "amount": amount,
     }
-    return mount_tx
 
 
 def validate_transfer(sender: Account, receiver: Account, transfer_data: dict) -> bool:
@@ -71,10 +68,14 @@ def send_transfer(mount_tx: dict, node_url: str) -> dict:
         })
 
     if response.ok:
-        mount_tx['send'] = True
-        mount_tx['response'] = response.json()
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx
     else:
-        mount_tx['send'] = False
-        mount_tx['response'] = response.text
+        mount_tx.update({
+            'send': False,
+            'response': response.text
+        })
         return mount_tx
