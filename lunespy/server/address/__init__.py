@@ -9,6 +9,54 @@ def aliases(address: str) -> str:
     pass
 
 
+def asset_distribution(node_url: str, asset_id: str) -> dict:
+    full_url = f'https://{node_url}/assets/{asset_id}/distribution'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
+
+
+def balance_asset_from_address(node_url: str, adress: str) -> dict:
+    full_url = f'https://{node_url}/assets/balance/{adress}'
+    response = get(full_url)
+    
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
+
+
+def balance_for_especify_asset_from_address(node_url: str, address: str, asset_id: str) -> dict:
+    full_url = f'https://{node_url}/assets/balance/{address}/{asset_id}'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
+
+
 def all_address_balance(node_ip: str, node_api_key: str) -> dict:    
     url = f"http://{node_ip}:5555/debug/state"
     header = {"X-API-key": node_api_key}
@@ -84,6 +132,7 @@ def rich_list(**kargs: dict) -> dict:
             "rich_list.json",
             report)
     return report
+
 
 def node_leased_list_addres(node_address: str) -> list:
     return [
