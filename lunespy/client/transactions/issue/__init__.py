@@ -2,7 +2,7 @@ from lunespy.client.transactions.issue.validators import validate_issue
 from lunespy.client.transactions.issue.validators import send_issue
 from lunespy.client.transactions.issue.validators import mount_issue
 from lunespy.client.transactions import BaseTransaction
-from lunespy.utils.settings import bcolors
+from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
 
 

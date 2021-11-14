@@ -1,6 +1,6 @@
 from lunespy.client.transactions.constants import CancelLeaseType
 from lunespy.utils.crypto.converters import sign
-from lunespy.utils.settings import bcolors
+from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
 
 from lunespy.utils import now

@@ -1,6 +1,6 @@
 from lunespy.client.transactions.constants import LeaseType
 from lunespy.utils.crypto.converters import sign
-from lunespy.utils.settings import bcolors
+from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
 
 from lunespy.utils import now
@@ -58,10 +58,14 @@ def send_lease(mount_tx: dict, node_url: str) -> dict:
         })
 
     if response.ok:
-        mount_tx['send'] = True
-        mount_tx['response'] = response.json()
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx
     else:
-        mount_tx['send'] = False
-        mount_tx['response'] = response.text
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx

@@ -3,3 +3,4 @@ base58
 pytest
 requests
 python-axolotl-curve25519
+pytest
