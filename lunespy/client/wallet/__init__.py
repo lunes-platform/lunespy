@@ -37,20 +37,16 @@ class Account:
             \npublic key\n └── {self.public_key}\
             \naddress\n └── {self.address}"
 
+    def to_json(self, path: str = '.') -> str:
+        from lunespy.utils import export_json
+        data = {
+            key: value 
+            for (key, value) in self.__dict__.items()
+            if 'byte' not in key and 'id' not in key
+        }
 
-    def to_json(self, path: str = './') -> None:
-        from lunespy.utils.settings import bcolors
-        import json
-
-        wallet = {
-            "seed":self.seed,
-            "hash_seed":self.hash_seed,
-            "nonce":self.nonce,
-            "network":self.network,
-            "private_key":self.private_key,
-            "public_key":self.public_key,
-            "address":self.address
-            }
-        with open(f'{path}wallet-{self.network}.json', 'w') as file:
-            file.write(json.dumps(wallet))
-        print(f"{bcolors.OKGREEN}Your wallet has been saved in `{path}wallet-{self.network}.json`{bcolors.ENDC}")
+        return export_json(
+            data=data,
+            name=f'wallet-{self.network}',
+            path=path
+        )
