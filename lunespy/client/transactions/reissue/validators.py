@@ -7,7 +7,6 @@ from base58 import b58decode
 from requests import post
 import struct
 
-
 def validate_reissue(sender: Account, reissue_data: dict) -> bool:
     quantity: int = reissue_data.get('quantity', -1)
     asset_id: str = reissue_data.get('asset_id', False)
