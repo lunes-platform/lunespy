@@ -19,6 +19,8 @@ In this way, we can create a transaction to transfer tokens, a transaction to cr
 2. [Send Tokens](#sendToken)
 3. [Reissue Tokens](#reissueToken)
 3. [Burn Tokens](#burnToken)
+3. [Create Lease](#createLease)
+3. [Cancel Lease](#cancelLease)
 3. [Create Alias](#createAlias)
 2. [Send Mass Transfer Lunes](#massTransferLunes)
 2. [Send Mass Transfer Tokens](#massTransferToken)
@@ -494,7 +496,7 @@ For Cancel your lease
 
 ```python
 from lunespy.client.wallet import Account
-from lunespy.client.transactions.cancel import CancelLease
+from lunespy.client.transactions.cancel_lease import CancelLease
 
 
 # Generate the wallet

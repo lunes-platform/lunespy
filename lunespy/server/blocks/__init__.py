@@ -1,10 +1,9 @@
 from requests import get
 
-
 def block_from_height(node_url: str, height: int) -> dict:
     full_url = f'https://{node_url}/blocks/at/{height}'
     response = get(full_url)
-
+    
     if response.ok:
         return {
             'status': 'ok',

@@ -1,26 +1,24 @@
-from lunespy.client.transactions.issue.constants import DEFAULT_ISSUE_FEE
-from lunespy.client.transactions.issue.constants import BYTE_TYPE_ISSUE
-from lunespy.client.transactions.issue.constants import INT_TYPE_ISSUE
+from lunespy.client.transactions.constants import IssueType
 from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import sign
-from lunespy.utils.settings import bcolors
+from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
 
 
 def mount_issue(sender: Account, issue_data: dict) -> dict:
-    timestamp: int = issue_data.get('timestamp', int(datetime.now().timestamp() * 1000))
-    issue_fee: int = issue_data.get('issue_fee', DEFAULT_ISSUE_FEE)
+    timestamp: int = issue_data.get('timestamp', int(now() * 1000))
+    issue_fee: int = issue_data.get('issue_fee', IssueType.fee.value)
     reissuable: bool = issue_data.get('reissuable', False)
     description: str = issue_data.get('description', '')
     quantity: int = issue_data.get('quantity', 0)
     decimals: str = issue_data.get('decimals', 0)
     name: str = issue_data.get('name', '')
 
-    bytes_data: bytes = BYTE_TYPE_ISSUE + \
+    bytes_data: bytes = IssueType.to_byte.value + \
         b58decode(sender.public_key) + \
         struct.pack(">H", len(name)) + \
         string_to_bytes(name) + \
@@ -34,12 +32,12 @@ def mount_issue(sender: Account, issue_data: dict) -> dict:
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
-        "type": INT_TYPE_ISSUE,
+        "type": IssueType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": issue_fee,
-        
+
         "description": description,
         "reissuable": reissuable,
         "decimals": decimals,
@@ -79,10 +77,14 @@ def send_issue(mount_tx: dict, node_url: str) -> dict:
         })
 
     if response.ok:
-        mount_tx['send'] = True
-        mount_tx['response'] = response.json()
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx
     else:
-        mount_tx['send'] = False
-        mount_tx['response'] = response.text
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx

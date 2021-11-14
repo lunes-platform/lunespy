@@ -1,56 +1,50 @@
-from lunespy.client.wallet.validators import validate_wallet
-
-
 class Account:
-    def __init__(self, **wallet: dict):        
-        __validated_wallet = validate_wallet(wallet)
+    """
+    params: 
+        private_key: str
+        public_key: str
+        hash_seed: str
+        network_id: str | '0' xor '1'
+        address: str
+        nonce: int | 0 to 4.294.967.295
+        network: str | 'mainnet' xor 'testnet'
+        seed: str | 12 words
+        byte_private_key: bytes 
+        byte_public_key: bytes
+        byte_address: bytes
+    """
+    def __init__(self, **wallet: dict):
+        from lunespy.client.wallet.validators import validate_wallet
         
-        self.private_key = __validated_wallet['private_key']
-        self.public_key = __validated_wallet['public_key']
-        self.hash_seed = __validated_wallet['hash_seed']
-        self.network_id = __validated_wallet['network_id']
-        self.address = __validated_wallet['address']
-        self.nonce = __validated_wallet['nonce']
-        self.network = __validated_wallet['network']
-        self.seed = __validated_wallet['seed']
+        self.__dict__ = validate_wallet(wallet)
 
-        self.byte_private_key = __validated_wallet['byte_private_key']
-        self.byte_public_key = __validated_wallet['byte_public_key']
-        self.byte_address = __validated_wallet['byte_address']
 
     def __str__(self) -> str:
-        from lunespy.utils.settings import bcolors
+        from lunespy.utils import bcolors
+        data = ''
+        for key, value in self.__dict__.items():
+            if 'byte' not in key and 'id' not in key:
+                data += f"\n{key}{bcolors.OKGREEN}\n └── {value}{bcolors.ENDC}"
+        return data
 
-        return f"\
-            \nseed\n {bcolors.OKGREEN + '└── ' +  self.seed + bcolors.ENDC}\
-            \nnetwork\n {bcolors.OKCYAN + '└── ' + self.network + bcolors.ENDC}\
-            \nnonce\n {bcolors.OKBLUE + '└── ' + str(self.nonce) + bcolors.ENDC}\
-            \nprivate key\n {bcolors.OKBLUE + '└── ' + self.private_key + bcolors.ENDC}\
-            \npublic key\n {bcolors.OKBLUE + '└── ' + self.public_key + bcolors.ENDC}\
-            \naddress\n {bcolors.OKBLUE + '└── ' + self.address + bcolors.ENDC}"
 
     def __repr__(self) -> str:
-        return f"seed\n └──  {self.seed}\
-            \nnetwork\n └── {self.network}\
-            \nnonce\n └── {str(self.nonce)}\
-            \nprivate key\n └── {self.private_key}\
-            \npublic key\n └── {self.public_key}\
-            \naddress\n └── {self.address}"
+        data = ''
+        for key, value in self.__dict__.items():
+                data += f"{key} -> {value}\n"
+        return data
 
 
-    def to_json(self, path: str = './') -> None:
-        from lunespy.utils.settings import bcolors
-        import json
+    def to_json(self, path: str = '.') -> str:
+        from lunespy.utils import export_json
+        data = {
+            key: value 
+            for (key, value) in self.__dict__.items()
+            if 'byte' not in key and 'id' not in key
+        }
 
-        wallet = {
-            "seed":self.seed,
-            "hash_seed":self.hash_seed,
-            "nonce":self.nonce,
-            "network":self.network,
-            "private_key":self.private_key,
-            "public_key":self.public_key,
-            "address":self.address
-            }
-        with open(f'{path}wallet-{self.network}.json', 'w') as file:
-            file.write(json.dumps(wallet))
-        print(f"{bcolors.OKGREEN}Your wallet has been saved in `{path}wallet-{self.network}.json`{bcolors.ENDC}")
+        return export_json(
+            data=data,
+            name=f'wallet-{self.network}',
+            path=path
+        )

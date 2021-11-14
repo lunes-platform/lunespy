@@ -5,9 +5,6 @@ stages:
 
 CreateReportTests:
     stage: deploy
-    only:
-        refs:
-            - main
     script:
         - python3 -m pytest -vv --junitxml=report.xml
     artifacts:
