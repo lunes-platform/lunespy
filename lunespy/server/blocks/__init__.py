@@ -183,6 +183,6 @@ def version_all_lunes_node_conected(node_url: str) -> dict:
     response = get(full_url)
     dic_peers = response.json()['peers']
     for itens_nodes in dic_peers:
-        iten_address = (itens_nodes['address'])[1:]
-        iten_application_version = (itens_nodes['applicationVersion'])
-        print(f'Address: {iten_address} \nNode Version: {iten_application_version}')
+        item_address = (itens_nodes['address'])[1:]
+        item_application_version = (itens_nodes['applicationVersion'])
+        print(f'Address: {item_address} \nNode Version: {item_application_version}')
