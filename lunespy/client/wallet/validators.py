@@ -15,13 +15,13 @@ def validate_wallet(wallet: dict) -> dict:
     wallet['nonce'] = wallet.get('nonce', 0)
 
     if wallet.get('network', 'mainnet') == 'mainnet':
-        wallet['network_id']: str = '1'
-        wallet['network']: str = 'mainnet'
+        wallet['network_id'] = '1'
+        wallet['network'] = 'mainnet'
     else:
-        wallet['network_id']: str = '0'
-        wallet['network']: str = 'testnet'
+        wallet['network_id'] = '0'
+        wallet['network'] = 'testnet'
 
-    if wallet['nonce'] not in range(0, 4294967295 + 1):
+    if wallet['nonce'] not in range(0, 4_294_967_295 + 1):
         raise InvalidNonce
 
     elif wallet.get('seed', False):

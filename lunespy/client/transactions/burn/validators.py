@@ -1,24 +1,22 @@
-from lunespy.client.transactions.burn.constants import DEFAULT_BURN_FEE
-from lunespy.client.transactions.burn.constants import BYTE_TYPE_BURN
-from lunespy.client.transactions.burn.constants import INT_TYPE_BURN
-from lunespy.utils.crypto.converters import string_to_bytes
-from lunespy.utils.crypto.converters import sign
 from lunespy.utils.crypto.converters import bytes_to_string
-from lunespy.utils.settings import bcolors
+from lunespy.utils.crypto.converters import string_to_bytes
+from lunespy.client.transactions.constants import BurnType
+from lunespy.utils.crypto.converters import sign
+from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
 
 
 def mount_burn(sender: Account, burn_data: dict) -> dict:
-    timestamp: int = burn_data.get('timestamp', int(datetime.now().timestamp() * 1000))
-    burn_fee: int = burn_data.get('burn_fee', DEFAULT_BURN_FEE)
+    timestamp: int = burn_data.get('timestamp', int(now() * 1000))
+    burn_fee: int = burn_data.get('burn_fee', BurnType.fee.value)
     quantity: int = burn_data.get('quantity', 0)
     asset_id: int = burn_data['asset_id']
 
-    bytes_data: bytes = BYTE_TYPE_BURN + \
+    bytes_data: bytes = BurnType.to_byte.value + \
         b58decode(sender.public_key) + \
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
@@ -27,7 +25,7 @@ def mount_burn(sender: Account, burn_data: dict) -> dict:
 
     signature: bytes = sign(sender.private_key, bytes_data)
     mount_tx = {
-        "type": INT_TYPE_BURN,
+        "type": BurnType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
@@ -69,10 +67,14 @@ def send_burn(mount_tx: dict, node_url: str) -> dict:
         })
 
     if response.ok:
-        mount_tx['send'] = True
-        mount_tx['response'] = response.json()
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx
     else:
-        mount_tx['send'] = False
-        mount_tx['response'] = response.json()
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx

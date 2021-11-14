@@ -2,7 +2,7 @@ from lunespy.client.transactions import BaseTransaction
 from lunespy.client.transactions.reissue.validators import validate_reissue
 from lunespy.client.transactions.reissue.validators import mount_reissue
 from lunespy.client.transactions.reissue.validators import send_reissue
-from lunespy.utils.settings import bcolors
+from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
 
 
