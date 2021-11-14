@@ -1,4 +1,6 @@
-from requests import get 
+from requests import get
+
+from lunespy.server import address
 
 
 def block_from_height(node_url: str, height: int) -> dict:
@@ -174,3 +176,12 @@ def blocks_generated_by_specified_address(node_url: str, address: str, start_blo
             'status': 'error',
             'response': response.text
         }
+
+
+def version_all_lunes_node_conected(node_url: str) -> dict:
+    full_url = f'https://{node_url}/peers/connected'
+    response = get(full_url)
+    dic_peers = response.json()['peers']
+    for list_nodes in dic_peers:
+        print(list_nodes['address'])
+        print(list_nodes['applicationVersion'])
