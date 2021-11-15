@@ -58,7 +58,7 @@ def balance_for_especify_asset_from_address(node_url: str, address: str, asset_i
 
 
 def all_address_balance(node_ip: str, node_api_key: str) -> dict:    
-    url = f"http://{node_ip}:5555/debug/state"
+    url = f"http://{node_ip}/debug/state"
     header = {"X-API-key": node_api_key}
 
     all_address: dict = get(url, headers=header).json()
@@ -69,7 +69,7 @@ def all_address_balance(node_ip: str, node_api_key: str) -> dict:
     return all_address
 
 
-def balance(address: str, node_url: str) -> int:
+def balance_from_address(address: str, node_url: str) -> int:
     response = get(f'{node_url}/addresses/balance/{address}')
     if response.ok:
         return response.json()['balance']
