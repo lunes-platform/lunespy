@@ -78,3 +78,11 @@ def now() -> int:
     return int(
         time() * 1000
     )
+
+
+def lunes_to_unes(lunes: float or int) -> int:
+    return int(lunes * 10e7)
+
+
+def unes_to_lunes(unes: int) -> float:
+    return float(unes / 10e7)

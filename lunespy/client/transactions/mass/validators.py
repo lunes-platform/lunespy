@@ -2,17 +2,13 @@ from lunespy.client.transactions.constants import TransferType
 from lunespy.client.wallet.validators import validate_address
 from lunespy.client.transactions.constants import MassType
 from lunespy.utils.crypto.converters import sign
-from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
+from lunespy.utils import lunes_to_unes
+from lunespy.utils import bcolors
 from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
-
-
-
-def lunes_to_unes(lunes: int) -> int:
-    return int(lunes * 10e7)
 
 
 def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_data: dict) -> dict:
