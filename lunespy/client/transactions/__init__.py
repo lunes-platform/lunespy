@@ -1,6 +1,9 @@
-from lunespy.server import MAINNET_NODE_URL, TESTNET_NODE_URL
-from lunespy.utils import bcolors, export_json, log_data
-from abc import ABCMeta, abstractmethod
+from lunespy.utils import export_json
+from lunespy.utils import log_data
+from lunespy.utils import bcolors
+from lunespy.server import Node
+from abc import abstractmethod
+from abc import ABCMeta
 
 
 class BaseTransaction(metaclass=ABCMeta):
@@ -26,9 +29,9 @@ class BaseTransaction(metaclass=ABCMeta):
     def send(self, send_tx, node_url: str) -> dict:
         if node_url == None:
             if self.sender.network == 'mainnet':
-                node_url = MAINNET_NODE_URL
+                node_url = Node.mainnet_url.value
             else:
-                node_url = TESTNET_NODE_URL
+                node_url = Node.testnet_url.value
 
         mounted_tx = self.transaction
         if mounted_tx['ready']:
