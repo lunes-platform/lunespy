@@ -2,7 +2,7 @@ from lunespy.client.transactions import BaseTransaction
 from lunespy.client.transactions.alias.validators import validate_alias
 from lunespy.client.transactions.alias.validators import mount_alias
 from lunespy.client.transactions.alias.validators import send_alias
-from lunespy.utils.settings import bcolors
+from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
 
 class CreateAlias(BaseTransaction):

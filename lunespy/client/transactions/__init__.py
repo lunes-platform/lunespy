@@ -1,8 +1,9 @@
-from lunespy.client.transactions.low_level import save_transaction
-from lunespy.client.transactions.low_level import log_transaction                                                  
-from lunespy.server import MAINNET_NODE_URL, TESTNET_NODE_URL
-from lunespy.utils.settings import bcolors
-from abc import ABCMeta, abstractmethod
+from lunespy.utils import export_json
+from lunespy.utils import log_data
+from lunespy.utils import bcolors
+from lunespy.server import Node
+from abc import abstractmethod
+from abc import ABCMeta
 
 
 class BaseTransaction(metaclass=ABCMeta):
@@ -28,24 +29,26 @@ class BaseTransaction(metaclass=ABCMeta):
     def send(self, send_tx, node_url: str) -> dict:
         if node_url == None:
             if self.sender.network == 'mainnet':
-                node_url = MAINNET_NODE_URL
+                node_url = Node.mainnet_url.value
             else:
-                node_url = TESTNET_NODE_URL
+                node_url = Node.testnet_url.value
 
         mounted_tx = self.transaction
         if mounted_tx['ready']:
             tx_response = send_tx(mounted_tx, node_url=node_url)
+
             if tx_response['send']:
                 self.show(**tx_response)
                 return tx_response
             else:
                 print(bcolors.FAIL + f"Your {self.tx_type} dont sended because:\n└──{tx_response['response']}" + bcolors.ENDC)
                 return tx_response
+
         else:
             print(bcolors.FAIL + f'{self.tx_type} Transaction dont send', bcolors.ENDC)
             return mounted_tx
         
 
     def show(self, **data: dict) -> None:
-        log_transaction(data)
-        save_transaction(data)
+        log_data(data)
+        export_json(data)

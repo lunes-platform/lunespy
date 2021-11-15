@@ -1,4 +1,4 @@
-from lunespy.client.transactions.cancel import CancelLease
+from lunespy.client.transactions.cancel_lease import CancelLease
 from lunespy.client.wallet import Account
 
 

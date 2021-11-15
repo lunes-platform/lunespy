@@ -1,25 +1,19 @@
-from lunespy.client.transactions.mass.constants import DEFAULT_MASS_TRANSFER_FEE
-from lunespy.client.transactions.transfer.constants import DEFAULT_TRANSFER_FEE
-from lunespy.client.transactions.mass.constants import BYTE_TYPE_MASS_TRANSFER
-from lunespy.client.transactions.mass.constants import INT_TYPE_MASS_TRANSFER
+from lunespy.client.transactions.constants import TransferType
 from lunespy.client.wallet.validators import validate_address
+from lunespy.client.transactions.constants import MassType
 from lunespy.utils.crypto.converters import sign
-from lunespy.utils.settings import bcolors
 from lunespy.client.wallet import Account
-from datetime import datetime
+from lunespy.utils import lunes_to_unes
+from lunespy.utils import bcolors
+from lunespy.utils import now
 from base58 import b58decode
 from requests import post
 import struct
 
 
-
-def lunes_to_unes(lunes: int) -> int:
-    return int(lunes * 10e7)
-
-
 def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_data: dict) -> dict:
-    mass_transfer_fee: int = DEFAULT_TRANSFER_FEE + len(receivers_list) * DEFAULT_MASS_TRANSFER_FEE
-    timestamp: int = mass_transfer_data.get('timestamp', int(datetime.now().timestamp() * 1000))
+    mass_transfer_fee: int = TransferType.fee.value + len(receivers_list) * MassType.fee.value
+    timestamp: int = mass_transfer_data.get('timestamp', int(now() * 1000))
     asset_id: str = mass_transfer_data.get('asset_id', "")
     receivers_list: list = [
         {'receiver': tx['receiver'], 'amount': lunes_to_unes(tx['amount'])}
@@ -32,15 +26,7 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
         map(hash_transfer, receivers_list)
     )
 
-    # a = b''
-    # for i in range(0, len(receivers_list)):
-    #     a += b58decode(receivers_list[i]['recipient']) + pack(">Q", receivers_list[i]['amount'])
-    # print(receivers_list_data)
-    # print(a)
-    # print(receivers_list_data == a)
-
-
-    bytes_data: bytes = BYTE_TYPE_MASS_TRANSFER + \
+    bytes_data: bytes = MassType.to_byte.value + \
             b'\1' + \
             b58decode(sender.public_key) + \
             (b'\1' + b58decode(asset_id) if asset_id != "" else b'\0') + \
@@ -52,7 +38,7 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
     signature: bytes = sign(sender.private_key, bytes_data)
 
     data = {
-        "type": INT_TYPE_MASS_TRANSFER,
+        "type": MassType.to_int.value,
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
@@ -99,10 +85,14 @@ def send_mass_transfer(mount_tx: dict, node_url: str) -> dict:
         })
 
     if response.ok:
-        mount_tx['send'] = True
-        mount_tx['response'] = response.json()
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx
     else:
-        mount_tx['send'] = False
-        mount_tx['response'] = response.text
+        mount_tx.update({
+            'send': True,
+            'response': response.json()
+        })
         return mount_tx
