@@ -1,6 +1,34 @@
 # Changelog
 
+## 2021-11-09
+- [762c6dc](762c6dc9f8b95b4291cd6cd9266b3ae7521f1849) Merge branch 'fixbug' into 'main'
+- [37ba58f](37ba58febd6f69141b00d7bda9515c34b292583b) fixed: function with no name
+- [1294994](12949946f300ac6bbcd10f4c3c9082fd4ef1ba1f) Merge branch 'add/get-all-peer-connected' into 'main'
+- [6cdcb79](6cdcb790e744ffe15f4838602eeea89b74f63b00) Merge branch 'add/get-last-blocks' into 'main'
+- [9795222](97952222e10570d5420fd5e0d94ba2d19c50b99d) added: function for all peers conected
+- [081f4ba](081f4ba9e885cdb59eeb9b60215d55bc65a81ac3) removed: function last block
+- [df14e02](df14e02643669ce5210d97a0a862d0ced840074a) added: function balance for especify asset from address
+- [3bf034a](3bf034a477f2f2e3d861aa51c1fd2c98c33eb4a3) added: function balance asset from address
+- [a20c355](a20c35540d3c5900313ccdd885533684490be768) added: function for asset distribution
+- [b074523](b074523756c087524d75148bb121fbfd09e64eb0) added: function for get last block
+
+## 2021-11-08
+- [7a8b7a9](7a8b7a98cf48f34cba15898d9528f974f0f6d973) Merge branch 'refact' into 'main'
+- [e0a1fb9](e0a1fb998e44250b7b73741082988adad40756b7) merged: `refact` to `main`
+- [8f2a3b0](8f2a3b05b6923e6e42e65325e205279417b9cd14) fixed: send not found node_url
+- [8a14086](8a140867a0241a4856de55d1b045deebb0554d08) Merge branch 'get/range-of-blocks' into 'main'
+- [ff5da59](ff5da593b8d6601b16662b2fdf8356764f09a84f) fixed: correct name for variable node
+
 ## 2021-11-07
+- [9109def](9109def69fae11feaa310ca45edbaf572311b98c) fixed: correct way
+- [08ed1b4](08ed1b4895b436c28caa9426b75459a9e385af6e) Merge branch 'main' of https://github.com/lunes-platform/lunespy into main
+- [6e20a58](6e20a58b7639e711307050d016f9b1998e7337cf) Merge branch 'main' of git.lunes.io:blockchain/production/lunespy into main
+- [fea8288](fea82881b43554b901ed1a39cf7ff1b65c9ab381) added: new links in readme
+- [c94c3da](c94c3da84c001d908c200012eef24fa2ac2b209b) changed: update readme
+- [d1dce91](d1dce9102b9ac37cbe66999e63ad4547db75d7da) Merge branch 'refact' into 'main'
+- [55f36da](55f36dab23838b9ec46fadb869eb206c96004481) Merge pull request #23 from lunes-platform/refact
+- [c4bb160](c4bb1607a4dee48fb212ce6744d868a9662bc31d) fixed: pipeline
+- [b67c51d](b67c51d8773e1349a83ce638fc14b0aed988beac) added: generate log from poetry
 - [9e89bad](9e89badcdcac0425147278ae7034b2aac51b79b1) added: url to mainet and testnet
 - [fd71277](fd71277ba76a057922764dcea4e23f1e65032999) Merge branch '41-make-a-templates-from-issues-and-merge-requests' into 'main'
 
