@@ -36,6 +36,7 @@ def node_version(node_url: str) -> dict:
 def version_all_lunes_node_conected(node_url: str) -> dict:
     full_url = f'https://{node_url}/peers/connected'
     response = get(full_url)
+
     if response.ok:
         return {
             'status': 'ok',

@@ -1,9 +1,20 @@
 from requests import get
 
+
 def transaction_from_id(id: str) -> dict:
     full_url = f'https://lunesnode.lunes.io/transactions/info/{id}'
     response = get(full_url)
-    return response.json()
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else: 
+        return {
+            'status': 'error',
+            'response': response.text
+        }
 
 
 def unconfirmed_transaction(node_url: str) -> dict:
@@ -33,6 +44,6 @@ def transactions_from_address(node_url: str, address: str, limit_transactions: i
         }
     else: 
         return {
-            'status': 'ok',
+            'status': 'error',
             'response': response.text
         }
