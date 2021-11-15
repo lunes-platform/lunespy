@@ -1,7 +1,6 @@
-from lunespy.server import TOTAL_SUPPLY
-
-from lunespy.utils import export_dict
-from lunespy.client.wallet import Account
+from lunespy.server import MAINNET_TOTAL_SUPPLY
+from lunespy.server import TESTNET_TOTAL_SUPPLY
+from lunespy.utils import export_json
 from requests import get
 
 
@@ -61,7 +60,11 @@ def all_address_balance(node_ip: str, node_api_key: str) -> dict:
     url = f"http://{node_ip}/debug/state"
     header = {"X-API-key": node_api_key}
 
-    all_address: dict = get(url, headers=header).json()
+
+    try:
+        all_address: dict = get(url, headers=header).json()
+    except:
+        return False
 
     for addr, amount in all_address.items():
         all_address[addr] = amount / 10e7
@@ -77,9 +80,6 @@ def balance_from_address(address: str, node_url: str) -> int:
         return -1
 
 
-def percent_total(amount: float) -> float:
-    percent = amount / TOTAL_SUPPLY
-    return round(float(percent) * 100, 5)
 
 
 def rich_list(**kargs: dict) -> dict:
@@ -91,6 +91,11 @@ def rich_list(**kargs: dict) -> dict:
         export=True,
         path='.'
     """
+    def percent_total(amount: float, supply: float) -> float:
+        percent = amount / supply
+        return round(float(percent) * 100, 5)
+
+    supply = MAINNET_TOTAL_SUPPLY if kargs['net'] == 'mainnet' else TESTNET_TOTAL_SUPPLY
     wallets = all_address_balance(
         kargs['node_ip'],
         kargs['node_api_key']
@@ -106,7 +111,7 @@ def rich_list(**kargs: dict) -> dict:
         {
             "address": address,
             "amount": amount,
-            "percent": percent_total(amount),
+            "percent": percent_total(amount, supply),
             "link": f"https://lunesnode.lunes.io/addresses/balance/details/{address}"
         }
         for address, amount in wallets.items()
@@ -121,16 +126,17 @@ def rich_list(**kargs: dict) -> dict:
     )
 
     report = {
-        "total_supply": TOTAL_SUPPLY,
+        "total_supply": supply,
         "total_percent": total_percent,
         "wallet_list": rich_list
     }
 
     if kargs.get('export', False):
-        export_dict(
-            kargs.get('path', '.'),
-            "rich_list.json",
-            report)
+        export_json(
+            report,
+            "rich_list",
+            kargs.get('path', '.')
+        )
     return report
 
 
