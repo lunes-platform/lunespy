@@ -163,19 +163,21 @@ def list_of_rich(**kargs: dict) -> dict:
         }
 
 
-def address_of_node_from_url(node_url: str, public_key: str) -> dict:
-    full_url = f'https://{node_url}/addresses/publicKey/{public_key}'
-    response = get(full_url)
+def address_of_node_from_url(node_url: str) -> dict:
+    if node_url == None:
+        full_url = f'https://{Node.mainnet_url.value}/addresses'
+
+    else:
+        full_url = f'https://{node_url}/addresses'
+        response = get(full_url)
 
     if response.ok:
         return {
             'status': 'ok',
-            'response': [
+            'response': 
                 {
-                    'node_url': public_key,
-                    'address': response.json()['address']
+                    node_url: response.json()
                 }
-            ]
         }
     else:
         return {
