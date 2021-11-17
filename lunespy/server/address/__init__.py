@@ -163,3 +163,17 @@ def list_of_rich(**kargs: dict) -> dict:
         }
 
 
+def leasing_active_by_address(node_url: str, address: str) -> dict:
+    full_url = f'https://{node_url}/leasing/active/{address}'
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
