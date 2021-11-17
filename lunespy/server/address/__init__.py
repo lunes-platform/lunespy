@@ -169,7 +169,8 @@ def address_of_node_from_url(node_url: str) -> dict:
 
     else:
         full_url = f'https://{node_url}/addresses'
-        response = get(full_url)
+            
+    response = get(full_url)
 
     if response.ok:
         return {
