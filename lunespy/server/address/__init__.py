@@ -163,9 +163,9 @@ def list_of_rich(**kargs: dict) -> dict:
         }
 
 
-def address_of_node_from_url(node_url: str) -> dict:
+def address_of_node_from_url(node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'https://{Node.mainnet_url.value}/addresses'
+        full_url = f'{Node.mainnet_url.value}/addresses'
 
     else:
         full_url = f'https://{node_url}/addresses'
@@ -177,7 +177,7 @@ def address_of_node_from_url(node_url: str) -> dict:
             'status': 'ok',
             'response': 
                 {
-                    node_url: response.json()
+                    full_url.replace('/addresses',''): response.json()
                 }
         }
     else:
