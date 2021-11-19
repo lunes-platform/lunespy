@@ -177,3 +177,23 @@ def leasing_active_by_address(node_url: str, address: str) -> dict:
             'status': 'error',
             'response': response.text
         }
+
+
+def aliases_associated_with_an_address(address: str, node_url: str = None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}addresses/alias/by-address/{address}'
+    else:
+        full_url = f'https://{node_url}/addresses/alias/by-address/{address}'
+
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else: 
+        return {
+            'status': 'error',
+            'response': response.text
+        }
