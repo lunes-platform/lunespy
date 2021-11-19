@@ -4,8 +4,26 @@ from lunespy.utils import export_json
 from requests import get
 
 
-def aliases(address: str) -> str:
-    pass
+def address_associated_with_an_alias(alias: str, node_url: str = None) -> dict:
+    if node_url == None:
+       full_url = f'{Node.mainnet_url.value}/addresses/alias/by-alias/{alias}'
+
+    else:
+        full_url = f'https://{node_url}/addresses/alias/by-alias/{alias}'
+    
+    response = get(full_url)
+
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': response.json()
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
+    
 
 
 def asset_distribution(node_url: str, asset_id: str) -> dict:
