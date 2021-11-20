@@ -8,8 +8,12 @@ def aliases(address: str) -> str:
     pass
 
 
-def asset_distribution(node_url: str, asset_id: str) -> dict:
-    full_url = f'https://{node_url}/assets/{asset_id}/distribution'
+def asset_distribution(asset_id: str, node_url: str == None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/assets/{asset_id}/distribution'
+    else: 
+        full_url = f'https://{node_url}/assets/{asset_id}/distribution'
+    
     response = get(full_url)
 
     if response.ok:
@@ -24,8 +28,12 @@ def asset_distribution(node_url: str, asset_id: str) -> dict:
         }
 
 
-def balance_all_assets_of_address(node_url: str, address: str) -> dict:
-    full_url = f'https://{node_url}/assets/balance/{address}'
+def balance_all_assets_of_address(address: str, node_url: str == None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/assets/balance/{address}'
+    else:
+        full_url = f'https://{node_url}/assets/balance/{address}'
+    
     response = get(full_url)
     
     if response.ok:
@@ -40,8 +48,12 @@ def balance_all_assets_of_address(node_url: str, address: str) -> dict:
         }
 
 
-def balance_for_especify_asset_of_address(node_url: str, address: str, asset_id: str) -> dict:
-    full_url = f'https://{node_url}/assets/balance/{address}/{asset_id}'
+def balance_for_especify_asset_of_address(address: str, asset_id: str, node_url: str = None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/assets/balance/{address}/{asset_id}'
+    else:
+        full_url = f'https://{node_url}/assets/balance/{address}/{asset_id}'
+    
     response = get(full_url)
 
     if response.ok:
@@ -73,8 +85,12 @@ def balance_of_all_address(node_ip: str, node_api_key: str) -> dict:
         }
 
 
-def balance_of_address(address: str, node_url: str) -> int:
-    full_url = f'http://{node_url}/addresses/balance/{address}'
+def balance_of_address(address: str, node_url: str = None) -> int:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/addresses/balance/{address}'
+    else:
+        full_url = f'http://{node_url}/addresses/balance/{address}'
+    
     response = get(full_url)
 
     if response.ok:
@@ -163,8 +179,12 @@ def list_of_rich(**kargs: dict) -> dict:
         }
 
 
-def leasing_active_by_address(node_url: str, address: str) -> dict:
-    full_url = f'https://{node_url}/leasing/active/{address}'
+def leasing_active_by_address(address: str, node_url: str = None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/leasing/active/{address}'
+    else:
+        full_url = f'https://{node_url}/leasing/active/{address}'
+    
     response = get(full_url)
 
     if response.ok:

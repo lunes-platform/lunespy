@@ -1,7 +1,12 @@
 from requests import get
+from lunespy.server import Node
 
-def block_from_height(node_url: str, height: int) -> dict:
-    full_url = f'https://{node_url}/blocks/at/{height}'
+def block_from_height(height: int, node_url: str = None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/blocks/at/{height}'
+    else:
+        full_url = f'https://{node_url}/blocks/at/{height}'
+    
     response = get(full_url)
     
     if response.ok:
@@ -16,8 +21,12 @@ def block_from_height(node_url: str, height: int) -> dict:
         }
 
 
-def range_block(node_url: str, start_block: int, end_block: int) -> dict:
-    full_url = f'https://{node_url}/blocks/seq/{start_block}/{end_block}'
+def range_block(start_block: int, end_block: int, node_url: str = None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/blocks/seq/{start_block}/{end_block}'
+    else:
+        full_url = f'https://{node_url}/blocks/seq/{start_block}/{end_block}'
+    
     response = get(full_url)
 
     if response.ok:
@@ -32,8 +41,12 @@ def range_block(node_url: str, start_block: int, end_block: int) -> dict:
         }
 
 
-def last_block(node_url: str) -> dict:
-    full_url = f'https://{node_url}/blocks/last'
+def last_block(node_url: str = None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/blocks/last'
+    else:
+        full_url = f'https://{node_url}/blocks/last'
+    
     response = get(full_url)
 
     if response.ok:
@@ -48,8 +61,12 @@ def last_block(node_url: str) -> dict:
             }
 
 
-def blocks_generated_by_specified_address(node_url: str, address: str, start_block: int, end_block: int) -> dict:
-    full_url = f'https://{node_url}/blocks/address/{address}/{start_block}/{end_block}'
+def blocks_generated_by_specified_address(address: str, start_block: int, end_block: int, node_url: str = None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/blocks/address/{address}/{start_block}/{end_block}'
+    else:
+        full_url = f'https://{node_url}/blocks/address/{address}/{start_block}/{end_block}'
+    
     response = get(full_url)
 
     if response.ok:
