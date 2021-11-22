@@ -4,35 +4,31 @@
     │   ├── client/
     │   │   ├── wallet/
     │   │   └──transaction/
+    │   │       ├── cancel_lease/
     │   │       ├── transfer/
-    │   │       ├── lease/
-    │   │       ├── issue/
     │   │       ├── reissue/
+    │   │       ├── issue/
+    │   │       ├── lease/
     │   │       ├── alias/
-    │   │       ├── burn/
-    │   │       └── .../
+    │   │       ├── lunex/
+    │   │       ├── mass/
+    │   │       └── burn/
     │   │
     │   ├── server/
+    │   │   ├── transactions/
     │   │   ├── address/
     │   │   ├── blocks/
-    │   │   ├── transactions/
-    │   │   └── .../
+    │   │   └── nodes/
     │   │
     │   └── utils/
-    │       ├── crypto/
-    │       ├── settings/
-    │       └── .../
+    │       └── crypto/
     |
     ├── tests/
     │   ├── client/
-    │   │   ├── wallet/
-    │   │   └──transaction/
-    │   │       ├── transfer/
-    │   │       ├── lease/
-    │   │       ├── issue/
-    │   │       ├── reissue/
-    │   │       ├── alias/
-    │   │       └── burn/
+    │   │   └── wallet/
+    │   │       └── .../
+    │   │   └── transaction/
+    │   │       └── .../
     │   │
     │   ├── server/
     │   │   └── .../
@@ -41,19 +37,17 @@
     │       └── .../
     |
     ├── data/
-    │   ├── transaction-XYZ.json
-    │   ├── wallet.json
-    │   ├── all_wallets.csv
-    │   └── rich_list.csv
+    │   ├── rich_list.json
+    │   ├── tx-hash.json
+    │   └── wallet.json
     │
     |
     ├── docs/
-    │   ├── CHANGELOG.md
-    │   ├── CONTRIBUTING.md
     │   ├── TUTORIAL.md
     │   └── PROJECT.md
-    |
     │
+    ├── CHANGELOG.md
+    ├── CONTRIBUTING.md
     ├── .gitignore
     ├── LICENSE
     ├── README.md
