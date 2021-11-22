@@ -23,7 +23,6 @@ def address_associated_with_an_alias(alias: str, node_url: str = None) -> dict:
             'status': 'error',
             'response': response.text
         }
-    
 
 
 def asset_distribution(asset_id: str, node_url: str == None) -> dict:
@@ -202,7 +201,30 @@ def leasing_active_by_address(address: str, node_url: str = None) -> dict:
         full_url = f'{Node.mainnet_url.value}/leasing/active/{address}'
     else:
         full_url = f'https://{node_url}/leasing/active/{address}'
-    
+
+    response = get(full_url)
+    if response.ok:
+        return {
+            'status': 'ok',
+            'response': 
+                {
+                    full_url.replace('/addresses',''): response.json()
+                }
+        }
+    else:
+        return {
+            'status': 'error',
+            'response': response.text
+        }
+
+
+def address_of_node_from_url(node_url: str = None) -> dict:
+    if node_url == None:
+        full_url = f'{Node.mainnet_url.value}/addresses'
+
+    else:
+        full_url = f'https://{node_url}/addresses'
+            
     response = get(full_url)
 
     if response.ok:
@@ -235,3 +257,4 @@ def aliases_associated_with_an_address(address: str, node_url: str = None) -> di
             'status': 'error',
             'response': response.text
         }
+
