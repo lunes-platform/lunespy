@@ -9,7 +9,7 @@ class CreateAlias(BaseTransaction):
     """
     alias_data: dict
         timestamp: int    
-        alias_fee: int
+        fee: int
         alias: str
     """
     def __init__(self, sender: Account, **alias_data: dict) -> None:

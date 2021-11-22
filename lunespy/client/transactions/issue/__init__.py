@@ -11,7 +11,7 @@ class IssueToken(BaseTransaction):
     issue_data: dict
         description: str
         reissuable: bool
-        issue_fee: int
+        fee: int
         quantity: int
         decimals: int
         name: str

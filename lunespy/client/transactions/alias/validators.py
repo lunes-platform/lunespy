@@ -32,7 +32,7 @@ def validate_alias(sender: Account, alias_data: dict) -> bool:
 
 def mount_alias(sender: Account, alias_data: dict) -> dict:
     timestamp: int = alias_data.get('timestamp', int(now() * 1000))
-    alias_fee: int = alias_data.get('alias_fee', AliasType.fee.value)
+    fee: int = alias_data.get('fee', AliasType.fee.value)
     alias: str = alias_data['alias']
     alias_lenght: int = len(alias)
     network_id: str = sender.network_id
@@ -46,7 +46,7 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
         b58decode(sender.public_key) + \
         struct.pack(">H", len(aliasWithNetwork)) + \
         aliasWithNetwork + \
-        struct.pack(">Q", alias_fee) + \
+        struct.pack(">Q", fee) + \
         struct.pack(">Q", timestamp)
 
     signature: bytes = sign(sender.private_key, bytes_data)
@@ -56,7 +56,7 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
-        "fee": alias_fee,
+        "fee": fee,
 
         "alias": alias
     }

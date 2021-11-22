@@ -9,7 +9,7 @@ from lunespy.client.wallet.constants import ADDRESS_VERSION
 from lunespy.client.wallet.constants import ADDRESS_LENGTH
 from lunespy.utils.crypto.converters import bytes_to_string
 from lunespy.utils.crypto.converters import string_to_bytes
-from lunespy.utils.crypto.converters import hash_network
+from lunespy.utils.crypto.converters import hash_data
 
 def validate_wallet(wallet: dict) -> dict:
     wallet['nonce'] = wallet.get('nonce', 0)
@@ -70,7 +70,7 @@ def validate_wallet(wallet: dict) -> dict:
 def validate_address(address: str, network_id: str) -> bool:
     bytes_address = bytes_to_string(address, decode=True)
     checksum = bytes_address[-ADDRESS_CHECKSUM_LENGTH:]
-    network = hash_network(string_to_bytes(
+    network = hash_data(string_to_bytes(
         bytes_address[:-ADDRESS_CHECKSUM_LENGTH]
         )
     )[:ADDRESS_CHECKSUM_LENGTH]

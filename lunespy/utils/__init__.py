@@ -62,7 +62,7 @@ def generate_log() -> None:
         return changelog
 
     def save_changelog(changelog: list) -> None:
-        with open('./docs/CHANGELOG.md', 'w') as file:
+        with open('./CHANGELOG.md', 'w') as file:
             file.writelines(changelog)
 
     save_changelog(

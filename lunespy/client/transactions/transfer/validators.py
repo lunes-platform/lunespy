@@ -12,7 +12,7 @@ from struct import pack
 
 def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> dict:
     timestamp: int = transfer_data.get('timestamp', int(now() * 1000))
-    transfer_fee: int = transfer_data.get('transfer_fee', TransferType.fee.value)
+    fee: int = transfer_data.get('fee', TransferType.fee.value)
     amount: int = lunes_to_unes(transfer_data['amount'])
     asset_fee: str = transfer_data.get('asset_fee', "")
     asset_id: str = transfer_data.get('asset_id', "")
@@ -23,7 +23,7 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
         (b'\1' + b58decode(asset_fee) if asset_fee != "" else b'\0') + \
         pack(">Q", timestamp) + \
         pack(">Q", amount) + \
-        pack(">Q", transfer_fee) + \
+        pack(">Q", fee) + \
         b58decode(receiver.address)
     signature: bytes = sign(sender.private_key, bytes_data)
     return {
@@ -31,7 +31,7 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
-        "fee": transfer_fee,
+        "fee": fee,
 
         "recipient": receiver.address,
         "feeAsset": asset_fee,

@@ -31,7 +31,7 @@ def bytes_to_string(bytes: str, decode: bool=False) -> str:
         )
 
 
-def hash_network(address: str) -> str:
+def hash_data(address: str) -> str:
     from hashlib import blake2b
     from lunespy.utils.crypto.algorithms import KeccakHash
     

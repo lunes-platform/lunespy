@@ -12,7 +12,7 @@ import struct
 
 
 def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_data: dict) -> dict:
-    mass_transfer_fee: int = TransferType.fee.value + len(receivers_list) * MassType.fee.value
+    fee: int = TransferType.fee.value + len(receivers_list) * mass_transfer_data.get('fee', MassType.fee.value)
     timestamp: int = mass_transfer_data.get('timestamp', int(now() * 1000))
     asset_id: str = mass_transfer_data.get('asset_id', "")
     receivers_list: list = [
@@ -33,7 +33,7 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
             struct.pack(">H", len(receivers_list)) + \
             receivers_list_data + \
             struct.pack(">Q", timestamp) + \
-            struct.pack(">Q", mass_transfer_fee)
+            struct.pack(">Q", fee)
 
     signature: bytes = sign(sender.private_key, bytes_data)
 
@@ -42,7 +42,7 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
-        "fee": mass_transfer_fee,
+        "fee": fee,
         
         "version": 1,
         "assetId": asset_id,

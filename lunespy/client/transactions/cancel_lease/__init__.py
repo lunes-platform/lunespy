@@ -9,7 +9,7 @@ class CancelLease(BaseTransaction):
     """
     cancel_data: dict
         lease_tx_id: str
-        cancel_fee: int
+        fee: int
         timestamp: int
     """
     def __init__(self, sender: Account, **cancel_data: dict) -> None:

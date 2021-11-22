@@ -12,7 +12,7 @@ class BurnToken(BaseTransaction):
         timestamp: int 
         asset_id: str 
         quantity: int
-        burn_fee: int
+        fee: int
     """
     def __init__(self, sender: Account, **burn_data: dict) -> None:
         super().__init__('Burn Token', burn_data)

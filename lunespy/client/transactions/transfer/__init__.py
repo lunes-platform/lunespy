@@ -7,7 +7,7 @@ from lunespy.client.wallet import Account
 class TransferToken(BaseTransaction):
     """
     transfer_data: dict
-        transfer_fee: int
+        fee: int
         timestamp: int
         asset_fee: int
         asset_id: str
