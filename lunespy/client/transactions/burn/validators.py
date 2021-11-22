@@ -12,7 +12,7 @@ import struct
 
 def mount_burn(sender: Account, burn_data: dict) -> dict:
     timestamp: int = burn_data.get('timestamp', int(now() * 1000))
-    burn_fee: int = burn_data.get('burn_fee', BurnType.fee.value)
+    fee: int = burn_data.get('fee', BurnType.fee.value)
     quantity: int = burn_data.get('quantity', 0)
     asset_id: int = burn_data['asset_id']
 
@@ -20,7 +20,7 @@ def mount_burn(sender: Account, burn_data: dict) -> dict:
         b58decode(sender.public_key) + \
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
-        struct.pack(">Q", burn_fee) + \
+        struct.pack(">Q", fee) + \
         struct.pack(">Q", timestamp)
 
     signature: bytes = sign(sender.private_key, bytes_data)
@@ -29,7 +29,7 @@ def mount_burn(sender: Account, burn_data: dict) -> dict:
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
-        "fee": burn_fee,
+        "fee": fee,
 
         "assetId": asset_id,
         "quantity": quantity

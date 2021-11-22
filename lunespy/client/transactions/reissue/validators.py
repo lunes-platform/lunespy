@@ -27,7 +27,7 @@ def validate_reissue(sender: Account, reissue_data: dict) -> bool:
 
 
 def mount_reissue(sender: Account, reissue_data: dict) -> dict:
-    reissue_fee = reissue_data.get('reissue_fee', ReissueType.fee.value)
+    fee = reissue_data.get('fee', ReissueType.fee.value)
     timestamp = reissue_data.get('timestamp', int(now() * 1000))
     reissuable = reissue_data.get('reissuable', False)
     asset_id = reissue_data['asset_id']
@@ -38,7 +38,7 @@ def mount_reissue(sender: Account, reissue_data: dict) -> dict:
         b58decode(asset_id) + \
         struct.pack(">Q", quantity) + \
         (b'\1' if reissuable else b'\0') + \
-        struct.pack(">Q",reissue_fee) + \
+        struct.pack(">Q",fee) + \
         struct.pack(">Q", timestamp)
 
     signature: bytes = sign(sender.private_key, bytes_data)
@@ -47,7 +47,7 @@ def mount_reissue(sender: Account, reissue_data: dict) -> dict:
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
-        "fee": reissue_fee,
+        "fee": fee,
 
         "assetId": asset_id,
         "reissuable": reissuable,

@@ -9,7 +9,7 @@ class CreateLease(BaseTransaction):
     """
     lease_data: dict
         validator_address: str
-        lease_fee: int
+        fee: int
         timestamp: int
         amount: int
     """

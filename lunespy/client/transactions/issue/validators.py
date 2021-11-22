@@ -11,7 +11,7 @@ import struct
 
 def mount_issue(sender: Account, issue_data: dict) -> dict:
     timestamp: int = issue_data.get('timestamp', int(now() * 1000))
-    issue_fee: int = issue_data.get('issue_fee', IssueType.fee.value)
+    fee: int = issue_data.get('fee', IssueType.fee.value)
     reissuable: bool = issue_data.get('reissuable', False)
     description: str = issue_data.get('description', '')
     quantity: int = issue_data.get('quantity', 0)
@@ -27,7 +27,7 @@ def mount_issue(sender: Account, issue_data: dict) -> dict:
         struct.pack(">Q", quantity) + \
         struct.pack(">B", decimals) + \
         (b'\1' if reissuable else b'\0') + \
-        struct.pack(">Q", issue_fee) + \
+        struct.pack(">Q", fee) + \
         struct.pack(">Q", timestamp)
 
     signature: bytes = sign(sender.private_key, bytes_data)
@@ -36,7 +36,7 @@ def mount_issue(sender: Account, issue_data: dict) -> dict:
         "senderPublicKey": sender.public_key,
         "signature": signature.decode(),
         "timestamp": timestamp,
-        "fee": issue_fee,
+        "fee": fee,
 
         "description": description,
         "reissuable": reissuable,

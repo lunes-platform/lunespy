@@ -10,7 +10,7 @@ class ReissueToken(BaseTransaction):
     """
     reissue_data: dict
         reissuable: bool
-        reissue_fee: int
+        fee: int
         asset_id: str
         quantity: int
     """
