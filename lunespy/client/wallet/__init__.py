@@ -8,8 +8,9 @@ class Account:
         address: str
         nonce: int | 0 to 4.294.967.295
         network: str | 'mainnet' xor 'testnet'
-        seed: str | 12 words
-        byte_private_key: bytes 
+        seed: str | n words
+        n_words: int | n_words should be n // 3  
+        byte_private_key: bytes
         byte_public_key: bytes
         byte_address: bytes
     """

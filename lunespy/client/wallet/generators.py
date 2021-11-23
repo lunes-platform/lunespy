@@ -30,19 +30,23 @@ def address_generator(public_key: str, network_id: str) -> dict:
     }
 
 
-def new_seed_generator() -> str:
-    wordCount = 2048
-    words = []
-    for i in range(4):
+def new_seed_generator(n_words: int) -> str:
+    def f():
+        wordCount = 2048        
         r = bytes_to_string(urandom(4))
         x = (ord(r[3])) + (ord(r[2]) << 8) + (ord(r[1]) << 16) + (ord(r[0]) << 24)
         w1 = x % wordCount
         w2 = ((int(x / wordCount) >> 0) + w1) % wordCount
         w3 = ((int((int(x / wordCount) >> 0) / wordCount) >> 0) + w2) % wordCount
-        words.append(word_list[w1])
-        words.append(word_list[w2])
-        words.append(word_list[w3])
-    return " ".join(words)
+        return w1, w2, w3
+
+    n_words_multiple_of_3: int = n_words // 3
+
+    return " ".join([
+        word_list[n]
+        for _ in range(n_words_multiple_of_3)
+        for n in f()
+    ])
 
 
 def seed_generator(seed: str, nonce: int, network_id: str) -> dict:
@@ -123,6 +127,11 @@ def wallet_generator(**data: dict) -> dict:
     elif data.get('address', False):
         return address_generator(public_key="", network_id=data['network_id'])
 
+    elif data.get('n_words', False):
+        seed = new_seed_generator(n_words=data['n_words'])
+        return seed_generator(seed=seed, nonce=data['nonce'], network_id=data['network_id'])
+    
     else:
-        seed = new_seed_generator()
+        n_words: int = 12
+        seed: str = new_seed_generator(n_words)
         return seed_generator(seed=seed, nonce=data['nonce'], network_id=data['network_id'])
