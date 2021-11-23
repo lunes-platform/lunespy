@@ -22,6 +22,7 @@ class Account:
 
     def __str__(self) -> str:
         from lunespy.utils import bcolors
+
         data = ''
         for key, value in self.__dict__.items():
             if 'byte' not in key and 'id' not in key:
@@ -38,6 +39,7 @@ class Account:
 
     def to_json(self, path: str = '.') -> str:
         from lunespy.utils import export_json
+
         data = {
             key: value 
             for (key, value) in self.__dict__.items()
@@ -49,3 +51,15 @@ class Account:
             name=f'wallet-{self.network}',
             path=path
         )
+
+
+class LunexAccount(Account):
+    """
+    params: 
+        public_key: str
+        network: str | 'mainnet' xor 'testnet'
+        url: str | 'http://ip:port'
+    """
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.url: str  = data['url']

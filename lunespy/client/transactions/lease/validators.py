@@ -10,7 +10,7 @@ import struct
 
 
 def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> dict:
-    timestamp: int = lease_data.get('timestamp', int(now() * 1000))
+    timestamp: int = lease_data.get('timestamp', now())
     amount: int = lease_data['amount']
     fee: int = lease_data.get('fee', LeaseType.fee.value)
 
@@ -65,7 +65,7 @@ def send_lease(mount_tx: dict, node_url: str) -> dict:
         return mount_tx
     else:
         mount_tx.update({
-            'send': True,
-            'response': response.json()
+            'send': False,
+            'response': response.text
         })
         return mount_tx

@@ -13,7 +13,7 @@ import struct
 
 def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_data: dict) -> dict:
     fee: int = TransferType.fee.value + len(receivers_list) * mass_transfer_data.get('fee', MassType.fee.value)
-    timestamp: int = mass_transfer_data.get('timestamp', int(now() * 1000))
+    timestamp: int = mass_transfer_data.get('timestamp', now())
     asset_id: str = mass_transfer_data.get('asset_id', "")
     receivers_list: list = [
         {'receiver': tx['receiver'], 'amount': lunes_to_unes(tx['amount'])}
@@ -92,7 +92,7 @@ def send_mass_transfer(mount_tx: dict, node_url: str) -> dict:
         return mount_tx
     else:
         mount_tx.update({
-            'send': True,
-            'response': response.json()
+            'send': False,
+            'response': response.text
         })
         return mount_tx

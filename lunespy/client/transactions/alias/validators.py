@@ -31,7 +31,7 @@ def validate_alias(sender: Account, alias_data: dict) -> bool:
     return True
 
 def mount_alias(sender: Account, alias_data: dict) -> dict:
-    timestamp: int = alias_data.get('timestamp', int(now() * 1000))
+    timestamp: int = alias_data.get('timestamp', now())
     fee: int = alias_data.get('fee', AliasType.fee.value)
     alias: str = alias_data['alias']
     alias_lenght: int = len(alias)
@@ -81,7 +81,7 @@ def send_alias(mount_tx: dict, node_url: str) -> dict:
         return mount_tx
     else:
         mount_tx.update({
-            'send': True,
-            'response': response.json()
+            'send': False,
+            'response': response.text
         })
         return mount_tx

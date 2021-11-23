@@ -11,7 +11,7 @@ import struct
 
 def mount_cancel(sender: Account, cancel_data: dict) -> dict:
     lease_tx_id: str = cancel_data['lease_tx_id']
-    timestamp: int = cancel_data.get('timestamp', int(now() * 1000))
+    timestamp: int = cancel_data.get('timestamp', now())
     fee: int = cancel_data.get('fee', CancelLeaseType.fee.value)
 
     bytes_data: bytes = CancelLeaseType.to_byte.value + \
