@@ -28,7 +28,7 @@ def validate_reissue(sender: Account, reissue_data: dict) -> bool:
 
 def mount_reissue(sender: Account, reissue_data: dict) -> dict:
     fee = reissue_data.get('fee', ReissueType.fee.value)
-    timestamp = reissue_data.get('timestamp', int(now() * 1000))
+    timestamp = reissue_data.get('timestamp', now())
     reissuable = reissue_data.get('reissuable', False)
     asset_id = reissue_data['asset_id']
     quantity = reissue_data['quantity']
@@ -74,7 +74,7 @@ def send_reissue(mount_tx: dict, node_url: str) -> dict:
         return mount_tx
     else:
         mount_tx.update({
-            'send': True,
-            'response': response.json()
+            'send': False,
+            'response': response.text
         })
         return mount_tx

@@ -1,4 +1,4 @@
-from lunespy.utils import export_json
+from lunespy.utils import export_json, sha256
 from lunespy.utils import log_data
 from lunespy.utils import bcolors
 from lunespy.server import Node
@@ -19,7 +19,7 @@ class BaseTransaction(metaclass=ABCMeta):
     def transaction(self, mount_tx, **extra) -> dict:
         if self.ready:
             tx = {'ready': True}
-            tx.update( mount_tx( **extra ) )
+            tx.update(mount_tx( **extra ))
             return tx
         else:
             print(bcolors.FAIL + f'{self.tx_type} Transactions bad formed', bcolors.ENDC)
@@ -38,7 +38,8 @@ class BaseTransaction(metaclass=ABCMeta):
             tx_response = send_tx(mounted_tx, node_url=node_url)
 
             if tx_response['send']:
-                self.show(**tx_response)
+                id = tx_response['response'].get('id', sha256(tx_response))
+                self.show(f'tx-{id}', tx_response)
                 return tx_response
             else:
                 print(bcolors.FAIL + f"Your {self.tx_type} dont sended because:\n└──{tx_response['response']}" + bcolors.ENDC)
@@ -49,6 +50,6 @@ class BaseTransaction(metaclass=ABCMeta):
             return mounted_tx
         
 
-    def show(self, **data: dict) -> None:
+    def show(self, name: str, data: dict, path: str = '.') -> None:
         log_data(data)
-        export_json(data)
+        export_json(data, name, path)

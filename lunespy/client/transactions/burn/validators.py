@@ -11,7 +11,7 @@ import struct
 
 
 def mount_burn(sender: Account, burn_data: dict) -> dict:
-    timestamp: int = burn_data.get('timestamp', int(now() * 1000))
+    timestamp: int = burn_data.get('timestamp', now())
     fee: int = burn_data.get('fee', BurnType.fee.value)
     quantity: int = burn_data.get('quantity', 0)
     asset_id: int = burn_data['asset_id']
@@ -74,7 +74,7 @@ def send_burn(mount_tx: dict, node_url: str) -> dict:
         return mount_tx
     else:
         mount_tx.update({
-            'send': True,
-            'response': response.json()
+            'send': False,
+            'response': response.text
         })
         return mount_tx

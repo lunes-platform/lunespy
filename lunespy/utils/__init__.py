@@ -86,3 +86,11 @@ def lunes_to_unes(lunes: float or int) -> int:
 
 def unes_to_lunes(unes: int) -> float:
     return float(unes / 10e7)
+
+
+def sha256(object: object) -> str:
+    from hashlib import sha256
+
+    return sha256(
+        str(object).encode()
+    ).hexdigest()

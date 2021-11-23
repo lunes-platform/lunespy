@@ -10,7 +10,7 @@ import struct
 
 
 def mount_issue(sender: Account, issue_data: dict) -> dict:
-    timestamp: int = issue_data.get('timestamp', int(now() * 1000))
+    timestamp: int = issue_data.get('timestamp', now())
     fee: int = issue_data.get('fee', IssueType.fee.value)
     reissuable: bool = issue_data.get('reissuable', False)
     description: str = issue_data.get('description', '')
@@ -84,7 +84,7 @@ def send_issue(mount_tx: dict, node_url: str) -> dict:
         return mount_tx
     else:
         mount_tx.update({
-            'send': True,
-            'response': response.json()
+            'send': False,
+            'response': response.text
         })
         return mount_tx

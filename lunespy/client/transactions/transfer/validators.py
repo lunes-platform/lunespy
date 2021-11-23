@@ -11,7 +11,7 @@ from struct import pack
 
 
 def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> dict:
-    timestamp: int = transfer_data.get('timestamp', int(now() * 1000))
+    timestamp: int = transfer_data.get('timestamp', now())
     fee: int = transfer_data.get('fee', TransferType.fee.value)
     amount: int = lunes_to_unes(transfer_data['amount'])
     asset_fee: str = transfer_data.get('asset_fee', "")
