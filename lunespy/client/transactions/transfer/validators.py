@@ -1,16 +1,14 @@
-from lunespy.client.transactions.constants import TransferType
-from lunespy.client.wallet.validators import validate_address
-from lunespy.utils.crypto.converters import sign
 from lunespy.client.wallet import Account
-from lunespy.utils import lunes_to_unes
-from lunespy.utils import bcolors
-from lunespy.utils import now
-from base58 import b58decode
-from requests import post
-from struct import pack
 
 
 def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> dict:
+    from lunespy.client.transactions.constants import TransferType
+    from lunespy.utils.crypto.converters import sign
+    from lunespy.utils import lunes_to_unes
+    from lunespy.utils import now
+    from base58 import b58decode
+    from struct import pack
+
     timestamp: int = transfer_data.get('timestamp', now())
     fee: int = transfer_data.get('fee', TransferType.fee.value)
     amount: int = lunes_to_unes(transfer_data['amount'])
@@ -41,6 +39,9 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
 
 
 def validate_transfer(sender: Account, receiver: Account, transfer_data: dict) -> bool:
+    from lunespy.client.wallet.validators import validate_address
+    from lunespy.utils import bcolors
+
     amount: int = transfer_data.get('amount', -1)
 
     if not sender.private_key:
@@ -56,6 +57,8 @@ def validate_transfer(sender: Account, receiver: Account, transfer_data: dict) -
 
 # todo async
 def send_transfer(mount_tx: dict, node_url: str) -> dict:
+    from requests import post
+
     response = post(
         f'{node_url}/transactions/broadcast',
         json=mount_tx,

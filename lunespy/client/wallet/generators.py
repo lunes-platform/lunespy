@@ -1,4 +1,3 @@
-from lunespy.utils.crypto.converters import bytes_to_string
 from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import hash_data
 from lunespy.client.wallet.constants import word_list
@@ -6,7 +5,6 @@ import axolotl_curve25519 as curve
 from base58 import b58decode
 from base58 import b58encode
 from os import urandom
-
 
 
 def address_generator(public_key: str, network_id: str) -> dict:
@@ -31,6 +29,8 @@ def address_generator(public_key: str, network_id: str) -> dict:
 
 
 def new_seed_generator(n_words: int) -> str:
+    from lunespy.utils.crypto.converters import bytes_to_string
+
     def f():
         wordCount = 2048        
         r = bytes_to_string(urandom(4))
@@ -111,7 +111,6 @@ def public_key_generator(public_key: str, network_id: str) -> dict:
         'byte_public_key': b58encode(public_key_b58),
         'byte_address': address['byte_address']
     }
-
 
 
 def wallet_generator(**data: dict) -> dict:

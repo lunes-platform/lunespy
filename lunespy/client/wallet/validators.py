@@ -1,17 +1,7 @@
-from lunespy.client.wallet.errors import InvalidChecksumAddress
-from lunespy.client.wallet.errors import InvalidVersionAddress
-from lunespy.client.wallet.errors import InvalidLengthAddress
-from lunespy.client.wallet.errors import InvalidChainAddress
-from lunespy.client.wallet.errors import InvalidNonce
-from lunespy.client.wallet.generators import wallet_generator
-from lunespy.client.wallet.constants import ADDRESS_CHECKSUM_LENGTH
-from lunespy.client.wallet.constants import ADDRESS_VERSION
-from lunespy.client.wallet.constants import ADDRESS_LENGTH
-from lunespy.utils.crypto.converters import bytes_to_string
-from lunespy.utils.crypto.converters import string_to_bytes
-from lunespy.utils.crypto.converters import hash_data
-
 def validate_wallet(wallet: dict) -> dict:
+    from lunespy.client.wallet.errors import InvalidNonce
+    from lunespy.client.wallet.generators import wallet_generator
+
     wallet['nonce'] = wallet.get('nonce', 0)
 
     if wallet.get('network', 'mainnet') == 'mainnet':
@@ -68,6 +58,17 @@ def validate_wallet(wallet: dict) -> dict:
 
 
 def validate_address(address: str, network_id: str) -> bool:
+    from lunespy.client.wallet.errors import InvalidChecksumAddress
+    from lunespy.client.wallet.errors import InvalidVersionAddress
+    from lunespy.client.wallet.errors import InvalidLengthAddress
+    from lunespy.client.wallet.errors import InvalidChainAddress
+    from lunespy.client.wallet.constants import ADDRESS_CHECKSUM_LENGTH
+    from lunespy.client.wallet.constants import ADDRESS_VERSION
+    from lunespy.client.wallet.constants import ADDRESS_LENGTH
+    from lunespy.utils.crypto.converters import bytes_to_string
+    from lunespy.utils.crypto.converters import string_to_bytes
+    from lunespy.utils.crypto.converters import hash_data
+
     bytes_address = bytes_to_string(address, decode=True)
     checksum = bytes_address[-ADDRESS_CHECKSUM_LENGTH:]
     network = hash_data(string_to_bytes(

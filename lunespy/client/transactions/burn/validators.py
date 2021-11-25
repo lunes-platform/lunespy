@@ -1,16 +1,13 @@
-from lunespy.utils.crypto.converters import bytes_to_string
-from lunespy.utils.crypto.converters import string_to_bytes
-from lunespy.client.transactions.constants import BurnType
-from lunespy.utils.crypto.converters import sign
-from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
-from lunespy.utils import now
-from base58 import b58decode
-from requests import post
-import struct
 
 
 def mount_burn(sender: Account, burn_data: dict) -> dict:
+    from lunespy.utils import now
+    from lunespy.client.transactions.constants import BurnType
+    from lunespy.utils.crypto.converters import sign
+    from base58 import b58decode
+    import struct
+
     timestamp: int = burn_data.get('timestamp', now())
     fee: int = burn_data.get('fee', BurnType.fee.value)
     quantity: int = burn_data.get('quantity', 0)
@@ -38,6 +35,8 @@ def mount_burn(sender: Account, burn_data: dict) -> dict:
 
 
 def validate_burn(sender: Account, burn_data: dict) -> bool:
+    from lunespy.utils import bcolors
+
     quantity: int = burn_data.get('quantity', -1)
     asset_id: str = burn_data.get('asset_id', False)
 
@@ -58,6 +57,8 @@ def validate_burn(sender: Account, burn_data: dict) -> bool:
 
 # todo async
 def send_burn(mount_tx: dict, node_url: str) -> dict:
+    from requests import post
+
     response = post(
         f'{node_url}/transactions/broadcast',
         json=mount_tx,

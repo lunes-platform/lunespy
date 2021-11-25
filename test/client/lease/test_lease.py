@@ -1,6 +1,7 @@
 from lunespy.client.transactions.lease import CreateLease
 from lunespy.client.wallet import Account
 
+
 def test_without_lease_ready_failed_successful():
     """
         with amount parameter iquals or less than 0:
@@ -43,4 +44,3 @@ def test_transaction_full_data():
 
     assert response['ready'] == True
     assert list(response.keys()) == offline_transaction
-

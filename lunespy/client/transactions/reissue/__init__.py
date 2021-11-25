@@ -1,8 +1,4 @@
 from lunespy.client.transactions import BaseTransaction
-from lunespy.client.transactions.reissue.validators import validate_reissue
-from lunespy.client.transactions.reissue.validators import mount_reissue
-from lunespy.client.transactions.reissue.validators import send_reissue
-from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
 
 
@@ -21,18 +17,28 @@ class ReissueToken(BaseTransaction):
         self.reissue_data['token_type'] = 'Token'
         self.history = []
 
+
     @property
     def ready(self) -> bool:
+        from lunespy.client.transactions.reissue.validators import validate_reissue
+
         return validate_reissue(self.sender, self.reissue_data)
     
+
     @property
     def transaction(self) -> dict:
+        from lunespy.client.transactions.reissue.validators import mount_reissue
+
         return super().transaction(
             mount_tx=mount_reissue,
             sender=self.sender,
             reissue_data=self.reissue_data)
 
+
+
     def send(self, node_url: str = None) -> dict:
+        from lunespy.client.transactions.reissue.validators import send_reissue
+
         tx = super().send(send_reissue, node_url)
         self.history.append(tx)
         return tx

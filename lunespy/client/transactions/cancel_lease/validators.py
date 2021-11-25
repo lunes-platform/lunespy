@@ -1,15 +1,13 @@
-from lunespy.client.transactions.constants import CancelLeaseType
-from lunespy.utils.crypto.converters import sign
-from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
-
-from lunespy.utils import now
-from base58 import b58decode
-from requests import post
-import struct
 
 
 def mount_cancel(sender: Account, cancel_data: dict) -> dict:
+    from lunespy.client.transactions.constants import CancelLeaseType
+    from lunespy.utils.crypto.converters import sign
+    from lunespy.utils import now
+    from base58 import b58decode
+    import struct
+
     lease_tx_id: str = cancel_data['lease_tx_id']
     timestamp: int = cancel_data.get('timestamp', now())
     fee: int = cancel_data.get('fee', CancelLeaseType.fee.value)
@@ -34,6 +32,8 @@ def mount_cancel(sender: Account, cancel_data: dict) -> dict:
 
 
 def validate_cancel(sender: Account, cancel_data: dict) -> bool:
+    from lunespy.utils import bcolors
+
     amount: int = cancel_data.get('amount', -1)
     lease_tx_id: str = cancel_data.get('lease_tx_id', '')
 
@@ -48,6 +48,8 @@ def validate_cancel(sender: Account, cancel_data: dict) -> bool:
 
 # todo async
 def send_cancel(mount_tx: dict, node_url: str) -> dict:
+    from requests import post
+
     response = post(
         f'{node_url}/transactions/broadcast',
         json=mount_tx,

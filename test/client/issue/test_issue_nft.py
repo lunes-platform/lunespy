@@ -1,6 +1,7 @@
 from lunespy.client.transactions.issue import IssueNFT
 from lunespy.client.wallet import Account
 
+
 def test_nft_ready():
     """
         with decimals parameter iquals or more than :
@@ -25,6 +26,7 @@ def test_without_name_ready_failed_successful():
     #Successful
     tx.issue_data['name'] = 'newNFT'
     assert tx.ready == True
+
 
 def test_without_quantity_ready_failed_successful():
     """
@@ -69,6 +71,3 @@ def test_transaction_full_data():
 
     assert response['ready'] == True
     assert list(response.keys()) == offline_transaction
-
-
-
