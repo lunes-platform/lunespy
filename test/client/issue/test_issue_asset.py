@@ -1,6 +1,7 @@
 from lunespy.client.transactions.issue import IssueAsset
 from lunespy.client.wallet import Account
 
+
 def test_asset_decimals():
     """
         with any decimals parameter:
@@ -9,7 +10,6 @@ def test_asset_decimals():
     sender = Account()
     tx = IssueAsset(sender, quantity=1, name='Asset', decimals=8)
     assert tx.issue_data['decimals'] == 8
-
 
 
 def test_without_name_ready_failed_successful():
@@ -26,6 +26,7 @@ def test_without_name_ready_failed_successful():
     #Successful
     tx.issue_data['name'] = 'newNFT'
     assert tx.ready == True
+
 
 def test_without_quantity_ready_failed_successful():
     """
@@ -70,6 +71,3 @@ def test_transaction_full_data():
 
     assert response['ready'] == True
     assert list(response.keys()) == offline_transaction
-
-
-
