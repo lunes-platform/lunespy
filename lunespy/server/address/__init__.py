@@ -257,4 +257,3 @@ def aliases_associated_with_an_address(address: str, node_url: str = None) -> di
             'status': 'error',
             'response': response.text
         }
-
