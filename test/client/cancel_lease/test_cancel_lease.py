@@ -40,4 +40,3 @@ def test_transaction_full_data():
 
     assert response['ready'] == True
     assert list(response.keys()) == offline_transaction
-
