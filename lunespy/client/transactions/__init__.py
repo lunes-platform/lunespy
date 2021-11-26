@@ -1,7 +1,5 @@
 from lunespy.utils import export_json, sha256
-from lunespy.utils import log_data
 from lunespy.utils import bcolors
-from lunespy.server import Node
 from abc import abstractmethod
 from abc import ABCMeta
 
@@ -10,6 +8,7 @@ class BaseTransaction(metaclass=ABCMeta):
     def __init__(self, tx_type: str, tx_data: dict):
         self.tx_type: str = tx_type
         self.tx_data: str = tx_data
+
 
     @abstractmethod
     def ready(self) -> bool:
@@ -27,6 +26,8 @@ class BaseTransaction(metaclass=ABCMeta):
 
 
     def send(self, send_tx, node_url: str) -> dict:
+        from lunespy.server import Node
+
         if node_url == None:
             if self.sender.network == 'mainnet':
                 node_url = Node.mainnet_url.value
@@ -51,5 +52,7 @@ class BaseTransaction(metaclass=ABCMeta):
         
 
     def show(self, name: str, data: dict, path: str = '.') -> None:
+        from lunespy.utils import log_data
+
         log_data(data)
         export_json(data, name, path)
