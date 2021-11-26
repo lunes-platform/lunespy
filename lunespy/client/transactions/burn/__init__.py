@@ -1,9 +1,5 @@
-from lunespy.client.transactions.burn.validators import validate_burn
-from lunespy.client.transactions.burn.validators import mount_burn
-from lunespy.client.transactions.burn.validators import send_burn
 from lunespy.client.transactions import BaseTransaction
 from lunespy.client.wallet import Account
-
 
 
 class BurnToken(BaseTransaction):
@@ -23,16 +19,22 @@ class BurnToken(BaseTransaction):
 
     @property
     def ready(self) -> bool:
+        from lunespy.client.transactions.burn.validators import validate_burn
+
         return validate_burn(self.sender, self.burn_data)
     
     @property
     def transaction(self) -> dict:
+        from lunespy.client.transactions.burn.validators import mount_burn
+
         return super().transaction(
             mount_tx=mount_burn,
             sender=self.sender,
             burn_data=self.burn_data)
 
     def send(self, node_url: str = None) -> dict:
+        from lunespy.client.transactions.burn.validators import send_burn
+
         tx = super().send(send_burn, node_url)
         self.history.append(tx)
         return tx
