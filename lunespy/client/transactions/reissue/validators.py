@@ -1,13 +1,9 @@
-from lunespy.client.transactions.constants import ReissueType
-from lunespy.utils.crypto.converters import sign
-from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
-from lunespy.utils import now
-from base58 import b58decode
-from requests import post
-import struct
+
 
 def validate_reissue(sender: Account, reissue_data: dict) -> bool:
+    from lunespy.utils import bcolors
+
     quantity: int = reissue_data.get('quantity', -1)
     asset_id: str = reissue_data.get('asset_id', False)
 
@@ -27,6 +23,12 @@ def validate_reissue(sender: Account, reissue_data: dict) -> bool:
 
 
 def mount_reissue(sender: Account, reissue_data: dict) -> dict:
+    from lunespy.client.transactions.constants import ReissueType
+    from lunespy.utils.crypto.converters import sign
+    from lunespy.utils import now
+    from base58 import b58decode
+    import struct
+
     fee = reissue_data.get('fee', ReissueType.fee.value)
     timestamp = reissue_data.get('timestamp', now())
     reissuable = reissue_data.get('reissuable', False)
@@ -58,6 +60,8 @@ def mount_reissue(sender: Account, reissue_data: dict) -> dict:
 
 # todo async
 def send_reissue(mount_tx: dict, node_url: str) -> dict:
+    from requests import post
+
     response = post(
         f'{node_url}/transactions/broadcast',
         json=mount_tx,
