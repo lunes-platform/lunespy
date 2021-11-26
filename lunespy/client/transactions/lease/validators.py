@@ -1,15 +1,13 @@
-from lunespy.client.transactions.constants import LeaseType
-from lunespy.utils.crypto.converters import sign
-from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
-
-from lunespy.utils import now
-from base58 import b58decode
-from requests import post
-import struct
 
 
 def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> dict:
+    from lunespy.client.transactions.constants import LeaseType
+    from lunespy.utils.crypto.converters import sign
+    from lunespy.utils import now
+    from base58 import b58decode
+    import struct
+
     timestamp: int = lease_data.get('timestamp', now())
     amount: int = lease_data['amount']
     fee: int = lease_data.get('fee', LeaseType.fee.value)
@@ -36,6 +34,8 @@ def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> di
 
 
 def validate_lease(sender: Account, lease_data: dict) -> bool:
+    from lunespy.utils import bcolors
+
     amount: int = lease_data.get('amount', -1)
 
     if not sender.private_key:
@@ -49,6 +49,8 @@ def validate_lease(sender: Account, lease_data: dict) -> bool:
 
 # todo async
 def send_lease(mount_tx: dict, node_url: str) -> dict:
+    from requests import post
+    
     response = post(
         f'{node_url}/transactions/broadcast',
         json=mount_tx,
