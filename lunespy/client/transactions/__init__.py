@@ -39,7 +39,10 @@ class BaseTransaction(metaclass=ABCMeta):
 
             if tx_response['send']:
                 id = tx_response['response'].get('id', sha256(tx_response))
-                self.show(f'tx-{id}', tx_response)
+                self.show(
+                    name=f'tx-{self.tx_type.replace(" ", "-")}-{id}',
+                    data=tx_response
+                )
                 return tx_response
             else:
                 print(bcolors.FAIL + f"Your {self.tx_type} dont sended because:\n└──{tx_response['response']}" + bcolors.ENDC)
@@ -50,6 +53,6 @@ class BaseTransaction(metaclass=ABCMeta):
             return mounted_tx
         
 
-    def show(self, name: str, data: dict, path: str = '.') -> None:
+    def show(self, name: str, data: dict, path: str = './data/') -> None:
         log_data(data)
         export_json(data, name, path)
