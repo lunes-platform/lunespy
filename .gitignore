@@ -1,6 +1,6 @@
 .vscode
 dist
-env
+./env/
 sample*
 *cache*
 tx*.json
