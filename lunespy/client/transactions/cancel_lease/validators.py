@@ -58,7 +58,7 @@ def send_cancel(mount_tx: dict, node_url: str) -> dict:
             'application/json'
         })
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         mount_tx['send'] = True
         mount_tx['response'] = response.json()
         return mount_tx

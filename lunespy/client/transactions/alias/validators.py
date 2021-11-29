@@ -37,7 +37,6 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
     timestamp: int = alias_data.get('timestamp', now())
     fee: int = alias_data.get('fee', AliasType.fee.value)
     alias: str = alias_data['alias']
-    alias_lenght: int = len(alias)
     network_id: str = sender.network_id
     
     aliasWithNetwork = AliasType.mount.value +\
@@ -77,7 +76,7 @@ def send_alias(mount_tx: dict, node_url: str) -> dict:
             'application/json'
         })
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         mount_tx.update({
             'send': True,
             'response': response.json()

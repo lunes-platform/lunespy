@@ -4,12 +4,12 @@ from lunespy.client.wallet import Account
 def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> dict:
     from lunespy.client.transactions.constants import LeaseType
     from lunespy.utils.crypto.converters import sign
-    from lunespy.utils import now
+    from lunespy.utils import now, lunes_to_unes
     from base58 import b58decode
     import struct
 
     timestamp: int = lease_data.get('timestamp', now())
-    amount: int = lease_data['amount']
+    amount: int = lunes_to_unes(lease_data['amount'])
     fee: int = lease_data.get('fee', LeaseType.fee.value)
 
     bytes_data: bytes = LeaseType.to_byte.value + \
@@ -59,7 +59,7 @@ def send_lease(mount_tx: dict, node_url: str) -> dict:
             'application/json'
         })
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         mount_tx.update({
             'send': True,
             'response': response.json()

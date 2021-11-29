@@ -13,6 +13,7 @@ def mount_issue(sender: Account, issue_data: dict) -> dict:
     fee: int = issue_data.get('fee', IssueType.fee.value)
     reissuable: bool = issue_data.get('reissuable', False)
     description: str = issue_data.get('description', '')
+    timestamp: int = issue_data.get('timestamp', now())
     quantity: int = issue_data.get('quantity', 0)
     decimals: str = issue_data.get('decimals', 0)
     name: str = issue_data.get('name', '')
@@ -79,7 +80,7 @@ def send_issue(mount_tx: dict, node_url: str) -> dict:
             'application/json'
         })
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         mount_tx.update({
             'send': True,
             'response': response.json()
