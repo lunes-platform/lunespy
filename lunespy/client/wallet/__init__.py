@@ -17,9 +17,26 @@ class Account:
         byte_address(bytes): The byte of your wallet address
     """
 
-    def __init__(self, **wallet: dict):
+    def __init__(self, private_key: str, public_key: str, hash_seed:str, network_id: str, 
+        address: str, nonce: int, network: str, seed: str, n_words: int, **bytes_data: dict) -> None:
+
         from lunespy.client.wallet.validators import validate_wallet
         
+        wallet = {
+            'private_key': private_key,
+            'public_key': public_key,
+            'hash_seed': hash_seed,
+            'network_id': network_id,
+            'address': address,
+            'nonce': nonce,
+            'network': network,
+            'seed': seed,
+            'n_words': n_words,
+            'byte_private_key': bytes_data.get('bytes_private_key', ''),
+            'byte_public_key': bytes_data.get('bytes_public_key',''),
+            'byte_address': bytes_data.get('bytes_address', '')
+        }
+            
         self.__dict__ = validate_wallet(wallet)
 
 
