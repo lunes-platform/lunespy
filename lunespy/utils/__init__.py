@@ -22,8 +22,8 @@ def log_data(data: dict) -> None:
 
 def export_json(data: dict, name: str, path: str) -> bool:
     import json
-
-    full_path = f"{path}/{name}.json"
+    path = path.replace("//", "/")
+    full_path = f"{path}{name}.json"
     try:
         with open(full_path, 'w') as file:
             file.write( json.dumps(data) )

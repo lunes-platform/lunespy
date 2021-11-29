@@ -1,7 +1,8 @@
 .vscode
 dist
-env
+./env/
 sample*
 *cache*
-*.json
+tx*.json
+wallet*.json
 *.xml

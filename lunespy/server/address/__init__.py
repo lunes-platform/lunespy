@@ -126,11 +126,11 @@ def list_of_rich(**kargs: dict) -> dict:
     """
     Example:
         quantity=30,
-        node_ip="127.0.0.1",
+        node_ip_port="127.0.0.1:555",
         net="mainnet" or "testnet"
         node_api_key="",
         export=True or False,
-        path='.'
+        path='./data/'
     """
     def percent(amount: float) -> float:
         return round((amount / supply) * 100, 5)
@@ -187,7 +187,7 @@ def list_of_rich(**kargs: dict) -> dict:
             export_json(
                 report,
                 "rich_list",
-                kargs.get('path', '.')
+                kargs.get('path', './data/')
             )
 
         return  {
