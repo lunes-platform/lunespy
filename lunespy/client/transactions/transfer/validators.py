@@ -11,9 +11,12 @@ def mount_transfer(sender: Account, receiver: Account, transfer_data: dict) -> d
 
     timestamp: int = transfer_data.get('timestamp', now())
     fee: int = transfer_data.get('fee', TransferType.fee.value)
-    amount: int = lunes_to_unes(transfer_data['amount'])
-    asset_fee: str = transfer_data.get('asset_fee', "")
     asset_id: str = transfer_data.get('asset_id', "")
+    asset_fee: str = transfer_data.get('asset_fee', "")
+    if asset_id == "":
+        amount: int = lunes_to_unes(transfer_data['amount'])
+    else:
+        amount: int = transfer_data['amount']
 
     bytes_data: bytes = TransferType.to_byte.value + \
         b58decode(sender.public_key) + \
@@ -67,7 +70,7 @@ def send_transfer(mount_tx: dict, node_url: str) -> dict:
             'application/json'
         })
     
-    if response.ok:
+    if response.status_code in range(200, 300):
         mount_tx.update({
             'send': True,
             'response': response.json()

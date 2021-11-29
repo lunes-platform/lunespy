@@ -87,7 +87,7 @@ def send_mass_transfer(mount_tx: dict, node_url: str) -> dict:
             'application/json'
         })
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         mount_tx.update({
             'send': True,
             'response': response.json()

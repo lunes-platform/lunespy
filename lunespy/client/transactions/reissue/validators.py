@@ -30,11 +30,11 @@ def mount_reissue(sender: Account, reissue_data: dict) -> dict:
     import struct
 
     fee = reissue_data.get('fee', ReissueType.fee.value)
-    timestamp = reissue_data.get('timestamp', now())
-    reissuable = reissue_data.get('reissuable', False)
-    asset_id = reissue_data['asset_id']
     quantity = reissue_data['quantity']
-
+    reissuable = reissue_data.get('reissuable', False)
+    timestamp = reissue_data.get('timestamp', now())
+    asset_id = reissue_data['asset_id']
+    
     bytes_data = ReissueType.to_byte.value + \
         b58decode(sender.public_key) + \
         b58decode(asset_id) + \
@@ -70,7 +70,7 @@ def send_reissue(mount_tx: dict, node_url: str) -> dict:
             'application/json'
         })
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         mount_tx.update({
             'send': True,
             'response': response.json()
