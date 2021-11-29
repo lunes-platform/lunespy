@@ -3,5 +3,6 @@ dist
 env
 sample*
 *cache*
-*.json
+tx*.json
+wallet*.json
 *.xml

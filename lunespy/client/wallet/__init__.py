@@ -40,7 +40,7 @@ class Account:
         return data
 
 
-    def to_json(self, path: str = '.') -> str:
+    def to_json(self, path: str = './data/') -> str:
         from lunespy.utils import export_json
 
         data = {
