@@ -1,6 +1,7 @@
 from requests import get
 from lunespy.server import Node
 
+
 def block_from_height(height: int, node_url: str = None) -> dict:
     if node_url == None:
         full_url = f'{Node.mainnet_url.value}/blocks/at/{height}'

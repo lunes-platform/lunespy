@@ -1,14 +1,9 @@
-from lunespy.client.transactions.constants import AliasType
-from lunespy.utils.crypto.converters import string_to_bytes
-from lunespy.utils.crypto.converters import sign
-from lunespy.utils import bcolors
 from lunespy.client.wallet import Account
-from lunespy.utils import now
-from base58 import b58decode
-from requests import post
-import struct
+
 
 def validate_alias(sender: Account, alias_data: dict) -> bool:
+    from lunespy.utils import bcolors
+
     alias: int = alias_data.get('alias', False)
     valid_alias_characters =  "-.0123456789@_abcdefghijklmnopqrstuvwxyz"
 
@@ -30,7 +25,15 @@ def validate_alias(sender: Account, alias_data: dict) -> bool:
     
     return True
 
+
 def mount_alias(sender: Account, alias_data: dict) -> dict:
+    from lunespy.utils import now
+    from lunespy.utils.crypto.converters import sign
+    from lunespy.client.transactions.constants import AliasType
+    from lunespy.utils.crypto.converters import string_to_bytes
+    from base58 import b58decode
+    import struct
+
     timestamp: int = alias_data.get('timestamp', now())
     fee: int = alias_data.get('fee', AliasType.fee.value)
     alias: str = alias_data['alias']
@@ -62,8 +65,9 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
     }
     return mount_tx
 
+
 def send_alias(mount_tx: dict, node_url: str) -> dict:
-    
+    from requests import post
     
     response = post(
         f'{node_url}/transactions/broadcast',

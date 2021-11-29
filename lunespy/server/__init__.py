@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class Node(Enum):
     mainnet_url: str = 'https://lunesnode.lunes.io'
     testnet_url: str = 'https://lunesnode-testnet.lunes.io'

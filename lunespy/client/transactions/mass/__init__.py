@@ -1,9 +1,5 @@
-from lunespy.client.transactions.mass.validators import validate_mass_transfer
-from lunespy.client.transactions.mass.validators import mount_mass_transfer
-from lunespy.client.transactions.mass.validators import send_mass_transfer
 from lunespy.client.transactions import BaseTransaction
 from lunespy.client.wallet import Account
-
 
 
 class MassTransferToken(BaseTransaction):
@@ -27,10 +23,15 @@ class MassTransferToken(BaseTransaction):
 
     @property
     def ready(self) -> bool:
+        from lunespy.client.transactions.mass.validators import validate_mass_transfer
+
         return validate_mass_transfer(self.sender, self.receivers_list)
+
 
     @property
     def transaction(self) -> dict:
+        from lunespy.client.transactions.mass.validators import mount_mass_transfer
+
         return super().transaction(
             mount_tx=mount_mass_transfer,
             sender=self.sender,
@@ -39,6 +40,8 @@ class MassTransferToken(BaseTransaction):
 
 
     def send(self, node_url: str = None) -> dict:
+        from lunespy.client.transactions.mass.validators import send_mass_transfer
+
         tx = super().send(send_mass_transfer, node_url)
         self.history.append(tx)
         return tx

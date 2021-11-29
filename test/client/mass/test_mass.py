@@ -3,6 +3,7 @@ from lunespy.client.wallet.errors import InvalidChainAddress
 from lunespy.client.wallet import Account
 from pytest import raises
 
+
 def test_ready_between_different_networks():
     """
         with a Account in network `mainnet`:

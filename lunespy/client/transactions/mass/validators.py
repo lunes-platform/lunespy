@@ -1,17 +1,15 @@
-from lunespy.client.transactions.constants import TransferType
-from lunespy.client.wallet.validators import validate_address
-from lunespy.client.transactions.constants import MassType
-from lunespy.utils.crypto.converters import sign
 from lunespy.client.wallet import Account
-from lunespy.utils import lunes_to_unes
-from lunespy.utils import bcolors
-from lunespy.utils import now
-from base58 import b58decode
-from requests import post
-import struct
 
 
 def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_data: dict) -> dict:
+    from lunespy.client.transactions.constants import TransferType
+    from lunespy.client.transactions.constants import MassType
+    from lunespy.utils.crypto.converters import sign
+    from lunespy.utils import lunes_to_unes
+    from lunespy.utils import now
+    from base58 import b58decode
+    import struct
+
     fee: int = TransferType.fee.value + len(receivers_list) * mass_transfer_data.get('fee', MassType.fee.value)
     timestamp: int = mass_transfer_data.get('timestamp', now())
     asset_id: str = mass_transfer_data.get('asset_id', "")
@@ -59,6 +57,9 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
 
 
 def validate_mass_transfer(sender: Account, receivers_list: list):
+    from lunespy.client.wallet.validators import validate_address
+    from lunespy.utils import bcolors
+
     amounts_list: list = [tx['amount'] for tx in receivers_list]
     
     if not sender.private_key:
@@ -76,6 +77,8 @@ def validate_mass_transfer(sender: Account, receivers_list: list):
 
 
 def send_mass_transfer(mount_tx: dict, node_url: str) -> dict:
+    from requests import post
+
     response = post(
         f'{node_url}/transactions/broadcast',
         json=mount_tx,

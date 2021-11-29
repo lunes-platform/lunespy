@@ -1,6 +1,7 @@
 from lunespy.client.transactions.issue import IssueToken
 from lunespy.client.wallet import Account
 
+
 def test_without_name_ready_failed_successful():
     """
         without a name parameter:
@@ -15,6 +16,7 @@ def test_without_name_ready_failed_successful():
     #Successful
     tx.issue_data['name'] = 'newToken'
     assert tx.ready == True
+
 
 def test_without_quantity_ready_failed_successful():
     """
@@ -59,6 +61,3 @@ def test_transaction_full_data():
 
     assert response['ready'] == True
     assert list(response.keys()) == offline_transaction
-
-
-
