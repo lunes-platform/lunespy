@@ -1,19 +1,22 @@
 class Account:
     """
-    params: 
-        private_key: str
-        public_key: str
-        hash_seed: str
-        network_id: str | '0' xor '1'
-        address: str
-        nonce: int | 0 to 4.294.967.295
-        network: str | 'mainnet' xor 'testnet'
-        seed: str | n words
-        n_words: int | n_words should be n // 3  
-        byte_private_key: bytes
-        byte_public_key: bytes
-        byte_address: bytes
+    This is a class for Wallet Account.
+
+    Parameters: 
+        private_key(str): The pivate key of your wallet.
+        public_key(str): The public key of your wallet.
+        hash_seed(str): The seed of your wallet hashed.
+        network_id(str): The id of your network. | '0' xor '1'
+        address(str): The address of your wallet.
+        nonce(int): The ip of your nonce. | 0 to 4.294.967.295
+        network(str): The network of your node. | 'mainnet' xor 'testnet'
+        seed(str): The seed of your wallet. | n words
+        n_words(int): The amount words of your seed wallet. | n_words should be n // 3  
+        byte_private_key(bytes): The byte of your wallet private key.
+        byte_public_key(bytes): The byte of your wallet public key.
+        byte_address(bytes): The byte of your wallet address
     """
+
     def __init__(self, **wallet: dict):
         from lunespy.client.wallet.validators import validate_wallet
         
