@@ -2,10 +2,10 @@ from requests import get
 
 
 def transaction_from_id(id: str) -> dict:
-    full_url = f'https://lunesnode.lunes.io/transactions/info/{id}'
+    full_url = f'http://lunesnode-testnet.lunes.io/transactions/info/{id}'
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -21,7 +21,7 @@ def unconfirmed_transaction(node_url: str) -> dict:
     full_url = f'https://{node_url}/transactions/unconfirmed'
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -37,7 +37,7 @@ def transactions_from_address(node_url: str, address: str, limit_transactions: i
     full_url = f'https://{node_url}/transactions/address/{address}/limit/{limit_transactions}'
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()

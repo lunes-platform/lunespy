@@ -9,7 +9,7 @@ def block_from_height(height: int, node_url: str = None) -> dict:
     
     response = get(full_url)
     
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -29,7 +29,7 @@ def range_block(start_block: int, end_block: int, node_url: str = None) -> dict:
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -49,7 +49,7 @@ def last_block(node_url: str = None) -> dict:
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -69,7 +69,7 @@ def blocks_generated_by_specified_address(address: str, start_block: int, end_bl
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()

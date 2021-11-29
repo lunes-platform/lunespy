@@ -10,7 +10,7 @@ def all_node_conected_in_node_url(node_url: str = None) -> dict:
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -30,7 +30,7 @@ def node_version(node_url: str = None) -> dict:
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -50,7 +50,7 @@ def version_all_lunes_node_conected(node_url: str = None) -> dict:
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': [
