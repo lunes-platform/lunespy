@@ -13,7 +13,7 @@ def address_associated_with_an_alias(alias: str, node_url: str = None) -> dict:
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -29,11 +29,11 @@ def asset_distribution(asset_id: str, node_url: str == None) -> dict:
     if node_url == None:
         full_url = f'{Node.mainnet_url.value}/assets/{asset_id}/distribution'
     else: 
-        full_url = f'https://{node_url}/assets/{asset_id}/distribution'
+        full_url = f'http://{node_url}/assets/{asset_id}/distribution'
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -53,7 +53,7 @@ def balance_all_assets_of_address(address: str, node_url: str == None) -> dict:
     
     response = get(full_url)
     
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -69,11 +69,11 @@ def balance_for_especify_asset_of_address(address: str, asset_id: str, node_url:
     if node_url == None:
         full_url = f'{Node.mainnet_url.value}/assets/balance/{address}/{asset_id}'
     else:
-        full_url = f'https://{node_url}/assets/balance/{address}/{asset_id}'
+        full_url = f'{node_url}/assets/balance/{address}/{asset_id}'
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -90,7 +90,7 @@ def balance_of_all_address(node_ip: str, node_api_key: str) -> dict:
     header = {"X-API-key": node_api_key}
     response = get(full_url, headers=header)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -110,7 +110,7 @@ def balance_of_address(address: str, node_url: str = None) -> int:
     
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -203,7 +203,7 @@ def leasing_active_by_address(address: str, node_url: str = None) -> dict:
         full_url = f'https://{node_url}/leasing/active/{address}'
 
     response = get(full_url)
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': 
@@ -227,7 +227,7 @@ def address_of_node_from_url(node_url: str = None) -> dict:
             
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
@@ -247,7 +247,7 @@ def aliases_associated_with_an_address(address: str, node_url: str = None) -> di
 
     response = get(full_url)
 
-    if response.ok:
+    if response.status_code in range(200, 300):
         return {
             'status': 'ok',
             'response': response.json()
