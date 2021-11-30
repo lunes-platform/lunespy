@@ -17,12 +17,12 @@ class Account:
         byte_address(bytes): The byte of your wallet address
     """
 
-    def __init__(self, private_key: str, public_key: str, hash_seed:str, network_id: str, 
-        address: str, nonce: int, network: str, seed: str, n_words: int, **bytes_data: dict) -> None:
-
+    def __init__(self, n_words: int = None, seed: str = None, nonce: int = None,
+                 network: str = None, private_key: str = None, public_key: str = None,
+                 hash_seed:str = None, network_id: str = None, address: str = None) -> None:
         from lunespy.client.wallet.validators import validate_wallet
         
-        wallet = {
+        wallet: dict = {
             'private_key': private_key,
             'public_key': public_key,
             'hash_seed': hash_seed,
@@ -31,13 +31,20 @@ class Account:
             'nonce': nonce,
             'network': network,
             'seed': seed,
-            'n_words': n_words,
-            'byte_private_key': bytes_data.get('bytes_private_key', ''),
-            'byte_public_key': bytes_data.get('bytes_public_key',''),
-            'byte_address': bytes_data.get('bytes_address', '')
+            'n_words': n_words
         }
-            
-        self.__dict__ = validate_wallet(wallet)
+
+        # filter for remove values == None
+        validate_keys = list(filter(
+            lambda key: wallet[key] != None,
+            wallet.keys()
+        ))
+
+        self.__dict__ = validate_wallet({
+            key: wallet[key]
+            for key in wallet.keys()
+            if key in validate_keys
+        })
 
 
     def __str__(self) -> str:
