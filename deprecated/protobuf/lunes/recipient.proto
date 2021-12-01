@@ -1,0 +1,12 @@
+syntax = "proto3";
+package lunes;
+option java_package = "com.lunesplatform.protobuf.transaction";
+option csharp_namespace = "Lunes";
+
+message Recipient {
+    oneof recipient {
+        // First 20 bytes of the result of the Keccak256(Blake2b256(publicKey)) hashing function.
+        bytes public_key_hash = 1;
+        string alias = 2;
+    };
+};
