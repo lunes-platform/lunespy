@@ -1,15 +1,13 @@
 image: registry.lunes.io/blockchain/production/lunespy:latest
 
 stages:
-    - deploy
+    - test
 
 CreateReportTests:
-    stage: deploy
+    stage: test
     script:
         - python3 -m pytest -vv --junitxml=report.xml
     artifacts:
         when: always
         reports:
             junit: report.xml
-    after_script:
-        - py3clean .
