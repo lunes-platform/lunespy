@@ -1,4 +1,4 @@
-from lunespy.utils import export_json, sha256
+from lunespy.utils import export_json, log_data, sha256
 from lunespy.utils import bcolors
 from abc import abstractmethod
 from abc import ABCMeta
@@ -23,6 +23,10 @@ class BaseTransaction(metaclass=ABCMeta):
         else:
             print(bcolors.FAIL + f'{self.tx_type} Transactions bad formed', bcolors.ENDC)
             return {'ready': False}
+
+
+    def sign(self) -> dict:
+        return ...
 
 
     def send(self, send_tx, node_url: str) -> dict:
@@ -52,7 +56,7 @@ class BaseTransaction(metaclass=ABCMeta):
         else:
             print(bcolors.FAIL + f'{self.tx_type} Transaction dont send', bcolors.ENDC)
             return mounted_tx
-        
+
 
     def show(self, name: str, data: dict, path: str = './data/') -> None:
         log_data(data)

@@ -94,3 +94,16 @@ def sha256(object: object) -> str:
     return sha256(
         str(object).encode()
     ).hexdigest()
+
+
+def drop_none(data: dict) -> dict:
+    validate_keys = list(filter(
+        lambda key: data[key] != None,
+        data.keys()
+    ))
+
+    return {
+        key: data[key]
+        for key in data.keys()
+        if key in validate_keys
+    }

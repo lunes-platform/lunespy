@@ -1,15 +1,16 @@
 from lunespy.client.transactions import BaseTransaction
 from lunespy.client.wallet import Account
+from lunespy.utils import drop_none
 
 
 class CreateAlias(BaseTransaction):
-    """
-    alias_data: dict
-        timestamp: int    
-        fee: int
-        alias: str
-    """
-    def __init__(self, sender: Account, **alias_data: dict) -> None:
+    def __init__(self, sender: Account, fee: int = None,
+                 timestamp: int = None, alias: str = None) -> None:
+        alias_data: dict = drop_none({
+            'timestamp': timestamp,
+            'alias': alias,
+            'fee': fee
+        })
         super().__init__('Alias', alias_data)
         self.sender: Account = sender
         self.alias_data: dict = alias_data
