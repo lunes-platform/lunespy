@@ -3,19 +3,19 @@ from lunespy.client.wallet import Account
 from lunespy.utils import drop_none
 
 class TransferToken(BaseTransaction):
-    def __init__(self, sender: Account, receiver: Account, fee: int = None, timestamp: int = None,
-                 asset_fee:int = None, asset_id = None, amount:float = None) -> None:
-        transfer_data: dict = drop_none({
+    def __init__(self, sender: Account, receiver: Account, asset_fee:int = None,
+                 asset_id = None, amount:float = None, timestamp: int = None,
+                 fee: int = None) -> None:
+        self.transfer_data: dict = drop_none({
             'timestamp': timestamp,
             'asset_fee': asset_fee,
             'asset_id': asset_id,
             'amount': amount,
             'fee': fee
         })
-        super().__init__('Transfer', transfer_data)
+        super().__init__('Transfer', self.transfer_data)
         self.sender: Account = sender
         self.receiver: Account = receiver
-        self.transfer_data: dict = transfer_data
         self.history: list = []
 
 

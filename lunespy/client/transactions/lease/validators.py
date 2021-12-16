@@ -1,20 +1,21 @@
 from lunespy.client.wallet import Account
 
 
-def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> dict:
+def mount_lease(sender: Account, lease_data: dict) -> dict:
     from lunespy.client.transactions.constants import LeaseType
     from lunespy.utils.crypto.converters import sign
     from lunespy.utils import now, lunes_to_unes
     from base58 import b58decode
     import struct
 
+    node_address: str = lease_data['node_address']
     timestamp: int = lease_data.get('timestamp', now())
     amount: int = lunes_to_unes(lease_data['amount'])
     fee: int = lease_data.get('fee', LeaseType.fee.value)
 
     bytes_data: bytes = LeaseType.to_byte.value + \
         b58decode(sender.public_key) + \
-        b58decode(validator_address) + \
+        b58decode(node_address) + \
         struct.pack(">Q", amount) + \
         struct.pack(">Q", fee) + \
         struct.pack(">Q", timestamp)
@@ -27,7 +28,7 @@ def mount_lease(sender: Account, validator_address: str, lease_data: dict) -> di
         "timestamp": timestamp,
         "fee": fee,
 
-        "recipient": validator_address,
+        "recipient": node_address,
         "amount": amount
     }
     return mount_tx

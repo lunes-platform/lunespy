@@ -12,11 +12,22 @@ class IssueToken(BaseTransaction):
         decimals: int
         name: str
     """
-    def __init__(self, sender: Account, **issue_data: dict) -> None:
-        super().__init__('Issue Token', issue_data)
+    def __init__(self, sender: Account, name: str = None, reissuable: bool = None,
+                 quantity: int = None, decimals: int = None, description: str = None,
+                 timestamp: int = None, fee: int = None) -> None:
+        from lunespy.utils import drop_none
+
+        self.issue_data = drop_none({
+            "name": name,
+            "reissuable": reissuable,
+            "quantity": quantity,
+            "decimals": decimals,
+            "description": description,
+            "timestamp": timestamp,
+            "fee": fee
+        })
+        super().__init__('Issue Token', self.issue_data)
         self.sender = sender
-        self.issue_data = issue_data
-        self.issue_data['token_type'] = 'Token'
         self.history = []
 
 
@@ -46,15 +57,39 @@ class IssueToken(BaseTransaction):
 
 
 class IssueAsset(IssueToken):
-    def __init__(self, sender: Account, **issue_data: dict) -> None:   
-        issue_data['token_type'] = 'Asset'
+    def __init__(self, sender: Account, name: str = None, reissuable: bool = None,
+                 quantity: int = None, decimals: int = None, description: str = None,
+                 timestamp: int = None, fee: int = None) -> None:
+        from lunespy.utils import drop_none
+
+        issue_data = drop_none({
+            "name": name,
+            "reissuable": reissuable,
+            "quantity": quantity,
+            "decimals": decimals,
+            "description": description,
+            "timestamp": timestamp,
+            "fee": fee
+        })
         IssueToken.__init__(self, sender=sender, **issue_data)
         BaseTransaction.__init__(self, tx_type='Issue Asset', tx_data=issue_data)
-    
+
 
 class IssueNFT(IssueToken):
-    def __init__(self, sender: Account, **issue_data: dict) -> None:
-        issue_data['token_type'] = 'NFT'
-        issue_data['decimals'] = 0
+    def __init__(self, sender: Account, name: str = None, reissuable: bool = None,
+                 quantity: int = None, description: str = None, timestamp: int = None,
+                 fee: int = None) -> None:
+        from lunespy.utils import drop_none
+
+        NFT_is_unique: int = 0
+        issue_data = drop_none({
+            "name": name,
+            "reissuable": reissuable,
+            "quantity": quantity,
+            "decimals": NFT_is_unique,
+            "description": description,
+            "timestamp": timestamp,
+            "fee": fee
+        })
         IssueToken.__init__(self, sender=sender, **issue_data)
         BaseTransaction.__init__(self, tx_type='Issue NFT', tx_data=issue_data)
