@@ -3,18 +3,19 @@ from lunespy.client.wallet import Account
 
 
 class ReissueToken(BaseTransaction):
-    """
-    reissue_data: dict
-        reissuable: bool
-        fee: int
-        asset_id: str
-        quantity: int
-    """
-    def __init__(self, sender: Account, **reissue_data: dict) -> None:
-        super().__init__('Reissue Token', reissue_data)
+    def __init__(self, sender: Account, asset_id: str = None, reissuable: bool = None,
+                 quantity: int = None, timestamp: int = None, fee: int = None) -> None:
+        from lunespy.utils import drop_none
+
+        self.reissue_data = drop_none({
+            "asset_id": asset_id,
+            "reissuable": reissuable,
+            "quantity": quantity,
+            "timestamp": timestamp,
+            "fee": fee
+        })
+        super().__init__('Reissue Token', self.reissue_data)
         self.sender = sender
-        self.reissue_data = reissue_data
-        self.reissue_data['token_type'] = 'Token'
         self.history = []
 
 
@@ -23,7 +24,7 @@ class ReissueToken(BaseTransaction):
         from lunespy.client.transactions.reissue.validators import validate_reissue
 
         return validate_reissue(self.sender, self.reissue_data)
-    
+
 
     @property
     def transaction(self) -> dict:
@@ -45,15 +46,32 @@ class ReissueToken(BaseTransaction):
 
 
 class ReissueAsset(ReissueToken):
-    def __init__(self, sender: Account, **reissue_data: dict) -> None:
-        reissue_data['token_type'] = 'Asset'
+    def __init__(self, sender: Account, asset_id: str = None, reissuable: bool = None,
+                 quantity: int = None, timestamp: int = None, fee: int = None) -> None:
+        from lunespy.utils import drop_none
+
+        reissue_data = drop_none({
+            "asset_id": asset_id,
+            "reissuable": reissuable,
+            "quantity": quantity,
+            "timestamp": timestamp,
+            "fee": fee
+        })
         BaseTransaction.__init__(self, tx_type='Reissue Asset', tx_data=reissue_data)
         ReissueToken.__init__(self, sender=sender, **reissue_data)
 
 
 class ReissueNFT(ReissueToken):
-    def __init__(self, sender: Account, **reissue_data: dict) -> None:
-        reissue_data['token_type'] = 'NFT'
-        reissue_data['decimals'] = 0
+    def __init__(self, sender: Account, asset_id: str = None, reissuable: bool = None,
+                 quantity: int = None, timestamp: int = None, fee: int = None) -> None:
+        from lunespy.utils import drop_none
+
+        reissue_data = drop_none({
+            "asset_id": asset_id,
+            "reissuable": reissuable,
+            "quantity": quantity,
+            "timestamp": timestamp,
+            "fee": fee
+        })
         BaseTransaction.__init__(self, tx_type='Reissue NFT', tx_data=reissue_data)
         ReissueToken.__init__(self, sender=sender, **reissue_data)

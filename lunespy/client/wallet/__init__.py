@@ -21,8 +21,9 @@ class Account:
                  network: str = None, private_key: str = None, public_key: str = None,
                  hash_seed:str = None, network_id: str = None, address: str = None) -> None:
         from lunespy.client.wallet.validators import validate_wallet
-        
-        wallet: dict = {
+        from lunespy.utils import drop_none
+
+        wallet: dict = drop_none({
             'private_key': private_key,
             'public_key': public_key,
             'hash_seed': hash_seed,
@@ -32,19 +33,9 @@ class Account:
             'network': network,
             'seed': seed,
             'n_words': n_words
-        }
-
-        # filter for remove values == None
-        validate_keys = list(filter(
-            lambda key: wallet[key] != None,
-            wallet.keys()
-        ))
-
-        self.__dict__ = validate_wallet({
-            key: wallet[key]
-            for key in wallet.keys()
-            if key in validate_keys
         })
+
+        self.__dict__ = validate_wallet(wallet)
 
 
     def __str__(self) -> str:

@@ -3,21 +3,21 @@ from lunespy.client.wallet import Account
 
 
 class CreateLease(BaseTransaction):
-    """
-    lease_data: dict
-        validator_address: str
-        fee: int
-        timestamp: int
-        amount: int
-    """
-    def __init__(self, sender: Account, validator_address: str, **lease_data: dict) -> None:
-        super().__init__('Create Lease', lease_data)
+    def __init__(self, sender: Account, node_address: str, amount: float = None,
+                 timestamp: int = None, fee: int = None) -> None:
+        from lunespy.utils import drop_none
+
+        self.lease_data = drop_none({
+            "node_address": node_address,
+            "amount": amount,
+            "timestamp": timestamp,
+            "fee": fee
+        })
+        super().__init__('Create Lease', self.lease_data)
         self.sender: Account = sender
-        self.validator_address: str = validator_address
-        self.lease_data: dict = lease_data
         self.history: list = []
 
-    
+
     @property
     def ready(self) -> bool:
         from lunespy.client.transactions.lease.validators import validate_lease
@@ -32,7 +32,6 @@ class CreateLease(BaseTransaction):
         return super().transaction(
             mount_tx=mount_lease,
             sender=self.sender,
-            validator_address=self.validator_address,
             lease_data=self.lease_data)
 
     def send(self, node_url: str = None) -> dict:

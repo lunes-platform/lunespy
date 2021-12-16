@@ -3,19 +3,20 @@ from lunespy.client.wallet import Account
 
 
 class CancelLease(BaseTransaction):
-    """
-    cancel_data: dict
-        lease_tx_id: str
-        fee: int
-        timestamp: int
-    """
-    def __init__(self, sender: Account, **cancel_data: dict) -> None:
-        super().__init__('Create Lease', cancel_data)
+    def __init__(self, sender: Account, lease_tx_id: str = None,
+                 timestamp: int = None, fee: int = None) -> None:
+        from lunespy.utils import drop_none
+
+        self.cancel_data = drop_none({
+            "timestamp": timestamp,
+            "lease_tx_id": lease_tx_id,
+            "fee": fee
+        })
+        super().__init__('Create Lease', self.cancel_data)
         self.sender: Account = sender
-        self.cancel_data: dict = cancel_data
         self.history: list = []
 
-    
+
     @property
     def ready(self) -> bool:
         from lunespy.client.transactions.cancel_lease.validators import validate_cancel

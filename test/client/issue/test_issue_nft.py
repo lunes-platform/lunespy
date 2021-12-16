@@ -1,5 +1,7 @@
 from lunespy.client.transactions.issue import IssueNFT
 from lunespy.client.wallet import Account
+from pytest import raises
+
 
 
 def test_nft_ready():
@@ -8,8 +10,10 @@ def test_nft_ready():
             - should be return tx.issue_data['decimals'] iquals 0
     """
     sender = Account()
-    tx = IssueNFT(sender, name="NFT!", quantity=1, decimals=10)
-    assert tx.issue_data['decimals'] == 0
+
+    with raises(TypeError):
+        tx = IssueNFT(sender, name="NFT!", quantity=1, decimals=10)
+
 
 
 def test_without_name_ready_failed_successful():
