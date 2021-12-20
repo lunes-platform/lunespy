@@ -6,7 +6,7 @@ def all_node_conected_in_node_url(node_url: str = None) -> dict:
     if node_url == None:
         full_url = f'{Node.mainnet_url.value}/peers/all'
     else:
-        full_url = f'https://{node_url}/peers/all'
+        full_url = f'{node_url}/peers/all' # You have pass your node url with https or other contents
     
     response = get(full_url)
 
@@ -26,7 +26,7 @@ def node_version(node_url: str = None) -> dict:
     if node_url == None:
         full_url = f'{Node.mainnet_url.value}/utils/lunesnode/version'
     else:
-        full_url = f'https://{node_url}/utils/lunesnode/version'
+        full_url = f'{node_url}/utils/lunesnode/version' # You have pass your node url with https or other contents
     
     response = get(full_url)
 
@@ -46,7 +46,7 @@ def version_all_lunes_node_conected(node_url: str = None) -> dict:
     if node_url == None:
         full_url = f'{Node.mainnet_url.value}/peers/connected'
     else:
-        full_url = f'https://{node_url}/peers/connected'
+        full_url = f'{node_url}/peers/connected' # You have pass your node url with https or other contents
     
     response = get(full_url)
 
