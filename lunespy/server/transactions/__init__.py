@@ -18,7 +18,7 @@ def transaction_from_id(id: str) -> dict:
 
 
 def unconfirmed_transaction(node_url: str) -> dict:
-    full_url = f'https://{node_url}/transactions/unconfirmed'
+    full_url = f'{node_url}/transactions/unconfirmed' # You have pass your node url with https or other contents
     response = get(full_url)
 
     if response.status_code in range(200, 300):
@@ -34,7 +34,7 @@ def unconfirmed_transaction(node_url: str) -> dict:
 
 
 def transactions_from_address(node_url: str, address: str, limit_transactions: int) -> dict:
-    full_url = f'https://{node_url}/transactions/address/{address}/limit/{limit_transactions}'
+    full_url = f'{node_url}/transactions/address/{address}/limit/{limit_transactions}' # You have pass your node url with https or other contents
     response = get(full_url)
 
     if response.status_code in range(200, 300):
