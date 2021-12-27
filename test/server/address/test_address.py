@@ -39,3 +39,4 @@ def test_address_of_node_from_url():
 
 def test_aliases_associated_with_an_address():
     assert aliases_associated_with_an_address('3868pVhDQAs2v5MGxNN75CaHzyx1YV8TivM', 'http://lunesnode.lunes.io')['response'] != []
+
