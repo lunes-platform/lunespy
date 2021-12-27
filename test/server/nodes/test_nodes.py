@@ -12,4 +12,3 @@ def test_node_version():
 
 def test_version_all_lunes_node_conected():
     assert version_all_lunes_node_conected('http://lunesnode.lunes.io')['status'] == 'ok'
-    
