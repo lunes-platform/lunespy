@@ -1,7 +1,6 @@
 from lunespy.utils.crypto.converters import string_to_bytes
 from lunespy.utils.crypto.converters import hash_data
 from lunespy.client.wallet.constants import word_list
-import axolotl_curve25519 as curve
 from base58 import b58decode
 from base58 import b58encode
 from os import urandom
@@ -32,7 +31,7 @@ def new_seed_generator(n_words: int) -> str:
     from lunespy.utils.crypto.converters import bytes_to_string
 
     def f():
-        wordCount = 2048        
+        wordCount = 2048
         r = bytes_to_string(urandom(4))
         x = (ord(r[3])) + (ord(r[2]) << 8) + (ord(r[1]) << 16) + (ord(r[0]) << 24)
         w1 = x % wordCount
@@ -51,14 +50,15 @@ def new_seed_generator(n_words: int) -> str:
 
 def seed_generator(seed: str, nonce: int, network_id: str) -> dict:
     from lunespy.utils.crypto.converters import sha256
+    from axolotl_curve25519 import generatePrivateKey, generatePublicKey
     from struct import pack
-    
+
     hash_seed = hash_data(
         pack(">L", nonce) + string_to_bytes(seed)
     )
     account_hash_seed = sha256(hash_seed)
-    private_key = curve.generatePrivateKey(account_hash_seed)
-    public_key = curve.generatePublicKey(private_key)
+    private_key = generatePrivateKey(account_hash_seed)
+    public_key = generatePublicKey(private_key)
     address = address_generator(public_key, network_id)
     return {
         'seed': seed,
@@ -76,8 +76,10 @@ def seed_generator(seed: str, nonce: int, network_id: str) -> dict:
 
 
 def private_key_generator(private_key: str, network_id: str) -> dict:
+    from axolotl_curve25519 import generatePublicKey
+
     private_key_b58 = b58decode(private_key)
-    public_key = curve.generatePublicKey(private_key_b58)
+    public_key = generatePublicKey(private_key_b58)
     address = address_generator(public_key, network_id)
     return {
         'seed': "",

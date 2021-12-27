@@ -100,7 +100,7 @@ class KeccakSponge(object):
 
     def copy(self):
         from copy import deepcopy
-        
+
         return deepcopy(self)
 
     def absorb_block(self, bb):
@@ -137,9 +137,9 @@ class KeccakSponge(object):
 
 class KeccakHash(object):
     def __init__(self):
+        from lunespy.utils.crypto.converters import multirate_padding
         from lunespy.utils.crypto.converters import bits_to_bytes
         from lunespy.utils.crypto.converters import keccak_f
-        from lunespy.utils.crypto.converters import multirate_padding
 
         bitrate_bits = 1088
         capacity_bits = 512
