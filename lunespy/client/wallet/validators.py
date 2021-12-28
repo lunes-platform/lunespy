@@ -71,10 +71,10 @@ def validate_address(address: str, network_id: str) -> bool:
 
     bytes_address = bytes_to_string(address, decode=True)
     checksum = bytes_address[-ADDRESS_CHECKSUM_LENGTH:]
-    network = hash_data(string_to_bytes(
-        bytes_address[:-ADDRESS_CHECKSUM_LENGTH]
-        )
-    )[:ADDRESS_CHECKSUM_LENGTH]
+    length_checksum = bytes_address[:-ADDRESS_CHECKSUM_LENGTH]
+    length_checksum_bytes = string_to_bytes(length_checksum)
+    hash_checksum = hash_data(length_checksum_bytes)
+    network = hash_checksum[:ADDRESS_CHECKSUM_LENGTH]
 
     if checksum != network:
         raise InvalidChecksumAddress

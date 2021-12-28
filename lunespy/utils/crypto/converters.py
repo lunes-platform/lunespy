@@ -9,6 +9,10 @@ def multirate_padding(used_bytes, align_bytes):
         return [0x01] + ([0x00] * (int(padlen) - 2)) + [0x80]
 
 
+def bits_to_bytes(x):
+    return (int(x) + 7) / 8
+
+
 def string_to_bytes(string: str) -> bytes:
     return string.encode('latin-1')
 
@@ -17,44 +21,37 @@ def string_to_list(string: str) -> list:
     return [char for char in string]
 
 
-def bytes_to_string(bytes: str, decode: bool=False) -> str:
-    
-    if decode:
-        from base58 import b58decode
-        string_base58 = b58decode(bytes)
-        return ''.join(
-           map(chr, string_base58)
-        )
-    else:
+def bytes_to_string(bytes: bytes, decode: bool=False) -> str:
+    if not decode:
         return ''.join(
             map(chr, bytes)
         )
+    else:
+        from base58 import b58decode
+
+        return ''.join(
+            map(chr, b58decode(bytes))
+        )
 
 
-def hash_data(address: str) -> str:
-    from hashlib import blake2b
+def hash_data(data: str) -> str:
     from lunespy.utils.crypto.algorithms import KeccakHash
-    
+    from hashlib import blake2b
     keccak256 = KeccakHash()
 
-    x = blake2b(
-        address,
-        digest_size=32
-    ).digest()
-    y = keccak256.digest( x )
-    return y
+    return keccak256.digest( 
+        blake2b(data, digest_size=32).digest()
+    )
 
 
 def sign(private_key: str, message: bytes) -> bytes:
-    import axolotl_curve25519 as curve
+    from axolotl_curve25519 import calculateSignature as curve
     from base58 import b58encode
     from base58 import b58decode
     from os import urandom
-
-    random64 = urandom(64)
     return b58encode(
-        curve.calculateSignature(
-            random64,
+        curve(
+            urandom(64),
             b58decode( private_key ),
             message
         )
@@ -62,18 +59,18 @@ def sign(private_key: str, message: bytes) -> bytes:
 
 
 def sha256(string: str) -> str:
-    import hashlib
+    from hashlib import sha256
 
-    return hashlib.sha256(
+    return sha256(
         string_to_bytes(string)
     ).digest()
 
 
 def id(message: str) -> str:
     from base58 import b58encode
-    import hashlib
+    from hashlib import sha256
 
-    return b58encode(hashlib.sha256( message ).digest())
+    return b58encode(sha256( message ).digest())
 
 
 def ror(value, right, bits):
@@ -90,10 +87,6 @@ def rol(value, left, bits):
     top = value >> (bits - left)
     bot = (value & Masks[bits - left]) << left
     return bot | top
-
-
-def bits_to_bytes(x):
-    return (int(x) + 7) / 8
 
 
 def keccak_f(state):
