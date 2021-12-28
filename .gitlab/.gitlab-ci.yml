@@ -1,4 +1,4 @@
-image: registry.lunes.io/blockchain/production/lunespy:amd64
+image: registry.lunes.io/blockchain/production/lunespy
 
 stages:
     - test
