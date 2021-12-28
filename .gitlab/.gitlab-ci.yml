@@ -6,7 +6,8 @@ stages:
 CreateReportTests:
     stage: test
     script:
-        - pytest -vv --junitxml=report.xml
+        - pytest -m "not request" --junitxml=report.xml
+        - pytest -m request --junitxml=report.xml
     artifacts:
         when: always
         reports:
