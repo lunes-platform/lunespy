@@ -6,7 +6,6 @@ stages:
 CreateReportTests:
     stage: test
     script:
-        - echo $PYTHONPATH
         - pytest -vv --junitxml=report.xml
     artifacts:
         when: always
