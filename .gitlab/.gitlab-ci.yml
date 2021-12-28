@@ -6,7 +6,7 @@ stages:
 CreateReportTests:
     stage: test
     script:
-        - pytest --junitxml=report.xml
+        - pytest --workers auto --tests-per-worker auto --junitxml=report.xml
     artifacts:
         when: always
         reports:

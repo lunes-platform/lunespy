@@ -19,6 +19,7 @@ python-axolotl-curve25519 = "^0.4.1.post2"
 requests = "^2.26.0"
 base58 = "^2.1.0"
 python = "^3.8"
+pytest-parallel = "^0.1.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -29,3 +30,8 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 log = "lunespy.utils:generate_log"
+
+[tool.pytest.ini_options]
+markers = [
+    "requests: marks tests as slow"
+]
