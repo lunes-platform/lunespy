@@ -30,7 +30,7 @@ class BaseTransaction(metaclass=ABCMeta):
 
 
     def send(self, send_tx, node_url: str) -> dict:
-        from lunespy.server import Node
+        from lunespy.server.nodes import Node
 
         if node_url == None:
             if self.sender.network == 'mainnet':

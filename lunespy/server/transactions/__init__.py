@@ -1,5 +1,5 @@
 from requests import get
-from lunespy.server import Node
+from lunespy.server.nodes import Node
 
 def transaction_from_id(id: str) -> dict:
     full_url = f'http://lunesnode-testnet.lunes.io/transactions/info/{id}'

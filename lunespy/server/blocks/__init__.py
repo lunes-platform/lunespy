@@ -1,5 +1,5 @@
 from requests import get
-from lunespy.server import Node
+from lunespy.server.nodes import Node
 
 
 def block_from_height(height: int, node_url: str = None) -> dict:

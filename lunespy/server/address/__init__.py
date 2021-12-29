@@ -1,4 +1,4 @@
-from lunespy.server import Node
+from lunespy.server.nodes import Node
 from lunespy.utils import unes_to_lunes
 from lunespy.utils import export_json
 from requests import get
