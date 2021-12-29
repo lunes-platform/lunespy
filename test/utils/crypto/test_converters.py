@@ -3,6 +3,7 @@ from lunespy.utils.crypto.converters import bits_to_bytes
 from lunespy.utils.crypto.converters import string_to_list
 from lunespy.utils.crypto.converters import bytes_to_string
 from lunespy.utils.crypto.converters import string_to_bytes
+from lunespy.utils.crypto.converters import sha256
 from lunespy.utils.crypto.converters import hash_data
 from pytest import mark
 
@@ -111,11 +112,6 @@ def test_function_hash_data_multiple_seed_should_be_return_hash_seed_list_of_int
 
     assert seed_hash == bytes_to_string(output)
 
-
-def sha256(string: str) -> str:
-    from hashlib import sha256
-
-    return sha256(string_to_bytes(string)).digest()
 
 @mark.parametrize(
     "input, output",
