@@ -50,7 +50,7 @@ def validate_transfer(sender: Account, receiver: Account, transfer_data: dict) -
     if not sender.private_key:
         print(bcolors.FAIL + 'Sender `Account` not have a private key' + bcolors.ENDC)
         return False
-    elif not validate_address(receiver.address, sender.network_id):
+    elif not validate_address(receiver.address, sender.chain_id):
         return False
     elif amount <= 0:
         print(bcolors.FAIL + 'You dont pass `amount` param' + bcolors.ENDC)

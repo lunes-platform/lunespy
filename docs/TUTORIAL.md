@@ -33,7 +33,7 @@ In this way, we can create a transaction to transfer tokens, a transaction to cr
 
 A `Wallet` is `Account` like an `email account`, which instead of having `address@provider` and `password` has:
 - seed
-- network
+- chain
 - nonce
 - private key
 - public key
@@ -66,7 +66,7 @@ seed
  └── "roast mother supply match result breeze canoe immune spike vague poverty apology found ivory reward"
 nonce
  └── 0
-network
+chain
  └── mainnet
 private key
  └── "EUMUHS8StgpYPkNFVLC1yucioN1WAEXLA16XbaTc4i7g"
@@ -99,8 +99,8 @@ from lunespy.client.wallet import Account
 
 # Generate the wallets
 seed = "My_seed"
-my_wallet = Account(seed=seed, network="testnet", nonce=0)
-random_wallet = Account(network="testnet")
+my_wallet = Account(seed=seed, chain="testnet", nonce=0)
+random_wallet = Account(chain="testnet")
 
 # Set up the transaction to send your Lunes
 tx = TransferToken(my_wallet, random_wallet, amount=100)
@@ -228,7 +228,7 @@ from lunespy.client.transactions.issue import IssueToken, IssueAsset, IssueNFT
 
 # Generate the wallet
 seed = "Your Seed"
-my_wallet = Account(seed=seed, network="testnet")
+my_wallet = Account(seed=seed, chain="testnet")
 
 
 # Information of issue your new token
@@ -303,8 +303,8 @@ from lunespy.client.wallet import Account
 
 # Generate the wallet
 seed = "My_seed"
-my_wallet = Account(seed=seed, network="testnet", nonce=0)
-random_wallet = Account(network="testnet")
+my_wallet = Account(seed=seed, chain="testnet", nonce=0)
+random_wallet = Account(chain="testnet")
 
 # Get Asset or Token ID
 token = "9ax6usn3TmwdTRoTnn8zr5Kku9qykstYxRkUb4Z1Z2oY"
@@ -372,7 +372,7 @@ from lunespy.client.transactions.reissue import ReissueToken, ReissueAsset, Reis
 
 # Generate the wallet
 seed = "Your Seed"
-my_wallet = Account(seed=seed, network="testnet")
+my_wallet = Account(seed=seed, chain="testnet")
 
 token_info = {
     'asset_id': 'YOUR_TOKEN_ID',
@@ -415,7 +415,7 @@ from lunespy.client.transactions.burn import BurnToken
 
 # Generate the wallet
 seed = "Your Seed"
-my_wallet = Account(seed=seed, network="testnet")
+my_wallet = Account(seed=seed, chain="testnet")
 
 token_info = {
     'asset_id': 'YOUR_TOKEN_ID',
@@ -460,7 +460,7 @@ from lunespy.client.transactions.lease import CreateLease
 
 # Generate the wallet
 seed = "Your Seed"
-my_wallet = Account(seed=seed, network="testnet")
+my_wallet = Account(seed=seed, chain="testnet")
 
 token_info = {
     'node_address': 'ADDRESS_OF_A_LUNESNODE',
@@ -501,7 +501,7 @@ from lunespy.client.transactions.cancel_lease import CancelLease
 
 # Generate the wallet
 seed = "Your Seed"
-my_wallet = Account(seed=seed, network="testnet")
+my_wallet = Account(seed=seed, chain="testnet")
 
 token_info = {
     'lease_tx_id': 'TRANSACTION_ID_OF_YOUR_LEASE',
@@ -542,7 +542,7 @@ from lunespy.client.transactions.alias import CreateAlias
 
 # Generate the wallet
 seed = "Your Seed"
-my_wallet = Account(seed=seed, network="testnet")
+my_wallet = Account(seed=seed, chain="testnet")
 
 
 # Set up the transaction to create a alias for your account
@@ -596,7 +596,7 @@ from lunespy.client.transactions.mass import MassTransferToken
 sender = Account(
     seed="whip wave witness family famous hundred dog east inner brief develop intact retreat result coyote",
     nonce=1,
-    network='testnet')
+    chain='testnet')
 
 
 list_of_address = [
@@ -632,7 +632,7 @@ from lunespy.client.transactions.issue import IssueToken
 
 sender = Account(
     seed="whip wave witness family famous hundred dog east inner brief develop intact retreat result coyote",
-    network='testnet')
+    chain='testnet')
 
 token_data = {
     "description": "My new Token",

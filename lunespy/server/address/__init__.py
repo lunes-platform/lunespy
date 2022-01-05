@@ -178,7 +178,7 @@ def list_of_rich(**kargs: dict) -> dict:
 
         report = {
             "total_supply": supply,
-            "network": kargs['net'],
+            "chain": kargs['net'],
             "total_percent": percent_total(wallets),
             "wallet_list": wallets
         }

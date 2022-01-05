@@ -33,7 +33,7 @@ class BaseTransaction(metaclass=ABCMeta):
         from lunespy.server import Node
 
         if node_url == None:
-            if self.sender.network == 'mainnet':
+            if self.sender.chain == 'mainnet':
                 node_url = Node.mainnet_url.value
             else:
                 node_url = Node.testnet_url.value

@@ -4,12 +4,12 @@ def validate_wallet(wallet: dict) -> dict:
 
     wallet['nonce'] = wallet.get('nonce', 0)
 
-    if wallet.get('network', 'mainnet') == 'mainnet':
-        wallet['network_id'] = '1'
-        wallet['network'] = 'mainnet'
+    if wallet.get('chain', 'mainnet') == 'mainnet':
+        wallet['chain_id'] = '1'
+        wallet['chain'] = 'mainnet'
     else:
-        wallet['network_id'] = '0'
-        wallet['network'] = 'testnet'
+        wallet['chain_id'] = '0'
+        wallet['chain'] = 'testnet'
 
     if wallet['nonce'] not in range(0, 4_294_967_295 + 1):
         raise InvalidNonce
@@ -24,14 +24,14 @@ def validate_wallet(wallet: dict) -> dict:
         return wallet_generator(**wallet)
 
     elif wallet.get('address', False):
-        if validate_address(wallet['address'], network_id=wallet['network_id']):
+        if validate_address(wallet['address'], chain_id=wallet['chain_id']):
             return {
                 'private_key': '',
                 'public_key': '',
                 'address': wallet['address'],
                 'nonce': 0,
-                'network': wallet['network'],
-                'network_id': wallet['network_id'],
+                'chain': wallet['chain'],
+                'chain_id': wallet['chain_id'],
                 'seed': '',
                 'hash_seed': '',
                 'byte_private_key': b'',
@@ -57,7 +57,7 @@ def validate_wallet(wallet: dict) -> dict:
         return wallet_generator(**wallet)
 
 
-def validate_address(address: str, network_id: str) -> bool:
+def validate_address(address: str, chain_id: str) -> bool:
     from lunespy.client.wallet.errors import InvalidChecksumAddress
     from lunespy.client.wallet.errors import InvalidVersionAddress
     from lunespy.client.wallet.errors import InvalidLengthAddress
@@ -74,13 +74,13 @@ def validate_address(address: str, network_id: str) -> bool:
     length_checksum = bytes_address[:-ADDRESS_CHECKSUM_LENGTH]
     length_checksum_bytes = string_to_bytes(length_checksum)
     hash_checksum = hash_data(length_checksum_bytes)
-    network = hash_checksum[:ADDRESS_CHECKSUM_LENGTH]
+    chain = hash_checksum[:ADDRESS_CHECKSUM_LENGTH]
 
-    if checksum != network:
+    if checksum != chain:
         raise InvalidChecksumAddress
     elif bytes_address[0] != chr(ADDRESS_VERSION):
         raise InvalidVersionAddress
-    elif bytes_address[1] != network_id:
+    elif bytes_address[1] != chain_id:
         raise InvalidChainAddress
     elif len(bytes_address) != ADDRESS_LENGTH:
         raise InvalidLengthAddress

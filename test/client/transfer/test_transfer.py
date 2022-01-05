@@ -6,18 +6,18 @@ from pytest import raises
 
 def test_ready_between_different_networks():
     """
-        with a Account in network `mainnet`:
-            should br return Error for receiver in network `testnet`
+        with a Account in chain `mainnet`:
+            should br return Error for receiver in chain `testnet`
         else should be return True
     """
-    sender_mainnet = Account(network='mainnet')    
-    receiver_testnet = Account(network='testnet')
+    sender_mainnet = Account(chain='mainnet')    
+    receiver_testnet = Account(chain='testnet')
 
     with raises(InvalidChainAddress):
         tx = TransferToken(sender_mainnet, receiver_testnet, amount=1)
         tx.ready
 
-    sender_testnet = Account(network='testnet')
+    sender_testnet = Account(chain='testnet')
     tx = TransferToken(sender_testnet, receiver_testnet, amount=1)
     assert tx.ready == True
 
