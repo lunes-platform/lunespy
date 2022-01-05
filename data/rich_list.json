@@ -1,6 +1,6 @@
 {
     "total_supply": 800100000.0,
-    "network": "testnet",
+    "chain": "testnet",
     "total_percent": 100.0,
     "wallet_list": [
         {

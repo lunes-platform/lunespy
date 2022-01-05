@@ -7,7 +7,7 @@ class InvalidVersionAddress(WalletError):
     """Wrong address version"""   
 
 class InvalidChainAddress(WalletError):
-    """Wrong network id"""
+    """Wrong chain id"""
 
 class InvalidLengthAddress(WalletError):
     """Wrong address length"""

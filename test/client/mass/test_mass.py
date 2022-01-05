@@ -6,13 +6,13 @@ from pytest import raises
 
 def test_ready_between_different_networks():
     """
-        with a Account in network `mainnet`:
-            should br return Error for receiver in network `testnet`
+        with a Account in chain `mainnet`:
+            should br return Error for receiver in chain `testnet`
         else should be return True
     """
-    sender_mainnet = Account(network='mainnet')    
+    sender_mainnet = Account(chain='mainnet')    
     receivers_list = [
-        { 'receiver': Account(network='testnet').address, 'amount': 100 }
+        { 'receiver': Account(chain='testnet').address, 'amount': 100 }
         for tx in range(4)
     ]
 
@@ -20,7 +20,7 @@ def test_ready_between_different_networks():
         tx = MassTransferToken(sender_mainnet, receivers_list)
         tx.ready
 
-    sender_testnet = Account(network='testnet')
+    sender_testnet = Account(chain='testnet')
     tx = MassTransferToken(sender_testnet, receivers_list)
     assert tx.ready == True
 

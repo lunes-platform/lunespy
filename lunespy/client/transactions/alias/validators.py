@@ -37,10 +37,10 @@ def mount_alias(sender: Account, alias_data: dict) -> dict:
     timestamp: int = alias_data.get('timestamp', now())
     fee: int = alias_data.get('fee', AliasType.fee.value)
     alias: str = alias_data['alias']
-    network_id: str = sender.network_id
-    
+    chain_id: str = sender.chain_id
+
     aliasWithNetwork = AliasType.mount.value +\
-        string_to_bytes(str(network_id)) + \
+        string_to_bytes(str(chain_id)) + \
         struct.pack(">H", len(alias)) + \
         string_to_bytes(alias)
 

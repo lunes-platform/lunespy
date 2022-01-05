@@ -6,10 +6,10 @@ class Account:
         private_key(str): The pivate key of your wallet.
         public_key(str): The public key of your wallet.
         hash_seed(str): The seed of your wallet hashed.
-        network_id(str): The id of your network. | '0' xor '1'
+        chain_id(str): The id of your chain. | '0' xor '1'
         address(str): The address of your wallet.
         nonce(int): The ip of your nonce. | 0 to 4.294.967.295
-        network(str): The network of your node. | 'mainnet' xor 'testnet'
+        chain(str): The chain of your node. | 'mainnet' xor 'testnet'
         seed(str): The seed of your wallet. | n words
         n_words(int): The amount words of your seed wallet. | n_words should be n // 3  
         byte_private_key(bytes): The byte of your wallet private key.
@@ -18,8 +18,8 @@ class Account:
     """
 
     def __init__(self, n_words: int = None, seed: str = None, nonce: int = None,
-                 network: str = None, private_key: str = None, public_key: str = None,
-                 hash_seed:str = None, network_id: str = None, address: str = None) -> None:
+                 chain: str = None, private_key: str = None, public_key: str = None,
+                 hash_seed:str = None, chain_id: str = None, address: str = None) -> None:
         from lunespy.client.wallet.validators import validate_wallet
         from lunespy.utils import drop_none
 
@@ -27,10 +27,10 @@ class Account:
             'private_key': private_key,
             'public_key': public_key,
             'hash_seed': hash_seed,
-            'network_id': network_id,
+            'chain_id': chain_id,
             'address': address,
             'nonce': nonce,
-            'network': network,
+            'chain': chain,
             'seed': seed,
             'n_words': n_words
         })
@@ -66,7 +66,7 @@ class Account:
 
         return export_json(
             data=data,
-            name=f'wallet-{self.network}',
+            name=f'wallet-{self.chain}',
             path=path
         )
 
@@ -75,7 +75,7 @@ class LunexAccount(Account):
     """
     params: 
         public_key: str
-        network: str | 'mainnet' xor 'testnet'
+        chain: str | 'mainnet' xor 'testnet'
         url: str | 'http://ip:port'
     """
     def __init__(self, **data):

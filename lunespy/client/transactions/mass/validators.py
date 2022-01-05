@@ -65,7 +65,7 @@ def validate_mass_transfer(sender: Account, receivers_list: list):
     if not sender.private_key:
         print(bcolors.FAIL + 'Sender `Account` not have a private key' + bcolors.ENDC)
         return False
-    elif not all(filter(lambda address: validate_address(address['receiver'], sender.network_id), receivers_list)):
+    elif not all(filter(lambda address: validate_address(address['receiver'], sender.chain_id), receivers_list)):
         return False
     elif len(receivers_list) > 100:
         print(bcolors.FAIL + '`receivers_list` cannot contain more than 100 addresses' + bcolors.ENDC)
