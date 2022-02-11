@@ -4,7 +4,11 @@
   </a>
 </p>
 
-#  [LunesPy](https://github.com/lunes-platform/lunespy)
+# LunesPy
+
+- Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
+Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
+
 
 [![Issues](https://img.shields.io/github/issues/lunes-platform/lunespy)](https://github.com/lunes-platform/lunespy/issues)
 [![CommitActivity](https://img.shields.io/github/commit-activity/m/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/pulse)
@@ -29,25 +33,17 @@
     <img alt="Telegram" src="https://badgen.net/badge/icon/Lunes%20Platform?icon=telegram&label=Telegram&color=blue"/>
   </a>
 
-- Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
-Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
-
-
-## How to use LunesPy?
-
-  Tutorial for all our features is [here](https://github.com/lunes-platform/lunespy/blob/main/docs/TUTORIAL.md) 
-
 ## Changelog
 
 The changelog process for this project is described [here](CHANGELOG.md).
 
 ## Documentation
 
-The [Lunespy](https://github.com/lunes-platform/lunespy) documentations is hosted at [Telescope](https://blockchain.lunes.io/telescope/)
+The `lunespy` documentations is hosted at [Telescope](https://blockchain.lunes.io/telescope/)
 
 ## Contributing
 
-[Lunespy](https://github.com/lunes-platform/lunespy) is still under development. Contributions are always welcome! Please follow the [Developers Guide](CONTRIBUTING.md) if you want to help.
+`lunespy` is still under development. Contributions are always welcome! Please follow the [Developers Guide](CONTRIBUTING.md) if you want to help.
 
 ## Contributors
 
