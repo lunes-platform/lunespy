@@ -6,3 +6,5 @@ sample*
 tx*.json
 wallet*.json
 *.xml
+.cov*
+.DS*

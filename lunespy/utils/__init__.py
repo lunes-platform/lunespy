@@ -9,6 +9,10 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+def flat_map(listOfLists):
+    from itertools import chain
+    return list(chain.from_iterable(listOfLists))
+
 
 def log_data(data: dict) -> None:
     list(map(
@@ -29,47 +33,85 @@ def export_json(data: dict, name: str, path: str) -> bool:
             file.write( json.dumps(data) )
     except Exception as msg:
         raise Exception(
-            bcolors.FAIL + f"[Error] File Don't Saved Because:\n{msg}" + bcolors.ENDC
+            bcolors.FAIL + f"[Error] File Don't Saved Because:\n└──{msg}" + bcolors.ENDC
         )
 
     return f"file save in {full_path}"
 
 
-def generate_log() -> None:
+def semantic_version() -> str:
     from subprocess import check_output
 
-    def get_logs() -> list:
+    def get_logs() -> list[str]:
         return check_output(
-            'git log --pretty="- [%h](%H) %s [%ai]"',
+            'git log --pretty="%s"',
             shell=True
-        ).decode().split('\n')
-    
-    def logs_to_changelog(logs: list) -> list:
-        range_date = {}
-        for line in logs:
-            range_date[line[-27:-17]] = []
-            for commit in logs:
-                if line[-27:-17] == commit[-27:-17]:
-                    range_date[line[-27:-17]].append(commit)
+        ).decode().split('\n')[::-1]
 
-        changelog = ['# Changelog\n']
-        for date in range_date.keys():
-            changelog.append(f"\n## {date}\n")
-            for commit in range_date[date]:
-                edited_commit = commit[:-29] + '\n'
-                changelog.append(edited_commit)
-        
-        return changelog
+    major, minor, patch = 0,0,0
 
-    def save_changelog(changelog: list) -> None:
-        with open('./CHANGELOG.md', 'w') as file:
-            file.writelines(changelog)
-
-    save_changelog(
-        logs_to_changelog(
-            get_logs()
-            )
+    for commit in get_logs():
+        if commit.startswith("deprecated"):
+            patch = 0
+            minor = 0
+            major += 1
+        elif  commit.startswith("Merge" or "issued" or "merged"):
+            patch = 0
+            minor += 1
+        elif  commit.startswith("fixed" or "fix" or "Update"):
+            patch += 1
+    print(
+        bcolors.OKGREEN + f"v{major}.{minor}.{patch}" + bcolors.ENDC
     )
+    return f"v{major}.{minor}.{patch}"
+
+
+def changelog(length=0):
+    from subprocess import check_output
+
+    deprecated = ["## Deprecated"]
+    merged_issued = ["## Issued"]
+    fixed = ["## Fixed"]
+    refactored = ["## Refactored"]
+    removed = ["## Removed"]
+    other = ["## Others"]
+    changelog = [
+        [f"# Changelog {semantic_version()}"],
+        deprecated, merged_issued, fixed, refactored, removed, other
+    ]
+
+    def get_logs() -> list[str]:
+        if length != 0:
+            return check_output(
+                'git log --pretty="- [%h](%H) %s"',
+                shell=True
+            ).decode().split('\n')[:length]
+        else:
+            return check_output(
+                'git log --pretty="- [%h](%H) %s"',
+                shell=True
+            ).decode().split('\n')
+
+    for commit in get_logs():
+        if len(commit.split(" ")) > 3:
+            test = commit.split(" ")[2]
+
+            if test.startswith("deprecated"):
+                deprecated.append(commit)
+            elif  test.startswith("Merge" or "issued" or "merged" or "merg"):
+                merged_issued.append(commit)
+            elif  test.startswith("fixed" or "fix" or "Update"):
+                fixed.append(commit)
+            elif  test.startswith("refact" or "chang"):
+                refactored.append(commit)
+            elif  test.startswith("remov"):
+                removed.append(commit)
+        else:
+            other.append(commit)
+
+    with open('./CHANGELOG.md', 'w') as file:
+        for line in flat_map(changelog):
+            file.write(line + "\n")
 
 
 def now() -> int:
@@ -88,22 +130,5 @@ def unes_to_lunes(unes: int) -> float:
     return float(unes / 10e7)
 
 
-def sha256(object: object) -> str:
-    from hashlib import sha256
-
-    return sha256(
-        str(object).encode()
-    ).hexdigest()
-
-
-def drop_none(data: dict) -> dict:
-    validate_keys = list(filter(
-        lambda key: data[key] != None,
-        data.keys()
-    ))
-
-    return {
-        key: data[key]
-        for key in data.keys()
-        if key in validate_keys
-    }
+def release():
+    changelog(50)

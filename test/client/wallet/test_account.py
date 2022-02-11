@@ -1,162 +1,145 @@
-from lunespy.client.wallet import Account
-from lunespy.client.wallet.errors import InvalidChainAddress
-from pytest import raises
+from pytest import fixture, mark
+
+class TestAccontFromNewSeed:
+    from lunespy.client.wallet import Account
 
 
-def test_seed():
-    """
-        this seed "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit":
-            - should returns this mainnet_address: "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
-            - should returns this testnet_address: "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
-    """
-    seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
+    @fixture
+    def account_from_new_seed_mainnet(self):
+        return self.Account(chain="mainnet")
 
-    mainnet = Account(seed=seed, chain='mainnet')
-    assert mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
+    @fixture
+    def account_from_new_seed_testnet(self):
+        return self.Account(chain="testnet")
 
-    testnet = Account(seed=seed, chain='testnet')
-    assert testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
+    def test_create_account_from_new_seed_mainnet(self, account_from_new_seed_mainnet):
+        assert type(account_from_new_seed_mainnet) == self.Account
 
+    def test_create_account_from_new_seed_testnet(self, account_from_new_seed_testnet):
+        assert type(account_from_new_seed_testnet) == self.Account
 
-def test_private_key():
-    """ 
-        this private_key "BnafXBSq1VDUdZ1nSjJoxhnQdBv2hk3o6dbV49TD1bzo":
-            - should returns this mainnet_address: "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
-            - should returns this testnet_address: "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
-    """
-    private_key = "BnafXBSq1VDUdZ1nSjJoxhnQdBv2hk3o6dbV49TD1bzo"
+    def test_address_from_create_account_from_new_seed_mainnet(self, account_from_new_seed_mainnet):
+        from lunespy.client.wallet.utils import validate_address
 
-    mainnet = Account(private_key=private_key, chain='mainnet')
-    assert mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
+        assert validate_address(account_from_new_seed_mainnet.address, chain_id="1") == True
 
-    testnet = Account(private_key=private_key, chain='testnet')
-    assert testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
+    def test_address_from_create_account_from_new_seed_testnet(self, account_from_new_seed_testnet):
+        from lunespy.client.wallet.utils import validate_address
+
+        assert validate_address(account_from_new_seed_testnet.address, chain_id="0") == True
 
 
-def test_public_key():
-    """
-        this public_key "2uuQVr3B5aGgvSJ5BMCw4Cd19tdYdnMGoYnji99aPde4":
-            - should returns this mainnet_address: "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
-            - should returns this testnet_address: "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
-    """
-    public_key = "2uuQVr3B5aGgvSJ5BMCw4Cd19tdYdnMGoYnji99aPde4"
+class TestAccountFromSeed:
+    from lunespy.client.wallet import Account
 
-    mainnet = Account(public_key=public_key, chain='mainnet')
-    assert mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
+    @fixture
+    def account_from_seed_mainnet(self):
+        seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
+        return self.Account(seed=seed)
 
-    testnet = Account(public_key=public_key, chain='testnet')
-    assert testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
-
-
-def test_address_mainnet():
-    """
-        this address "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj":
-            - should return this mainet_address: "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
-            - should return this testnet_address: Error InvalidChainAddress
-    """
-    address = "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
-
-    mainnet = Account(address=address, chain='mainnet')
-    assert mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
-
-    with raises(InvalidChainAddress):
-        Account(address=address, chain='testnet')
+    @fixture
+    def account_from_seed_testnet(self):
+        seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
+        return self.Account(seed=seed, chain="testnet")
 
 
-def test_address_testnet():
-    """
-        this address "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u":
-            - should return this mainet_address: Error InvalidChainAddress
-            - should return this testnet_address: "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
-    """
-    from lunespy.client.wallet.errors import InvalidChainAddress
+    def test_create_account_from_seed_mainnet(self, account_from_seed_mainnet):
+        assert account_from_seed_mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
 
-    address = "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
-
-    testnet = Account(address=address, chain='testnet')
-    assert testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
-
-    with raises(InvalidChainAddress):
-            Account(address=address, chain='mainnet')
+    def test_create_account_from_seed_testnet(self, account_from_seed_testnet):
+        assert account_from_seed_testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
 
 
-def test_seed_with_nonce_1():
-    """
-        this seed "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-        with nonce 1:
-            - should return this mainet_private_key: "BHKyaXmhajKVNfyHszvFbeQvK8zMTHTMMCWjLxUmcwLw"
-            - should return this mainet_public_key: "AMXrxLv1wtnr8EWxvk1hcuujTzh56SiuPGBQqho2ocW2"
-            - should return this mainet_address: "37tD32367v1fiWgW8waw3QTdYTKKGrCV3zw"
-    """    
-    seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-    nonce = 1
-    wallet = Account(seed=seed, nonce=nonce, chain='mainnet')
-    assert wallet.private_key == "BHKyaXmhajKVNfyHszvFbeQvK8zMTHTMMCWjLxUmcwLw"
-    assert wallet.public_key == "AMXrxLv1wtnr8EWxvk1hcuujTzh56SiuPGBQqho2ocW2"
-    assert wallet.address == "37tD32367v1fiWgW8waw3QTdYTKKGrCV3zw"
+    @mark.parametrize(
+        "nonce, address",
+        [
+            (0, "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"),
+            (1, "37tD32367v1fiWgW8waw3QTdYTKKGrCV3zw"),
+            (2, "37qYK5eRJEr8a38hUXmxYv9aoQ8NpXH7Aqd"),
+            (3, "37w8stLd9JQwUKBrBUQr1VryJuhS3RWqEen"),
+            (4, "37vVbQVXEE4Lvs7X4wimsoxAvqBmoyHsWDJ"),
+        ]
+    )
+    def test_create_account_from_seed_mainnet_with_nonces_0_1_2_3_4(self, nonce, address):
+
+        seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
+        assert self.Account(seed=seed, nonce=nonce).address == address
+
+    @mark.parametrize(
+        "nonce, address",
+        [
+            (0, "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"),
+            (1, "37UsS2vnqCqCqhFN3vAbivLMkpp4L8GMCyP"),
+            (2, "37SCi6Y81XffhDhZPWMdES2K1md7skK1mFu"),
+            (3, "37XoGuEKrbEUbVki6SzWh1jhXHCB6jnKFxS"),
+            (4, "37X9zRPDwWst43gNyvJSZKpu9CgWsHt1U8i"),
+        ]
+    )
+    def test_create_account_from_seed_testnet_with_nonces_0_1_2_3_4(self, nonce, address):
+
+        seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
+        assert self.Account(seed=seed, nonce=nonce, chain="testnet").address == address
 
 
-def test_seed_with_nonce_2():
-    """
-        this seed "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-        with nonce 1
-            - should return this mainet_private_key: "4GSXCGMEvAPrhhTSUHfUfxfieqgpcJN8wsgUYdp82jJL"
-            - should return this mainet_public_key: "6dBW6ZD1GGomCjtjngvRHUJWqixoqk7PpCR6Yv8VAi6y"
-            - should return this mainet_address: "37qYK5eRJEr8a38hUXmxYv9aoQ8NpXH7Aqd"
-    """
-    seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-    nonce = 2
-    wallet = Account(seed=seed, nonce=nonce, chain='mainnet')
-    assert wallet.private_key == "4GSXCGMEvAPrhhTSUHfUfxfieqgpcJN8wsgUYdp82jJL"
-    assert wallet.public_key == "6dBW6ZD1GGomCjtjngvRHUJWqixoqk7PpCR6Yv8VAi6y"
-    assert wallet.address == "37qYK5eRJEr8a38hUXmxYv9aoQ8NpXH7Aqd"
+class TestAccountFromPrivateKey:
+
+    from lunespy.client.wallet import Account
+
+    @fixture
+    def account_from_private_key_mainnet(self):
+        private_key = "BnafXBSq1VDUdZ1nSjJoxhnQdBv2hk3o6dbV49TD1bzo"
+        return self.Account(private_key=private_key, chain="mainnet")
+
+    @fixture
+    def account_from_private_key_testnet(self):
+        private_key = "BnafXBSq1VDUdZ1nSjJoxhnQdBv2hk3o6dbV49TD1bzo"
+        return self.Account(private_key=private_key, chain="testnet")
 
 
-def test_seed_with_nonce_3():
-    """
-        this seed "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-        with nonce 1
-            - should return this mainet_private_key: "5MiDw2Sa8PhvJLBfPg272jhLoZsBbZ3uT7p4fNB6X8DJ"
-            - should return this mainet_public_key: "2cwvWpBCtgZURG5WEwzpmnJhzhtNN8T6jJH6G6qamfG6"
-            - should return this mainet_address: "37w8stLd9JQwUKBrBUQr1VryJuhS3RWqEen"
-    """
-    seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-    nonce = 3
-    wallet = Account(seed=seed, nonce=nonce, chain='mainnet')
-    assert wallet.private_key == "5MiDw2Sa8PhvJLBfPg272jhLoZsBbZ3uT7p4fNB6X8DJ"
-    assert wallet.public_key == "2cwvWpBCtgZURG5WEwzpmnJhzhtNN8T6jJH6G6qamfG6"
-    assert wallet.address == "37w8stLd9JQwUKBrBUQr1VryJuhS3RWqEen"
+    def test_create_account_from_private_key_mainnet(self, account_from_private_key_mainnet):
+        assert account_from_private_key_mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
+
+    def test_create_account_from_private_key_testnet(self, account_from_private_key_testnet):
+        assert account_from_private_key_testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
 
 
-def test_all_attributes_of_account():
-    """
-        this attributes below:
-            - should be:
-                seed -> "oak display outdoor barely friend spike video defense proud cave lamp oxygen problem traffic exercise"
-                hash_seed -> "L79j8bS2SfpjpWZS8oJaqYdczKYun5F1JuQo9uBnAKn97REWjJ2SeoHeEG8Nn6xk7qLaGEHWdtHjVf3emRsuumVKdpaa2zBTRptucQqJ9cs6XDiNsV8XDGh5e1buQmrG6gQFhnWCix"
-                nonce -> 0
-                chain -> 'testnet'
-                chain_id -> '0'
-                private_key -> "7VAsqDQ9PadMbG21fHkbtVHyteuPT26ZspaDQr37scUZ"
-                public_key -> "B226T1TgGB23Nc6L2jmowtSWY14dwG9wWEVhpBmBzPkr"
-                address -> "37iwu4YZc5umF7u24kMDzgYN55PQy6x3NTm"
-    """
-    seed = "oak display outdoor barely friend spike video defense proud cave lamp oxygen problem traffic exercise"
-    hash_seed = "L79j8bS2SfpjpWZS8oJaqYdczKYun5F1JuQo9uBnAKn97REWjJ2SeoHeEG8Nn6xk7qLaGEHWdtHjVf3emRsuumVKdpaa2zBTRptucQqJ9cs6XDiNsV8XDGh5e1buQmrG6gQFhnWCix"
-    nonce = 0
-    chain = 'testnet'
-    chain_id = '0'
-    private_key = "7VAsqDQ9PadMbG21fHkbtVHyteuPT26ZspaDQr37scUZ"
-    public_key = "B226T1TgGB23Nc6L2jmowtSWY14dwG9wWEVhpBmBzPkr"
-    address = "37iwu4YZc5umF7u24kMDzgYN55PQy6x3NTm"
+class TestAccountFromPublicKey:
+    from lunespy.client.wallet import Account
 
-    wallet = Account(seed=seed, chain='testnet')
+    @fixture
+    def account_from_public_key_mainnet(self):
+        public_key = "2uuQVr3B5aGgvSJ5BMCw4Cd19tdYdnMGoYnji99aPde4"
+        return self.Account(public_key=public_key, chain="mainnet")
 
-    assert wallet.private_key == private_key
-    assert wallet.chain_id == chain_id
-    assert wallet.public_key == public_key
-    assert wallet.hash_seed == hash_seed
-    assert wallet.chain == chain
-    assert wallet.address == address
-    assert wallet.nonce == nonce
-    assert wallet.seed == seed
+    @fixture
+    def account_from_public_key_testnet(self):
+        public_key = "2uuQVr3B5aGgvSJ5BMCw4Cd19tdYdnMGoYnji99aPde4"
+        return self.Account(public_key=public_key, chain="testnet")
+
+
+    def test_create_account_from_publick_key_mainnet(self, account_from_public_key_mainnet):
+        assert account_from_public_key_mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
+
+    def test_create_account_from_publick_key_testnet(self, account_from_public_key_testnet):
+        assert account_from_public_key_testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
+
+
+class TestAccountFromAddress:
+    from lunespy.client.wallet import Account
+
+    @fixture
+    def account_from_address_mainnet(self):
+        address = "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
+        return self.Account(address=address, chain="mainnet")
+
+    @fixture
+    def account_from_address_testnet(self):
+        address = "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
+        return self.Account(address=address, chain="testnet")
+
+
+    def test_create_account_from_address_mainnet(self, account_from_address_mainnet):
+        assert account_from_address_mainnet.address == "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
+
+    def test_create_account_from_address_testnet(self, account_from_address_testnet):
+        assert account_from_address_testnet.address == "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"

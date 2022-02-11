@@ -17,3 +17,6 @@ class InvalidChecksumAddress(WalletError):
 
 class InvalidNonce(WalletError):
     """Nonce must be between 0 and 4294967295"""
+
+class InvalidData(WalletError):
+    """Wrong data passed: (seed, nonce, chain, private_key, public_key, address)"""

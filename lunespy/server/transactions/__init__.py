@@ -35,7 +35,7 @@ def unconfirmed_transaction(node_url: str) -> dict:
 
 def transactions_from_address(address: str, limit_transactions: int, node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/transactions/address/{address}/limit/{limit_transactions}'
+        full_url = f'{Node.mainnet.value}/transactions/address/{address}/limit/{limit_transactions}'
     else:
         full_url = f'{node_url}/transactions/address/{address}/limit/{limit_transactions}' # You have pass your node url with https or other contents
     

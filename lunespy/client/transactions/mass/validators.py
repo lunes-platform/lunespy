@@ -41,7 +41,7 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
         "signature": signature.decode(),
         "timestamp": timestamp,
         "fee": fee,
-        
+
         "version": 1,
         "assetId": asset_id,
         "transfers": [
@@ -57,11 +57,11 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
 
 
 def validate_mass_transfer(sender: Account, receivers_list: list):
-    from lunespy.client.wallet.validators import validate_address
+    from lunespy.client.wallet.utils import validate_address
     from lunespy.utils import bcolors
 
     amounts_list: list = [tx['amount'] for tx in receivers_list]
-    
+
     if not sender.private_key:
         print(bcolors.FAIL + 'Sender `Account` not have a private key' + bcolors.ENDC)
         return False

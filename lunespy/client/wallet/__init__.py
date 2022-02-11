@@ -19,24 +19,10 @@ class Account:
 
     def __init__(self, n_words: int = None, seed: str = None, nonce: int = None,
                  chain: str = None, private_key: str = None, public_key: str = None,
-                 hash_seed:str = None, chain_id: str = None, address: str = None) -> None:
-        from lunespy.client.wallet.validators import validate_wallet
-        from lunespy.utils import drop_none
+                 address: str = None, address_version: int = None) -> None:
+        from lunespy.client.wallet.utils import new
 
-        wallet: dict = drop_none({
-            'private_key': private_key,
-            'public_key': public_key,
-            'hash_seed': hash_seed,
-            'chain_id': chain_id,
-            'address': address,
-            'nonce': nonce,
-            'chain': chain,
-            'seed': seed,
-            'n_words': n_words
-        })
-
-        self.__dict__ = validate_wallet(wallet)
-
+        self.__dict__ = new(n_words, seed, nonce, chain, private_key, public_key, address, address_version)
 
     def __str__(self) -> str:
         from lunespy.utils import bcolors
@@ -45,13 +31,6 @@ class Account:
         for key, value in self.__dict__.items():
             if 'byte' not in key and 'id' not in key:
                 data += f"\n{key}{bcolors.OKGREEN}\n └── {value}{bcolors.ENDC}"
-        return data
-
-
-    def __repr__(self) -> str:
-        data = ''
-        for key, value in self.__dict__.items():
-                data += f"{key} -> {value}\n"
         return data
 
 
