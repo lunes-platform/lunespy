@@ -1,10 +1,16 @@
-# Contributing
+# CONTRIBUTING
+
 
 ## What is the workflow?
 
-1. Create and describe your proposal in an _issue_.
+1. Create and describe your **proposal/bug** in an _issue_.
 2. Create a new **branch** and **merge request** with the pattern `1-my-feature`.
 3. Commit your code to the commit convention.
+4. Finaly, update the **CHANGELOG** with:
+
+```py
+poetry run log
+```
 
 ---
 
@@ -20,6 +26,7 @@ why was it modified?
 
 #issue
 ```
+
 ### **Types**
 
 - **fixed** fixes a bug

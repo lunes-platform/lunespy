@@ -1,8 +1,9 @@
-# Changelog v2.37.6
+# Changelog v2.38.1
 ## Deprecated
 - [db7f11b](db7f11bc5951c4515714995326a432f9a0921586) deprecated!: `transfer_asset` to `transfer_token`
 - [dfff302](dfff3029bf44cc6eefd57f681b34c3f035327b16) deprecated(transfer_asset):  to `transfer_token`
 ## Issued
+- [57d2091](57d209140ca7e1f52ef57b3ae539db331d468664) Merge branch 'fixed_commits' into refactored-based-on-the-telescope
 - [a240131](a24013171e070846460640c02c49890e59f5eb3d) Merge branch 'add-requeriment' into 'main'
 - [6f2dc23](6f2dc23e65054e1bda8f944721bb8ea2d910ced9) Merge branch 'change/remove-https' into 'main'
 - [de9bf50](de9bf5040d63914895b60efb7ff3efaac597aa1d) Merge branch 'refactor-pytest' into 'main'
@@ -44,7 +45,11 @@
 - [13611fc](13611fc963a72b775ed02e7b8f007571e3ed6243) Merge  'feature/new-architecture' -> 'master'
 - [c78af04](c78af048cde86b86eb923a9945e8c1c5d53f4617) Merge pull request #1 from VanJustin/master
 ## Fixed
-- [ca0c806](ca0c806718a900e54cdd16acfd7eff081398f882) fixed: semantic version
+- [40a0e9f](40a0e9fb0af995d131c1501cfd370c472debd710) fixed: update refactored-based-on-the-telescope
+- [edb5cda](edb5cdace94be10356c20bb6fe8881fa30c99624) fixed: semantic version
+- [4186a1b](4186a1b99d0c214b4eb6750715681ea10df0e648) fixed: semantic version
+- [c2730fe](c2730fe2c0c8ccb34671e13e882811e59d227cb2) fixed: crypto functions
+- [aee9634](aee96342b5ef24a1048c3aab5dffb9c62858d29d) fixed: semantic version
 - [e8e66f4](e8e66f44c0c39f350f806113f416d55dd867136e) fixed: crypto functions
 - [8189119](818911941db4e1adac4d57a24a4b7ad0da4a4f2b) fixed: account class
 - [fbd688c](fbd688c06e7bdcf0deb4eedd11fff91c7d5a21ce) fixed: format lint
@@ -98,6 +103,9 @@
 - [cb2285d](cb2285d81c5706fb41a44cc5b7a94d63e6683dea) fixed: template method
 - [8ee052d](8ee052dacf4c96e7af73c86228a593597e97951e) fixed: bytes data
 ## Refactored
+- [433dedb](433dedbd36e801828ee56f81cb3568a0caf952a9) refactored: based on telescope design
+- [17b4e2c](17b4e2c47314ed255693675e9ea3f3aea5ec5e36) refactored: crypto functions
+- [300008a](300008a83d3d2de2a8d07375b805884124526ac1) refactored: account class
 - [771f378](771f378d4b34d82d6093f3ad1f8dbff222bc325d) refactored: generator to utils
 - [38d08fe](38d08fe6f2618cd4743f699b3484e66fde33fde6) refactored: move test to `transactions` dir
 - [e17b00e](e17b00e8915f21a2f6c5944f84aced351b381f97) refactored: to new `to_human` and `to_machine`
