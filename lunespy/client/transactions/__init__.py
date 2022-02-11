@@ -1,4 +1,5 @@
-from lunespy.utils import export_json, log_data, sha256
+from lunespy.utils.crypto.converters import sha256
+from lunespy.utils import export_json, log_data
 from lunespy.utils import bcolors
 from abc import abstractmethod
 from abc import ABCMeta
@@ -25,27 +26,28 @@ class BaseTransaction(metaclass=ABCMeta):
             return {'ready': False}
 
 
-    def sign(self) -> dict:
-        return ...
+    def sign(self, sign_tx, private_key, **tx) -> dict:
+        return sign_tx(private_key, **tx)
 
 
-    def send(self, send_tx, node_url: str) -> dict:
+    def send(self, send_tx, node_url: str, chain: str) -> dict:
         from lunespy.server.nodes import Node
 
         if node_url == None:
-            if self.sender.chain == 'mainnet':
-                node_url = Node.mainnet_url.value
+            if self.sender.chain == chain:
+                node_url = Node.mainnet.value
             else:
-                node_url = Node.testnet_url.value
+                node_url = Node.testnet.value
 
-        mounted_tx = self.transaction
-        if mounted_tx['ready']:
-            tx_response = send_tx(mounted_tx, node_url=node_url)
+
+        if self._tx['ready']:
+            tx_response = send_tx(self._tx, node_url=node_url)
 
             if tx_response['send']:
                 id = tx_response['response'].get('id', sha256(tx_response))
+                msg = f'tx-{self.tx_type.replace(" ", "-")}-{id}'
                 self.show(
-                    name=f'tx-{self.tx_type.replace(" ", "-")}-{id}',
+                    name=msg,
                     data=tx_response
                 )
                 return tx_response
@@ -55,9 +57,10 @@ class BaseTransaction(metaclass=ABCMeta):
 
         else:
             print(bcolors.FAIL + f'{self.tx_type} Transaction dont send', bcolors.ENDC)
-            return mounted_tx
+            return self._tx
 
 
-    def show(self, name: str, data: dict, path: str = './data/') -> None:
+    def show(self, name: str, data: dict, path: str = './') -> None:
         log_data(data)
         export_json(data, name, path)
+

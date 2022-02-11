@@ -6,7 +6,7 @@ from requests import get
 
 def address_associated_with_an_alias(alias: str, node_url: str = None) -> dict:
     if node_url == None:
-       full_url = f'{Node.mainnet_url.value}/addresses/alias/by-alias/{alias}'
+       full_url = f'{Node.mainnet.value}/addresses/alias/by-alias/{alias}'
 
     else:
         full_url = f'{node_url}/addresses/alias/by-alias/{alias}' # You have pass your node url with https or other contents
@@ -27,7 +27,7 @@ def address_associated_with_an_alias(alias: str, node_url: str = None) -> dict:
 
 def asset_distribution(asset_id: str, node_url: str == None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/assets/{asset_id}/distribution'
+        full_url = f'{Node.mainnet.value}/assets/{asset_id}/distribution'
     else: 
         full_url = f'{node_url}/assets/{asset_id}/distribution' # You have pass your node url with https or other contents
     
@@ -47,7 +47,7 @@ def asset_distribution(asset_id: str, node_url: str == None) -> dict:
 
 def balance_all_assets_of_address(address: str, node_url: str == None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/assets/balance/{address}'
+        full_url = f'{Node.mainnet.value}/assets/balance/{address}'
     else:
         full_url = f'{node_url}/assets/balance/{address}' # You have pass your node url with https or other contents
     
@@ -67,7 +67,7 @@ def balance_all_assets_of_address(address: str, node_url: str == None) -> dict:
 
 def balance_for_especify_asset_of_address(address: str, asset_id: str, node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/assets/balance/{address}/{asset_id}'
+        full_url = f'{Node.mainnet.value}/assets/balance/{address}/{asset_id}'
     else:
         full_url = f'{node_url}/assets/balance/{address}/{asset_id}' # You have pass your node url with https or other contents 
     
@@ -104,7 +104,7 @@ def balance_of_all_address(node_ip: str, node_api_key: str) -> dict:
 
 def balance_of_address(address: str, node_url: str = None) -> int:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/addresses/balance/{address}'
+        full_url = f'{Node.mainnet.value}/addresses/balance/{address}'
     else:
         full_url = f'{node_url}/addresses/balance/{address}' # You have pass your node url with https or other contents
     
@@ -141,7 +141,7 @@ def list_of_rich(**kargs: dict) -> dict:
             for i in wallets
         ])
         return percent(total)
-    
+
     response = balance_of_all_address(kargs['node_ip'], kargs['node_api_key'])
     supply = Node.mainnet_total_supply.value if kargs['net'] == 'mainnet' else Node.testnet_total_supply.value
     link = Node.mainnet_blockexplorer.value if kargs['net'] == 'mainnet' else Node.testnet_blockexplorer.value
@@ -198,7 +198,7 @@ def list_of_rich(**kargs: dict) -> dict:
 
 def leasing_active_by_address(address: str, node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/leasing/active/{address}'
+        full_url = f'{Node.mainnet.value}/leasing/active/{address}'
     else:
         full_url = f'{node_url}/leasing/active/{address}' # You have pass your node url with https or other contents
 
@@ -220,7 +220,7 @@ def leasing_active_by_address(address: str, node_url: str = None) -> dict:
 
 def address_of_node_from_url(node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/addresses'
+        full_url = f'{Node.mainnet.value}/addresses'
 
     else:
         full_url = f'{node_url}/addresses' # You have pass your node url with https or other contents
@@ -241,7 +241,7 @@ def address_of_node_from_url(node_url: str = None) -> dict:
 
 def aliases_associated_with_an_address(address: str, node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}addresses/alias/by-address/{address}'
+        full_url = f'{Node.mainnet.value}addresses/alias/by-address/{address}'
     else:
         full_url = f'{node_url}/addresses/alias/by-address/{address}' # You have pass your node url with https or other contents
 

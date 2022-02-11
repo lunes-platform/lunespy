@@ -1,6 +1,5 @@
-from enum import Enum
-
 from lunespy.utils import lunes_to_unes
+from enum import Enum
 
 
 class IssueType(Enum):

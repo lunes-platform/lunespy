@@ -1,3 +1,78 @@
+
+def ror(value, right, bits):
+    from lunespy.utils.crypto import Masks
+
+    top = value >> right
+    bot = (value & Masks[right]) << (bits - right)
+    return bot | top
+
+
+def rol(value, left, bits):
+    from lunespy.utils.crypto import Masks
+
+    top = value >> (bits - left)
+    bot = (value & Masks[bits - left]) << left
+    return bot | top
+
+
+def keccak_f(state):
+    from lunespy.utils.crypto import RoundConstants
+    from math import log
+
+    def round(A, RC):
+        from lunespy.utils.crypto import RotationConstants
+        from functools import reduce
+        from operator import xor
+
+        W, H = state.W, state.H
+        rangeW, rangeH = state.rangeW, state.rangeH
+        lanew = state.lanew
+        zero = state.zero
+
+        # theta
+        C = [reduce(xor, A[x]) for x in rangeW]
+        D = [0] * W
+        for x in rangeW:
+            D[x] = C[(x - 1) % W] ^ rol(C[(x + 1) % W], 1, lanew)
+            for y in rangeH:
+                A[x][y] ^= D[x]
+
+        # rho and pi
+        B = zero()
+        for x in rangeW:
+            for y in rangeH:
+                B[y % W][(2 * x + 3 * y) % H] = rol(A[x][y], RotationConstants[y][x], lanew)
+
+        # chi
+        for x in rangeW:
+            for y in rangeH:
+                A[x][y] = B[x][y] ^ ((~ B[(x + 1) % W][y]) & B[(x + 2) % W][y])
+
+        # iota
+        A[0][0] ^= RC
+
+    l = int(log(state.lanew, 2))
+    nr = 12 + 2 * l
+
+    for ir in range(nr):
+        round(state.s, RoundConstants[ir])
+
+
+def multirate_padding(used_bytes, align_bytes):
+    padlen = align_bytes - used_bytes
+    if padlen == 0:
+        padlen = align_bytes
+    # note: padding done in 'internal bit ordering', wherein LSB is leftmost
+    if padlen == 1:
+        return [0x81]
+    else:
+        return [0x01] + ([0x00] * (int(padlen) - 2)) + [0x80]
+
+
+def bits_to_bytes(x):
+    return (int(x) + 7) / 8
+
+
 class KeccakState(object):
     W = 5
     H = 5
@@ -38,7 +113,6 @@ class KeccakState(object):
         return r
 
     def __init__(self, bitrate, b):
-        from lunespy.utils.crypto.converters import bits_to_bytes
 
         self.bitrate = bitrate
         self.b = b
@@ -56,7 +130,6 @@ class KeccakState(object):
         return KeccakState.format(self.s)
 
     def absorb(self, bb):
-        from lunespy.utils.crypto.converters import bits_to_bytes
 
         assert len(bb) == self.bitrate_bytes
 
@@ -72,7 +145,6 @@ class KeccakState(object):
         return self.get_bytes()[:self.bitrate_bytes]
 
     def get_bytes(self):
-        from lunespy.utils.crypto.converters import bits_to_bytes
 
         out = [0] * int(bits_to_bytes(self.b))
         i = 0
@@ -109,10 +181,8 @@ class KeccakSponge(object):
         self.state.absorb(bb)
         self.permfn(self.state)
 
-    def absorb(self, s):
-        from lunespy.utils.crypto.converters import string_to_list
-
-        self.buffer = string_to_list(s)
+    def absorb(self, string):
+        self.buffer = [char for char in string]
 
         while len(self.buffer) >= self.state.bitrate_bytes:
             self.absorb_block(self.buffer[:self.state.bitrate_bytes])
@@ -137,9 +207,6 @@ class KeccakSponge(object):
 
 class KeccakHash(object):
     def __init__(self):
-        from lunespy.utils.crypto.converters import multirate_padding
-        from lunespy.utils.crypto.converters import bits_to_bytes
-        from lunespy.utils.crypto.converters import keccak_f
 
         bitrate_bits = 1088
         capacity_bits = 512
@@ -160,7 +227,7 @@ class KeccakHash(object):
         )
         return "<KeccakHash with r=%d, c=%d, image=%d>" % info
 
-    def digest(self, string: str) -> str:
+    def digest(self, string: bytes) -> str:
         self.sponge.absorb(string)
         finalised = self.sponge.copy()
         finalised.absorb_final()

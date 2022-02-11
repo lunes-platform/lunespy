@@ -4,7 +4,7 @@ from lunespy.server.nodes import Node
 
 def block_from_height(height: int, node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/blocks/at/{height}'
+        full_url = f'{Node.mainnet.value}/blocks/at/{height}'
     else:
         full_url = f'{node_url}/blocks/at/{height}' # You have pass your node url with https or other contents
     
@@ -24,7 +24,7 @@ def block_from_height(height: int, node_url: str = None) -> dict:
 
 def range_block(start_block: int, end_block: int, node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/blocks/seq/{start_block}/{end_block}'
+        full_url = f'{Node.mainnet.value}/blocks/seq/{start_block}/{end_block}'
     else:
         full_url = f'{node_url}/blocks/seq/{start_block}/{end_block}' # You have pass your node url with https or other contents
     
@@ -44,7 +44,7 @@ def range_block(start_block: int, end_block: int, node_url: str = None) -> dict:
 
 def last_block(node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/blocks/last'
+        full_url = f'{Node.mainnet.value}/blocks/last'
     else:
         full_url = f'{node_url}/blocks/last' # You have pass your node url with https or other contents
     
@@ -64,7 +64,7 @@ def last_block(node_url: str = None) -> dict:
 
 def blocks_generated_by_specified_address(address: str, start_block: int, end_block: int, node_url: str = None) -> dict:
     if node_url == None:
-        full_url = f'{Node.mainnet_url.value}/blocks/address/{address}/{start_block}/{end_block}'
+        full_url = f'{Node.mainnet.value}/blocks/address/{address}/{start_block}/{end_block}'
     else:
         full_url = f'{node_url}/blocks/address/{address}/{start_block}/{end_block}' # You have pass your node url with https or other contents
     

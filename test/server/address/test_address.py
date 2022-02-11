@@ -30,17 +30,17 @@ def test_balance_for_especify_asset_of_address():
 
 
 @mark.requests
-def test_balance_of_address():
-    assert balance_of_address('37qrqmmQ8jwJJB2aXMnXt98kiwezyzb5ww7', 'http://lunesnode.lunes.io')["response"]["balance"] == int
+def test_balance_of_address_response_type():
+    assert type(balance_of_address('37qrqmmQ8jwJJB2aXMnXt98kiwezyzb5ww7', 'http://lunesnode.lunes.io')["response"]["balance"]) == int
 
 
 @mark.requests
-def test_balance_of_address():
+def test_balance_of_address_status():
     assert balance_of_address('37qrqmmQ8jwJJB2aXMnXt98kiwezyzb5ww7', 'http://lunesnode.lunes.io')["status"] == "ok"
 
 
 @mark.requests
-def test_balance_of_address():
+def test_balance_of_address_type():
     assert type(balance_of_address('37qrqmmQ8jwJJB2aXMnXt98kiwezyzb5ww7', 'http://lunesnode.lunes.io')) == dict
 
 

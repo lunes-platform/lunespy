@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lunespy"
-version = "1.40.0"
+version = "2.37.6-alpha"
 description = "Library for communication with nodes in mainnet or testnet of the lunes-blockchain network Allows the automation of sending assets, issue end reissue tokens, leasing, registry, and create new wallet."
 authors = [
     "Lunes Platform <development@lunes.io>"
@@ -27,11 +27,17 @@ pytest = "^6.2.5"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+python = "^3.10"
 
 [tool.poetry.scripts]
-log = "lunespy.utils:generate_log"
+log = "lunespy.utils:changelog"
+semver = "lunespy.utils:semantic_version"
+release = "lunespy.utils:release"
+# cov = "pytest --workers 8 --cov-report html:report_of_cov_test --cov lunespy/"
+# test = "pytest --workers 8"
 
 [tool.pytest.ini_options]
 markers = [
-    "requests: marks tests as slow"
+    "requests: marks tests as slow",
+    "now: marks current dev test"
 ]

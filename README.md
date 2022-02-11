@@ -9,7 +9,7 @@ Allows the automation of **sending assets**, **issue end reissue tokens**, **lea
 ## [What's new?](https://github.com/lunes-platform/lunespy/blob/main/CHANGELOG.md)
 
 
-## [How to use LunesPy?](https://github.com/lunes-platform/lunespy/blob/main/docs/TUTORIAL.md)
+## [How to use LunesPy?](https://blockchain.lunes.io/telescope/docs/sdk/getting_started)
 
 
 ## [Want to contribute to LunesPy?](https://github.com/lunes-platform/lunespy/blob/main/CONTRIBUTING.md)

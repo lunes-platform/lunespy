@@ -284,7 +284,7 @@ class Address(object):
         if not publicKey and not privateKey and not seed:
             wordCount = 2048
             words = []
-            for i in range(5):
+            for step in range(5):
                 r = crypto.bytes2str(os.urandom(4))
                 x = (ord(r[3])) + (ord(r[2]) << 8) + (ord(r[1]) << 16) + (ord(r[0]) << 24)
                 w1 = x % wordCount
