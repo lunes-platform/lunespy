@@ -34,7 +34,9 @@
 Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
 
 
-## [How to use LunesPy?](https://github.com/lunes-platform/lunespy/blob/main/docs/TUTORIAL.md) 
+## How to use LunesPy?
+
+  Tutorial for all our features is [here](https://github.com/lunes-platform/lunespy/blob/main/docs/TUTORIAL.md) 
 
 ## Changelog
 
