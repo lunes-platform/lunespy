@@ -2,6 +2,7 @@ image: lunesplatform/lunespy
 
 stages:
     - test
+    - deploy
 
 CreateTestsReport:
     stage: test
