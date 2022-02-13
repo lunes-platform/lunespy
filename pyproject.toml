@@ -31,10 +31,7 @@ python = "^3.10"
 
 [tool.poetry.scripts]
 log = "lunespy.utils:changelog"
-semver = "lunespy.utils:semantic_version"
-release = "lunespy.utils:release"
-# cov = "pytest --workers 8 --cov-report html:report_of_cov_test --cov lunespy/"
-# test = "pytest --workers 8"
+test = "lunespy.utils:parallel_test"
 
 [tool.pytest.ini_options]
 markers = [

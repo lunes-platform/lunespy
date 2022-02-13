@@ -136,3 +136,12 @@ def unes_to_lunes(unes: int) -> float:
 
 def release():
     changelog(50)
+
+
+def parallel_test():
+    import subprocess
+    subprocess.run([
+        "pytest",
+        "--workers", "8",
+        "--tests-per-worker", "1"
+    ])
