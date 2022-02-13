@@ -21,6 +21,7 @@ Allows the automation of **sending assets**, **issue end reissue tokens**, **lea
 ![PullRequestClosed](https://img.shields.io/github/issues-pr-closed/lunes-platform/lunespy?color=blueviolet)
 [![License](https://img.shields.io/github/license/lunes-platform/lunespy?color=blueviolet)](LICENSE)
 
+The changelog process for this project is described [here](CHANGELOG.md).
 
 <br><br>
   <a href="https://twitter.com/LunesPlatform" target="_blank">
