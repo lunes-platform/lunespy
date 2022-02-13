@@ -2,7 +2,7 @@
     <img alt="Lunes" src="docs/logo.png" width="100" />
 </p>
 
-# Lunes
+# LunesPy
 
 - Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
 Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
