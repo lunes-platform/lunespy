@@ -1,16 +1,13 @@
 <p align="center">
-  <a href="https://lunes.io">
-    <img alt="Lunes" src="docs/lunes.png" width="100" />
-  </a>
+    <img alt="Lunes" src="docs/logo.png" width="100" />
 </p>
 
-# LunesPy
+# Lunes
 
 - Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
 Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
 
 
-[![Issues](https://img.shields.io/github/issues/lunes-platform/lunespy)](https://github.com/lunes-platform/lunespy/issues)
 [![CommitActivity](https://img.shields.io/github/commit-activity/m/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/pulse)
 [![Forks](https://img.shields.io/github/forks/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/network/members)
 [![Stars](https://img.shields.io/github/stars/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/stargazers)
@@ -23,7 +20,8 @@ Allows the automation of **sending assets**, **issue end reissue tokens**, **lea
 ![PullRequest](https://img.shields.io/github/issues-pr/lunes-platform/lunespy?color=blueviolet)
 ![PullRequestClosed](https://img.shields.io/github/issues-pr-closed/lunes-platform/lunespy?color=blueviolet)
 [![License](https://img.shields.io/github/license/lunes-platform/lunespy?color=blueviolet)](LICENSE)
-[![GitHub](https://badgen.net/badge/icon/github?icon=github&label&color=purple)](https://github.com/lunes-platform)
+
+The changelog process for this project is described [here](CHANGELOG.md).
 
 <br><br>
   <a href="https://twitter.com/LunesPlatform" target="_blank">
@@ -33,13 +31,15 @@ Allows the automation of **sending assets**, **issue end reissue tokens**, **lea
     <img alt="Telegram" src="https://badgen.net/badge/icon/Lunes%20Platform?icon=telegram&label=Telegram&color=blue"/>
   </a>
 
-## Changelog
-
-The changelog process for this project is described [here](CHANGELOG.md).
+The `lunespy` documentations is hosted at [Telescope](https://blockchain.lunes.io/telescope/)
 
 ## Documentation
 
 The `lunespy` documentations is hosted at [Telescope](https://blockchain.lunes.io/telescope/)
+
+## Changelog
+
+The changelog process for this project is described [here](CHANGELOG.md).
 
 ## Contributing
 

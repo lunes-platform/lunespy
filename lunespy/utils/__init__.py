@@ -51,15 +51,17 @@ def semantic_version() -> str:
     major, minor, patch = 0,0,0
 
     for commit in get_logs():
-        if commit.startswith("deprecated"):
-            patch = 0
-            minor = 0
-            major += 1
-        elif  commit.startswith("Merge" or "issued" or "merged"):
-            patch = 0
-            minor += 1
-        elif  commit.startswith("fixed" or "fix" or "Update"):
-            patch += 1
+        commit_type = commit.split(":")[0]
+        match commit_type:
+            case "deprecated!":
+                patch = 0
+                minor = 0
+                major += 1
+            case "Merge" | "issued" | "merged" | "add" | "added":
+                patch = 0
+                minor += 1
+            case "fixed" | "fix" | "Update":
+                patch += 1
     print(
         bcolors.OKGREEN + f"v{major}.{minor}.{patch}" + bcolors.ENDC
     )
@@ -71,13 +73,14 @@ def changelog(length=0):
 
     deprecated = ["## Deprecated"]
     merged_issued = ["## Issued"]
+    added = ["## Added"]
     fixed = ["## Fixed"]
     refactored = ["## Refactored"]
     removed = ["## Removed"]
     other = ["## Others"]
     changelog = [
         [f"# Changelog {semantic_version()}"],
-        deprecated, merged_issued, fixed, refactored, removed, other
+        deprecated, merged_issued, added, fixed, refactored, removed, other
     ]
 
     def get_logs() -> list[str]:
@@ -93,21 +96,22 @@ def changelog(length=0):
             ).decode().split('\n')
 
     for commit in get_logs():
-        if len(commit.split(" ")) > 3:
-            test = commit.split(" ")[2]
-
-            if test.startswith("deprecated"):
+        commit_type = commit.split(":")[0].split(" ")[-1]
+        match commit_type:
+            case "deprecated!" | "deprecated":
                 deprecated.append(commit)
-            elif  test.startswith("Merge" or "issued" or "merged" or "merg"):
+            case "Merge" | "issued" | "merged":
                 merged_issued.append(commit)
-            elif  test.startswith("fixed" or "fix" or "Update"):
+            case "add" | "added":
+                added.append(commit)
+            case "fixed" | "fix" | "Update":
                 fixed.append(commit)
-            elif  test.startswith("refact" or "chang"):
+            case "refactored" | "refact":
                 refactored.append(commit)
-            elif  test.startswith("remov"):
+            case "remove" | "removed":
                 removed.append(commit)
-        else:
-            other.append(commit)
+            case _:
+                other.append(commit)
 
     with open('./CHANGELOG.md', 'w') as file:
         for line in flat_map(changelog):
