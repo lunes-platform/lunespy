@@ -7,10 +7,12 @@
 - Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
 Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
 
+[![Test](https://github.com/lunes-platform/lunespy/actions/workflows/python-app.yml/badge.svg)](https://github.com/lunes-platform/lunespy/actions/workflows/python-app.yml)
+[![License](https://img.shields.io/github/license/lunes-platform/lunespy?color=blueviolet)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/stargazers)
 
 [![CommitActivity](https://img.shields.io/github/commit-activity/m/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/pulse)
 [![Forks](https://img.shields.io/github/forks/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/network/members)
-[![Stars](https://img.shields.io/github/stars/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/stargazers)
 [![Contributors](https://flat.badgen.net/github/contributors/lunes-platform/lunespy?color=purple)](https://github.com/lunes-platform/lunespy/graphs/contributors)
 ![ClosedIssue](https://flat.badgen.net/github/closed-issues/lunes-platform/lunespy?color=red)
 [![Branches](https://badgen.net/github/branches/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/branches)
@@ -19,7 +21,7 @@ Allows the automation of **sending assets**, **issue end reissue tokens**, **lea
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Flunes.io%2F)](https://lunes.io)
 ![PullRequest](https://img.shields.io/github/issues-pr/lunes-platform/lunespy?color=blueviolet)
 ![PullRequestClosed](https://img.shields.io/github/issues-pr-closed/lunes-platform/lunespy?color=blueviolet)
-[![License](https://img.shields.io/github/license/lunes-platform/lunespy?color=blueviolet)](LICENSE)
+
 
 
 <br><br>
