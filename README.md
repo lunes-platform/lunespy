@@ -2,7 +2,7 @@
     <img alt="Lunes" src="docs/logo.png" width="100" />
 </p>
 
-# Lunes
+# LunesPy
 
 - Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
 Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
@@ -21,7 +21,6 @@ Allows the automation of **sending assets**, **issue end reissue tokens**, **lea
 ![PullRequestClosed](https://img.shields.io/github/issues-pr-closed/lunes-platform/lunespy?color=blueviolet)
 [![License](https://img.shields.io/github/license/lunes-platform/lunespy?color=blueviolet)](LICENSE)
 
-The changelog process for this project is described [here](CHANGELOG.md).
 
 <br><br>
   <a href="https://twitter.com/LunesPlatform" target="_blank">
@@ -30,8 +29,6 @@ The changelog process for this project is described [here](CHANGELOG.md).
   <a href="https://t.me/LunesPlatformPT" target="_blank">
     <img alt="Telegram" src="https://badgen.net/badge/icon/Lunes%20Platform?icon=telegram&label=Telegram&color=blue"/>
   </a>
-
-The `lunespy` documentations is hosted at [Telescope](https://blockchain.lunes.io/telescope/)
 
 ## Documentation
 
@@ -44,8 +41,6 @@ The changelog process for this project is described [here](CHANGELOG.md).
 ## Contributing
 
 `lunespy` is still under development. Contributions are always welcome! Please follow the [Developers Guide](CONTRIBUTING.md) if you want to help.
-
-## Contributors
 
 Thanks to the following people who have contributed to this project:
 

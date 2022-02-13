@@ -1,9 +1,10 @@
-# Changelog v2.0.0
+# Changelog v1.84.1
 ## Deprecated
-- [4fa0761](4fa0761958f1bd9ede3bce44526c97a058bb5f8f) deprecated: semantic version | changelog functions
 - [db7f11b](db7f11bc5951c4515714995326a432f9a0921586) deprecated!: `transfer_asset` to `transfer_token`
 ## Issued
-- [66274d1](66274d1b5685bfdcf5ad113cedd52551ff3fc5f3) merged: add/pattern-for-lunespy
+- [031685c](031685c6568ea628a826a41b77acd1a8ebf74976) merged: fast-fix
+- [719ec79](719ec79299c569e2c834209a43665ff19ce596cc) merged: add pattern readme for lunespy
+- [f5ac998](f5ac998c9e01e2533d6596e2bce985750986c1f2) merged: pattern of repository for lunespy
 - [49ea149](49ea149a5825b42d339cfd68ec65bdbafd85dc1e) merged: refactored based on telescope
 - [ebf77b8](ebf77b8b6a86d8eb29422b2b1caa7524d93e88fb) merged: `add-requeriment` to `main`
 - [3dd35d6](3dd35d6d0db4a8ad1f622842ebd041f65aae63fa) merged: update from `main`
@@ -24,19 +25,8 @@
 - [00e60bd](00e60bd4fea9ab7095aa681ba056fdf4fe895c42) issued: add docs
 - [59574dd](59574dd851db09673f498d24556e4ae193ea7907) issued: refactor contributing
 ## Added
-- [a29e48b](a29e48b8f10253ed66cafec37619c755eda91c2c) added: update the changelog file
-- [c92361e](c92361e1ecd3f5a932330bad939a4d1c72b4b957) added: update the contributing file
-- [f12b926](f12b9260d4a5ee47f1b6f49bd36c7735d52a1f58) added: update the readme file
-- [9fd7ba2](9fd7ba24b1e97648d161324be23f5759d919abd0) added: realese auto changelog with 50 last commits
-- [e6103c9](e6103c9e0918e0c9f040a9234a6cfa5b88c0c5ef) added: realese auto changelog with 50 last commits
-- [5af87fb](5af87fb57bbfc93e35947f5e92ead5a64440223d) added: new error for match `invalid data`
-- [f941c2c](f941c2c35c9f3ac07b337ede964468746b5cfbcc) added: 2 new functions
-- [7fbfc5a](7fbfc5a32c0d1f7a4c88475862e6e8cca40fa09a) added: sign function save tx in self obj
-- [3dfc99d](3dfc99d17838353795b2b2da176a14d144210ee2) added: new tests
-- [bc48be4](bc48be4eca69c27b4e3ee3d0896c5da455b65a61) added: tests for new design of transfer tx
-- [d71cc27](d71cc279b4f517e436f9892e82bf6c5ddac3000c) added: new design based in telescope
-- [530da8c](530da8c885fca3065131f0cbe3ded8b5d6485234) added: 3 new functions
-- [00a22a3](00a22a3d3c4ed56ecdb6a105b02f45c0723c4722) added: setup config files
+- [8c984ad](8c984add942b72788399001088c880406a5177a0) added: parttern readme
+- [f419a2a](f419a2a3b046e9f504c2e6d0a1cfb273d0e92293) added: pattern of repository for lunespy
 - [c090e76](c090e7675aa10e083d34cc709595f88ac348b164) added:  requeriments in docker/env
 - [436364c](436364c92cac6fb228aefd7dd5fca067ada3200b) added: permision to push image script
 - [780f3b4](780f3b4aa3354aac39ce29e019f0d6e922dc1069) added: parallel tests
@@ -126,16 +116,7 @@
 - [57a934b](57a934be804ec80b85f2cbe378b4bedccfa1cbe1) added: new docs
 - [b7052dc](b7052dca17b72ce632e384fd5cf28998bc9a2b0e) added: new tests
 ## Fixed
-- [40a0e9f](40a0e9fb0af995d131c1501cfd370c472debd710) fixed: update refactored-based-on-the-telescope
-- [edb5cda](edb5cdace94be10356c20bb6fe8881fa30c99624) fixed: semantic version
-- [4186a1b](4186a1b99d0c214b4eb6750715681ea10df0e648) fixed: semantic version
-- [c2730fe](c2730fe2c0c8ccb34671e13e882811e59d227cb2) fixed: crypto functions
-- [aee9634](aee96342b5ef24a1048c3aab5dffb9c62858d29d) fixed: semantic version
-- [e8e66f4](e8e66f44c0c39f350f806113f416d55dd867136e) fixed: crypto functions
-- [8189119](818911941db4e1adac4d57a24a4b7ad0da4a4f2b) fixed: account class
-- [fbd688c](fbd688c06e7bdcf0deb4eedd11fff91c7d5a21ce) fixed: format lint
-- [758392f](758392f58db8e59774664293c372d29a4793710b) fixed: bit row
-- [58e7629](58e7629aba8a03ae16713bf07c89bf1731959a3d) fixed: data directory not found
+- [3889a4d](3889a4d8a7a554d8280e7d170620da7fecb416ef) fixed: coverage report
 - [e1f6903](e1f69037497ce8a9587bc9e46529c3913af61739) fixed: path of python for run pytest in '.'
 - [98ca945](98ca94536b5fb6cd5758a152582bb7a7b10fea2f) fixed: error in create wallet
 - [89b1bbf](89b1bbf7f073e60182e0e2d77acc1308afe0eeff) fixed: status code in range
@@ -183,25 +164,20 @@
 - [8ee052d](8ee052dacf4c96e7af73c86228a593597e97951e) fixed: bytes data
 - [dd79f2f](dd79f2f99c01c87fcd503d5ba847a96aceba1a19) fix: fixing route
 ## Refactored
-- [433dedb](433dedbd36e801828ee56f81cb3568a0caf952a9) refactored: based on telescope design
-- [17b4e2c](17b4e2c47314ed255693675e9ea3f3aea5ec5e36) refactored: crypto functions
-- [300008a](300008a83d3d2de2a8d07375b805884124526ac1) refactored: account class
-- [771f378](771f378d4b34d82d6093f3ad1f8dbff222bc325d) refactored: generator to utils
-- [38d08fe](38d08fe6f2618cd4743f699b3484e66fde33fde6) refactored: move test to `transactions` dir
-- [e17b00e](e17b00e8915f21a2f6c5944f84aced351b381f97) refactored: to new `to_human` and `to_machine`
 - [0484d54](0484d5447e03fb32487c50710f7a2406c13b375e) refactored: rename `network` to `chain`
 - [0487f1a](0487f1a87f236e126a3f57f3e7f8f5dd223b3621) refactored: grouped tests with @mark.requests
 ## Removed
-- [3e3690a](3e3690acc844cb5cbfa5a7730313ef817fbd7759) removed: __repr__ for Account
+- [d9efcae](d9efcaefd80c50dc3f970f879728c390d148a400) removed: duplicated info
 - [2accdf1](2accdf16892f25c0546b3a8928494ba27133e83c) removed: transfer lunex to another branch
 - [081f4ba](081f4ba9e885cdb59eeb9b60215d55bc65a81ac3) removed: function last block
 - [04baab3](04baab3965dba159e37225c39b087586bdc464aa) removed: test requests
 - [61ab23a](61ab23a810679b8d2d4bfafdeac81182cb1ac520) removed: discontinued antique design
 - [f4c17e5](f4c17e57c1495997f3acc20090aa891d902e96df) removed: attachment drop
 ## Others
+- [90aa07f](90aa07f0593b6f8a01cc62efbe747a0997c30d6e) Revert "Merge branch 'fast-fix' into 'main'"
+- [fa40888](fa4088850cc2da5ce5bb9120f8323af712e40670) Merge branch 'fast-fix' into 'main'
+- [802530c](802530c4308e01f8156fbe8840a40d8c057a5332) Update README.md
 - [ff53f2c](ff53f2cd56205fd21afa3201b7e9a0332acbc4b0) add realese auto changelog with 50 last commits
-- [57d2091](57d209140ca7e1f52ef57b3ae539db331d468664) Merge branch 'fixed_commits' into refactored-based-on-the-telescope
-- [c9d6349](c9d6349b3d5acb4e17256742ce146a35708b4cab) refacored: move function to crypto/converters
 - [0c64465](0c64465c66758dde82f2b4337d38b2615bf38386) Update pyproject.toml
 - [a240131](a24013171e070846460640c02c49890e59f5eb3d) Merge branch 'add-requeriment' into 'main'
 - [6f2dc23](6f2dc23e65054e1bda8f944721bb8ea2d910ced9) Merge branch 'change/remove-https' into 'main'

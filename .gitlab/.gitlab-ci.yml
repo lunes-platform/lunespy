@@ -3,8 +3,7 @@ image: lunesplatform/lunespy
 stages:
     - test
 
-
-CreateReportTests:
+CreateTestsReport:
     stage: test
     script:
         - pytest --workers auto --tests-per-worker auto --junitxml=report.xml
@@ -13,11 +12,13 @@ CreateReportTests:
         reports:
             junit: report.xml
 
-# CreateReportTestsCoverage:
-#     stage: test
-#     script:
-#         - pytest --workers auto --tests-per-worker auto --cov-report xml:report_cov.xml --cov=lunespy/
-#     artifacts:
-#         when: always
-#         reports:
-#             junit: report_cov.xml
+CreateCoverageReport:
+    stage: test
+    script:
+        - coverage run -m pytest
+        - coverage report
+        - coverage xml
+    artifacts:
+        when: always
+        reports:
+            junit: coverage.xml
