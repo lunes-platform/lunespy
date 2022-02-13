@@ -116,7 +116,7 @@
 - [57a934b](57a934be804ec80b85f2cbe378b4bedccfa1cbe1) added: new docs
 - [b7052dc](b7052dca17b72ce632e384fd5cf28998bc9a2b0e) added: new tests
 ## Fixed
-- [3889a4d](3889a4d8a7a554d8280e7d170620da7fecb416ef) fixed: coverage report
+- [bf8822e](bf8822ea7daae03cc7e35536fa2f7036342af242) fixed: changelog readme contributing
 - [e1f6903](e1f69037497ce8a9587bc9e46529c3913af61739) fixed: path of python for run pytest in '.'
 - [98ca945](98ca94536b5fb6cd5758a152582bb7a7b10fea2f) fixed: error in create wallet
 - [89b1bbf](89b1bbf7f073e60182e0e2d77acc1308afe0eeff) fixed: status code in range
