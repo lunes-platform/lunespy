@@ -5,6 +5,8 @@ WORKDIR runner/
 ENV PYTHONPATH=.
 ENV RUNNER_ALLOW_RUNASROOT="1"
 
+COPY ./requirements.txt .
+RUN pip3 install --upgrade pip -r requirements.txt
 
 # Install Github Runner
 RUN apt update -y
