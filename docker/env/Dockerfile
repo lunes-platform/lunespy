@@ -1,8 +1,8 @@
-FROM python:3.10.0-alpine3.14
-
+FROM python:alpine
 ENV PYTHONPATH=.
-COPY requirements.txt .
 
-RUN apk --update --upgrade add gcc musl-dev jpeg-dev zlib-dev libffi-dev cairo-dev pango-dev gdk-pixbuf-dev curl git openssh
-RUN pip3 install --upgrade pip -r requirements.txt
+RUN apk add --no-cache curl zsh git gcc musl-dev
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+RUN ln -sv /root/.poetry/bin/poetry /usr/bin/poetry
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN git config --global core.editor 'code --wait'
