@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: python3 -m pip install --upgrade pip -r requirements.txt
+      run: poetry install
 
     - name: Test with pytest
-      run: pytest --workers auto
+      run: poetry run pytest --workers auto
