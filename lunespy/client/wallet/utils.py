@@ -84,7 +84,7 @@ def validate_address(address: str, chain_id: str) -> bool:
     from lunespy.client.wallet.constants import ADDRESS_CHECKSUM_LENGTH, ADDRESS_VERSION, ADDRESS_LENGTH
     from lunespy.utils.crypto.converters import b58_to_bytes, hash_keccak256_blake2b32b
 
-    def slice(string: str, index: int) -> tuple[str]:
+    def slice(string: str, index: int) -> tuple:
         return string[:-index], string[-index:]
 
     raw_address: str = b58_to_bytes(address).decode('latin-1')
