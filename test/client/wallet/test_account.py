@@ -134,7 +134,7 @@ class TestAccountFromAddress:
 
     @fixture
     def account_from_address_testnet(self):
-        address = "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
+        address = "7PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
         return self.Account(address=address, chain="testnet")
 
 
