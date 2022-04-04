@@ -1,7 +1,7 @@
 {
 	"name": "Existing Dockerfile",
 	"context": "..",
-	"dockerFile": "../docker/env/Dockerfile",
+	"dockerFile": "./Dockerfile",
 	"postCreateCommand": "poetry install && pip install --upgrade pip",
 	"settings": {
 		"python.pythonPath": "."

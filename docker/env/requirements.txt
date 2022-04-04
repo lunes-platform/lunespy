@@ -1,7 +1,0 @@
-poetry
-base58
-pytest
-requests
-pytest-cov
-pytest-parallel
-python-axolotl-curve25519

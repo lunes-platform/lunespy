@@ -1,8 +1,10 @@
-FROM python:alpine
+FROM python
 ENV PYTHONPATH=.
 
-RUN apk add --no-cache curl zsh git gcc musl-dev
+# install deps
+RUN apt update -y && apt install curl zsh git -y
+# poetry, ohMyZsh
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-RUN ln -sv /root/.poetry/bin/poetry /usr/bin/poetry
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# setting vscode editor for git
 RUN git config --global core.editor 'code --wait'
