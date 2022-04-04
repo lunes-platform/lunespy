@@ -84,7 +84,7 @@ def validate_address(address: str, chain_id: str) -> bool:
     from lunespy.client.wallet.constants import ADDRESS_CHECKSUM_LENGTH, ADDRESS_VERSION, ADDRESS_LENGTH
     from lunespy.utils.crypto.converters import b58_to_bytes, hash_keccak256_blake2b32b
 
-    def slice(string: str, index: int) -> tuple[str]:
+    def slice(string: str, index: int) -> tuple:
         return string[:-index], string[-index:]
 
     raw_address: str = b58_to_bytes(address).decode('latin-1')
@@ -108,55 +108,61 @@ def new(n_words, seed, nonce, chain, private_key, public_key, address, address_v
     from lunespy.client.wallet.errors import InvalidNonce, InvalidData
     from lunespy.client.wallet.constants import ADDRESS_VERSION
 
-    match (n_words, seed, nonce, chain, private_key, public_key, address, address_version):
-
-        case (None, None, _, _, None, None, None, _):
-            address_version = address_version if address_version else ADDRESS_VERSION[0]
-            chain = chain if chain else "mainnet"
-            chain_id = "1" if chain == "mainnet" else "0"
-            nonce = nonce if nonce else 0
-            n_words: int = 12
-            seed: str = new_seed_generator(n_words)
-            return seed_generator(seed=seed, nonce=0, chain_id=chain_id, address_version=address_version)
-
-        case (n_words, None, _, _, None, None, None, _) if n_words is not None:
-            address_version = address_version if address_version else ADDRESS_VERSION[0]
-            chain = chain if chain else "mainnet"
-            chain_id = "1" if chain == "mainnet" else "0"
-            nonce = nonce if nonce else 0
-            if nonce not in range(0, 4_294_967_295 + 1):
+    if seed:
+        if nonce:
+            if 0 <= nonce <= 4_294_967_296:
                 InvalidNonce
-            seed: str = new_seed_generator(n_words)
-            return seed_generator(seed=seed, nonce=0, chain_id=chain_id, address_version=address_version)
+        chain = chain if chain else "mainnet"
 
-        case (None, None, _, _, None, None, address, _) if address is not None:
-            address_version = address_version if address_version else ADDRESS_VERSION[0]
-            chain = chain if chain else "mainnet"
-            chain_id = "1" if chain == "mainnet" else "0"
-            validate_address(address=address, chain_id=chain_id)
-            return {"address": address, "chain_id": chain_id}
+        return seed_generator(
+            seed,
+            nonce if nonce else 0,
+            "1" if chain == "mainnet" else "0",
+            address_version if address_version else ADDRESS_VERSION[0]
+        )
 
-        case (None, None, _, _, None, public_key, _, _) if public_key is not None:
-            address_version = address_version if address_version else ADDRESS_VERSION[0]
-            chain = chain if chain else "mainnet"
-            chain_id = "1" if chain == "mainnet" else "0"
-            return public_key_generator(public_key=public_key, chain_id=chain_id, address_version=address_version)
+    elif private_key:
+        chain = chain if chain else "mainnet"
 
-        case (None, None, _, _, private_key, _, _, _) if private_key is not None:
-            address_version = address_version if address_version else ADDRESS_VERSION[0]
-            chain = chain if chain else "mainnet"
-            chain_id = "1" if chain == "mainnet" else "0"
-            return private_key_generator(private_key=private_key, chain_id=chain_id, address_version=address_version)
+        return private_key_generator(
+            private_key,
+            "1" if chain == "mainnet" else "0",
+            address_version if address_version else ADDRESS_VERSION[0],
+        )
 
-        case (_, seed, _, _, _, _, _, _) if seed is not None:
-            address_version = address_version if address_version else ADDRESS_VERSION[0]
-            chain = chain if chain else "mainnet"
-            nonce = nonce if nonce else 0
-            chain_id = "1" if chain == "mainnet" else "0"
-            if nonce not in range(0, 4_294_967_295 + 1):
+    elif public_key:
+        chain = chain if chain else "mainnet"
+
+        return public_key_generator(
+            public_key,
+            "1" if chain == "mainnet" else "0",
+            address_version if address_version else ADDRESS_VERSION[0]
+        )
+
+    elif address:
+        chain = chain if chain else "mainnet"
+        validate_address(
+            address,
+            "1" if chain == "mainnet" else "0"
+        )
+        return {
+            "address": address,
+            "chain_id": "1" if chain == "mainnet" else "0",
+        }
+
+    else:
+        if nonce:
+            if 0 <= nonce <= 4_294_967_296:
                 InvalidNonce
-            return seed_generator(seed=seed, nonce=nonce, chain_id=chain_id, address_version=address_version)
+        chain = chain if chain else "mainnet"
+        seed: str = new_seed_generator(
+            n_words if n_words else 12
+        )
 
-        case _:
-            InvalidData
+        return seed_generator(
+            seed,
+            nonce if nonce else 0,
+            "1" if chain == "mainnet" else "0",
+            address_version if address_version else ADDRESS_VERSION[0]
+        )
 
