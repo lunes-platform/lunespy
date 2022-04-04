@@ -1,7 +1,8 @@
-# Changelog v1.84.1
+# Changelog v1.90.1
 ## Deprecated
 - [db7f11b](db7f11bc5951c4515714995326a432f9a0921586) deprecated!: `transfer_asset` to `transfer_token`
 ## Issued
+- [f8162f6](f8162f66e5e155d44dab09af034ae68284e8795b) merged: fix contributing
 - [031685c](031685c6568ea628a826a41b77acd1a8ebf74976) merged: fast-fix
 - [719ec79](719ec79299c569e2c834209a43665ff19ce596cc) merged: add pattern readme for lunespy
 - [f5ac998](f5ac998c9e01e2533d6596e2bce985750986c1f2) merged: pattern of repository for lunespy
@@ -25,6 +26,11 @@
 - [00e60bd](00e60bd4fea9ab7095aa681ba056fdf4fe895c42) issued: add docs
 - [59574dd](59574dd851db09673f498d24556e4ae193ea7907) issued: refactor contributing
 ## Added
+- [ad65687](ad65687dbeb65dea38f220cd94ba2fe9c97f23e3) added: runner github in container
+- [d4c6959](d4c6959dcb5047ff5fc312961291ece45eee0719) added: auto push to github
+- [2f9b0cd](2f9b0cd7a7d3a7784d449bf521ca2a4ccd884d2e) added: pipeline ci to github
+- [da6f591](da6f59183fbed59d247c9784a4416e01c4eac2ee) added: runner docker for github
+- [dd94332](dd9433274a4484f5bc7b277defc4078bc8d748d8) added: pipeline ci to github
 - [8c984ad](8c984add942b72788399001088c880406a5177a0) added: parttern readme
 - [f419a2a](f419a2a3b046e9f504c2e6d0a1cfb273d0e92293) added: pattern of repository for lunespy
 - [c090e76](c090e7675aa10e083d34cc709595f88ac348b164) added:  requeriments in docker/env
@@ -116,7 +122,11 @@
 - [57a934b](57a934be804ec80b85f2cbe378b4bedccfa1cbe1) added: new docs
 - [b7052dc](b7052dca17b72ce632e384fd5cf28998bc9a2b0e) added: new tests
 ## Fixed
+- [71ffe39](71ffe39f02222cacff781e21c8d9fa00ee82fed1) fixed: runner github in container
+- [0239be9](0239be92107f562aa2e39aec6c908c9337e51ec3) fixed: .gitlab/.gitlab-ci.yml file
 - [bf8822e](bf8822ea7daae03cc7e35536fa2f7036342af242) fixed: changelog readme contributing
+- [85ea797](85ea797590eb05d6260996cf703a70fe30542700) fixed: update readme
+- [4351efa](4351efa0dafd97beca62cc9a62283748fdc0906f) fixed: coverage report
 - [e1f6903](e1f69037497ce8a9587bc9e46529c3913af61739) fixed: path of python for run pytest in '.'
 - [98ca945](98ca94536b5fb6cd5758a152582bb7a7b10fea2f) fixed: error in create wallet
 - [89b1bbf](89b1bbf7f073e60182e0e2d77acc1308afe0eeff) fixed: status code in range
@@ -164,9 +174,12 @@
 - [8ee052d](8ee052dacf4c96e7af73c86228a593597e97951e) fixed: bytes data
 - [dd79f2f](dd79f2f99c01c87fcd503d5ba847a96aceba1a19) fix: fixing route
 ## Refactored
+- [fb9e885](fb9e88589f2b4d5b73a6569f76edd0cb715c532b) refactored: sign tx
+- [7268e1f](7268e1fd3783d0cae65fa3cd3d13308a2eadd9ad) refactored: config project
 - [0484d54](0484d5447e03fb32487c50710f7a2406c13b375e) refactored: rename `network` to `chain`
 - [0487f1a](0487f1a87f236e126a3f57f3e7f8f5dd223b3621) refactored: grouped tests with @mark.requests
 ## Removed
+- [05454fd](05454fd32ac22cef8865444916989672dea77260) remove: unused containers
 - [d9efcae](d9efcaefd80c50dc3f970f879728c390d148a400) removed: duplicated info
 - [2accdf1](2accdf16892f25c0546b3a8928494ba27133e83c) removed: transfer lunex to another branch
 - [081f4ba](081f4ba9e885cdb59eeb9b60215d55bc65a81ac3) removed: function last block
@@ -174,6 +187,20 @@
 - [61ab23a](61ab23a810679b8d2d4bfafdeac81182cb1ac520) removed: discontinued antique design
 - [f4c17e5](f4c17e57c1495997f3acc20090aa891d902e96df) removed: attachment drop
 ## Others
+- [f5db20b](f5db20be809c0343e5bbc638bba81ba9ebc515c7) update: pipeline
+- [427ea36](427ea3681d91a5c534b68041a5256bd8b1564d4a) update: pipeline
+- [6ad1383](6ad138395857b62a6e0c30363fbeedddeb64051f) update: pipeline
+- [2f9645f](2f9645f22465363b7d9d5fcca098a7ee53988e29) update: pipeline
+- [336d269](336d26925608867be9dcbd7f85514754d17ecab7) update: pipeline
+- [9276f5f](9276f5fa017ef090097e5dab31deef9f1b65abe3) update: pipeline
+- [1367e79](1367e79468cca792643029799e7084d8e5d69050) update: pipeline
+- [09a77bc](09a77bc127ffe2d63ae5c0b97e2003697d351a25) update: pipeline
+- [1625297](16252975d73d722090ab596097e1a8756662fbc9) update: pipeline
+- [b329336](b3293364b0fe5cc13d316b42127353be87cd2538) update: pipeline
+- [34de23f](34de23f8de453a380d6a34772a0e360783e8a792) update: pipeline
+- [12315e8](12315e8e09eef7a65c871fbbadc66773ecb7510c) update: pipeline
+- [3d47197](3d4719713094d8198d580ddcd9419ecfa3b46e14) update: pipeline
+- [64e05b5](64e05b56f20a5d260f5e9405fc59d791d90ec015) update main
 - [90aa07f](90aa07f0593b6f8a01cc62efbe747a0997c30d6e) Revert "Merge branch 'fast-fix' into 'main'"
 - [fa40888](fa4088850cc2da5ce5bb9120f8323af712e40670) Merge branch 'fast-fix' into 'main'
 - [802530c](802530c4308e01f8156fbe8840a40d8c057a5332) Update README.md
