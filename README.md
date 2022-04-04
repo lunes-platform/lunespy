@@ -7,7 +7,7 @@
 - Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
   Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
 
-[![Test](https://github.com/lunes-platform/lunespy/actions/workflows/python-app.yml/badge.svg)](https://github.com/lunes-platform/lunespy/actions/workflows/python-app.yml)
+[![PyTest](https://github.com/lunes-platform/lunespy/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/lunes-platform/lunespy/actions/workflows/test.yml)
 [![License](https://img.shields.io/github/license/lunes-platform/lunespy?color=blueviolet)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/lunes-platform/lunespy?color=blueviolet)](https://github.com/lunes-platform/lunespy/stargazers)
 
