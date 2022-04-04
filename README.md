@@ -5,7 +5,7 @@
 # LunesPy
 
 - Library for communication with nodes in mainnet or testnet of the lunes-blockchain network
-Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
+  Allows the automation of **sending assets**, **issue end reissue tokens**, **lease** and **create new wallet**.
 
 [![Test](https://github.com/lunes-platform/lunespy/actions/workflows/python-app.yml/badge.svg)](https://github.com/lunes-platform/lunespy/actions/workflows/python-app.yml)
 [![License](https://img.shields.io/github/license/lunes-platform/lunespy?color=blueviolet)](LICENSE)
@@ -22,15 +22,13 @@ Allows the automation of **sending assets**, **issue end reissue tokens**, **lea
 ![PullRequest](https://img.shields.io/github/issues-pr/lunes-platform/lunespy?color=blueviolet)
 ![PullRequestClosed](https://img.shields.io/github/issues-pr-closed/lunes-platform/lunespy?color=blueviolet)
 
-
-
 <br><br>
-  <a href="https://twitter.com/LunesPlatform" target="_blank">
-    <img alt="Twitter: Lunes Platform" src="https://badgen.net/twitter/follow/lunesplatform?icon=twitter&label=follow @LunesPlatform&color=blue" />
-  </a>  
-  <a href="https://t.me/LunesPlatformPT" target="_blank">
-    <img alt="Telegram" src="https://badgen.net/badge/icon/Lunes%20Platform?icon=telegram&label=Telegram&color=blue"/>
-  </a>
+<a href="https://twitter.com/LunesPlatform" target="_blank">
+<img alt="Twitter: Lunes Platform" src="https://badgen.net/twitter/follow/lunesplatform?icon=twitter&label=follow @LunesPlatform&color=blue" />
+</a>  
+ <a href="https://t.me/LunesPlatformPT" target="_blank">
+<img alt="Telegram" src="https://badgen.net/badge/icon/Lunes%20Platform?icon=telegram&label=Telegram&color=blue"/>
+</a>
 
 ## Documentation
 
@@ -46,10 +44,10 @@ The changelog process for this project is described [here](CHANGELOG.md).
 
 Thanks to the following people who have contributed to this project:
 
-* [olivmath](https://github.com/olivmath)
-* [marcoslkz](https://github.com/marcoslkz)
-* [VanJustin](https://github.com/VanJustin)
-* [xonfps](https://github.com/xonfps)
+- [olivmath](https://github.com/olivmath)
+- [marcoslkz](https://github.com/marcoslkz)
+- [VanJustin](https://github.com/VanJustin)
+- [xonfps](https://github.com/xonfps)
 
 ## Contact
 

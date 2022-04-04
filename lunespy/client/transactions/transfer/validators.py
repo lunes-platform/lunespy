@@ -34,14 +34,13 @@ def mount_transfer(sender: str, timestamp: str, receiver: str, asset_fee: str, a
     }
 
 
-def sign_transaction(private_key: str, **tx: dict) -> dict:
-    from lunespy.utils.crypto.converters import b58_to_bytes, string_to_b58, from_hex
+def serialize_transfer(**tx: dict) -> bytes:
     from lunespy.client.transactions.constants import TransferType
-    from lunespy.utils.crypto.converters import sign
+    from lunespy.utils.crypto.converters import b58_to_bytes
     from struct import pack
 
-
-    bytes_data: bytes = TransferType.to_byte.value + \
+    return (
+        TransferType.to_byte.value + \
         b58_to_bytes(tx["senderPublicKey"]) + \
         (b'\1' + b58_to_bytes(tx["assetId"]) if tx["assetId"] != "" else b'\0') + \
         (b'\1' + b58_to_bytes(tx["feeAsset"]) if tx["feeAsset"] != "" else b'\0') + \
@@ -49,9 +48,14 @@ def sign_transaction(private_key: str, **tx: dict) -> dict:
         pack(">Q", tx["amount"]) + \
         pack(">Q", tx["fee"]) + \
         b58_to_bytes(tx["recipient"])
+    )
 
-    tx["signature"] = string_to_b58(sign(b58_to_bytes(private_key), bytes_data))
-    tx["raw_data"] = string_to_b58(bytes_data)
+def sign_transaction(private_key: str, **tx: dict) -> dict:
+    from lunespy.utils.crypto.converters import b58_to_bytes, string_to_b58
+    from lunespy.utils.crypto.converters import sign
+
+
+    tx["signature"] = string_to_b58(sign(b58_to_bytes(private_key), serialize_transfer(**tx)))
     return tx
 
 

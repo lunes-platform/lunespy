@@ -2,6 +2,7 @@ image: lunesplatform/lunespy
 
 stages:
     - test
+    - deploy
 
 CreateTestsReport:
     stage: test
@@ -22,3 +23,11 @@ CreateCoverageReport:
         when: always
         reports:
             junit: coverage.xml
+
+DeployGithub:
+    stage: deploy
+    script:
+        - git remote add github https://github.com/lunesplatform/lunespy
+        - git push github main
+    only:
+        - main

@@ -1,7 +1,6 @@
 from pytest import fixture
-from lunespy.utils import now
 
-timestamp = now()
+timestamp = 1234567890123
 
 
 @fixture
@@ -76,6 +75,7 @@ def test_transfer_sign(basic_transfer_token, sender):
         passed private_key
         should be return a signature for tx.sign
     """
+    from lunespy.client.transactions.transfer.validators import serialize_transfer
     from lunespy.utils.crypto.converters import validate_sign, b58_to_bytes
 
     tx = basic_transfer_token.sign(
@@ -83,7 +83,7 @@ def test_transfer_sign(basic_transfer_token, sender):
     )
     assert True == validate_sign(
         b58_to_bytes(sender.public_key),
-        b58_to_bytes(tx["raw_data"]),
+        serialize_transfer(**basic_transfer_token.transaction),
         b58_to_bytes(tx["signature"])
     )
 
@@ -101,3 +101,30 @@ def test_transfer_transaction_after_signed_tx(basic_transfer_token, sender):
     with raises(KeyError):
         assert before['signature']
     assert type(after['signature']) == str
+
+
+def test_serialize_transfer(basic_transfer_token):
+    """
+        passed basic_transaction
+        should be return a raw_data
+    """
+    from lunespy.client.transactions.transfer.validators import serialize_transfer
+    from base58 import b58encode
+
+    tx: dict = basic_transfer_token.transaction
+    message: bytes = serialize_transfer(**tx)
+
+    assert b58encode(message) == "2J2EfWqeqbH17PC5yfioAeQ5h27J76uduH5nafAUuJhKb8gHCSqoQozy16kAgeAgAbjYrewhxEcXeaqvU8knmWWtY2woSGVoE5C8GvPU2NN3R8y9CNes".encode()
+    assert list(message) == [4, 28, 26, 172, 20, 253, 115, 23, 6, 248, 59, 119, 129, 151, 144, 5, 252, 208, 116, 12, 81, 146, 227, 208, 88, 57, 27, 134, 143, 7, 76, 94, 8, 0, 0, 0, 0, 1, 31, 113, 251, 4, 203, 0, 0, 0, 23, 72, 118, 232, 0, 0, 0, 0, 0, 0, 15, 66, 64, 1, 49, 146, 80, 170, 11, 139, 27, 185, 41, 131, 242, 219, 45, 180, 199, 38, 41, 173, 240, 198, 30, 146, 73, 23, 128]
+    assert tx == {
+        'senderPublicKey': '2ti1GM7F7J78J347fqSWSVocueDV3RSCFkLSKqmhk35Z',
+        'recipient': '37xRcbn1LiT1Az4REoLhjpca93jPG1gTEwq',
+        'sender': '37tQRv7x2RHd32Ss2i1EFTWSTSsqkwXcaBe',
+        'timestamp': 1234567890123,
+        'amount': 100000000000,
+        'fee': 1000000,
+        'feeAsset': '',
+        'assetId': '',
+        'ready': True,
+        'type': 4
+    }
