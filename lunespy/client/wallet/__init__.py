@@ -11,10 +11,7 @@ class Account:
         nonce(int): The ip of your nonce. | 0 to 4.294.967.295
         chain(str): The chain of your node. | 'mainnet' xor 'testnet'
         seed(str): The seed of your wallet. | n words
-        n_words(int): The amount words of your seed wallet. | n_words should be n // 3  
-        byte_private_key(bytes): The byte of your wallet private key.
-        byte_public_key(bytes): The byte of your wallet public key.
-        byte_address(bytes): The byte of your wallet address
+        n_words(int): The amount words of your seed wallet. | n_words should be n // 3
     """
 
     def __init__(self, n_words: int = None, seed: str = None, nonce: int = None,
