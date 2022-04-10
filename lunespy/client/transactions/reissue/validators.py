@@ -1,4 +1,4 @@
-from lunespy.client.wallet import Account
+from lunespy.client.account import Wallet
 
 
 def validate_reissue(sender: Account, reissue_data: dict) -> bool:

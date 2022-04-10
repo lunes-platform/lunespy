@@ -198,7 +198,7 @@ class TestCreateAccountStepByStep:
         ]
     )
     def test_generate_mainnet_version_1_address_for_0_1_2_3_4_nonces(self, public_key, address):
-        from lunespy.client.wallet.utils import address_generator
+        from lunespy.client.account.utils import address_generator
         from lunespy.utils.crypto.converters import from_hex
 
         result = address_generator(from_hex(public_key), chain_id="1", address_version=chr(1)).hex()
@@ -231,7 +231,7 @@ class TestCreateAccountStepByStep:
         ]
     )
     def test_generate_mainnet_version_2_address_for_0_1_2_3_4_nonces(self, public_key, address):
-        from lunespy.client.wallet.utils import address_generator
+        from lunespy.client.account.utils import address_generator
         from lunespy.utils.crypto.converters import from_hex
 
         result = address_generator(from_hex(public_key), chain_id="1", address_version=chr(11)).hex()
@@ -264,7 +264,7 @@ class TestCreateAccountStepByStep:
         ]
     )
     def test_generate_testnet_version_1_address_for_0_1_2_3_4_nonces(self, public_key, address):
-        from lunespy.client.wallet.utils import address_generator
+        from lunespy.client.account.utils import address_generator
         from lunespy.utils.crypto.converters import from_hex
 
         result = address_generator(from_hex(public_key), chain_id="0", address_version=chr(1)).hex()
@@ -297,7 +297,7 @@ class TestCreateAccountStepByStep:
         ]
     )
     def test_generate_testnet_version_2_address_for_0_1_2_3_4_nonces(self, public_key, address):
-        from lunespy.client.wallet.utils import address_generator
+        from lunespy.client.account.utils import address_generator
         from lunespy.utils.crypto.converters import from_hex
 
         result = address_generator(from_hex(public_key), chain_id="0", address_version=chr(11)).hex()

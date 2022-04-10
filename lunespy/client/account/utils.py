@@ -9,7 +9,7 @@ def address_generator(public_key: bytes, chain_id: str, address_version: str = N
 
 
 def new_seed_generator(n_words: int) -> str:
-    from lunespy.client.wallet.constants import word_list
+    from lunespy.client.account.constants import word_list
     from os import urandom
 
     def f():
@@ -80,8 +80,8 @@ def public_key_generator(public_key: str, chain_id: str, address_version: str) -
 
 
 def validate_address(address: str, chain_id: str) -> bool:
-    from lunespy.client.wallet.errors import InvalidChecksumAddress ,InvalidVersionAddress ,InvalidLengthAddress, InvalidChainAddress
-    from lunespy.client.wallet.constants import ADDRESS_CHECKSUM_LENGTH, ADDRESS_VERSION, ADDRESS_LENGTH
+    from lunespy.client.account.errors import InvalidChecksumAddress ,InvalidVersionAddress ,InvalidLengthAddress, InvalidChainAddress
+    from lunespy.client.account.constants import ADDRESS_CHECKSUM_LENGTH, ADDRESS_VERSION, ADDRESS_LENGTH
     from lunespy.utils.crypto.converters import b58_to_bytes, hash_keccak256_blake2b32b
 
     def slice(string: str, index: int) -> tuple:
@@ -105,8 +105,8 @@ def validate_address(address: str, chain_id: str) -> bool:
 
 
 def new(n_words, seed, nonce, chain, private_key, public_key, address, address_version):
-    from lunespy.client.wallet.errors import InvalidNonce, InvalidData
-    from lunespy.client.wallet.constants import ADDRESS_VERSION
+    from lunespy.client.account.errors import InvalidNonce, InvalidData
+    from lunespy.client.account.constants import ADDRESS_VERSION
 
     if seed:
         if nonce:

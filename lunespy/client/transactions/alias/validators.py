@@ -1,4 +1,4 @@
-from lunespy.client.wallet import Account
+from lunespy.client.account import Wallet
 
 
 def validate_alias(sender: Account, alias_data: dict) -> bool:

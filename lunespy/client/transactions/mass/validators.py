@@ -1,4 +1,4 @@
-from lunespy.client.wallet import Account
+from lunespy.client.account import Wallet
 
 
 def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_data: dict) -> dict:
@@ -57,7 +57,7 @@ def mount_mass_transfer(sender: Account, receivers_list: list, mass_transfer_dat
 
 
 def validate_mass_transfer(sender: Account, receivers_list: list):
-    from lunespy.client.wallet.utils import validate_address
+    from lunespy.client.account.utils import validate_address
     from lunespy.utils import bcolors
 
     amounts_list: list = [tx['amount'] for tx in receivers_list]

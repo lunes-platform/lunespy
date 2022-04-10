@@ -1,46 +1,46 @@
 from pytest import fixture, mark
 
 class TestAccontFromNewSeed:
-    from lunespy.client.wallet import Account
+    from lunespy.client.account import Wallet
 
 
     @fixture
     def account_from_new_seed_mainnet(self):
-        return self.Account(chain="mainnet")
+        return self.Wallet(chain="mainnet")
 
     @fixture
     def account_from_new_seed_testnet(self):
-        return self.Account(chain="testnet")
+        return self.Wallet(chain="testnet")
 
     def test_create_account_from_new_seed_mainnet(self, account_from_new_seed_mainnet):
-        assert type(account_from_new_seed_mainnet) == self.Account
+        assert type(account_from_new_seed_mainnet) == self.Wallet
 
     def test_create_account_from_new_seed_testnet(self, account_from_new_seed_testnet):
-        assert type(account_from_new_seed_testnet) == self.Account
+        assert type(account_from_new_seed_testnet) == self.Wallet
 
     def test_address_from_create_account_from_new_seed_mainnet(self, account_from_new_seed_mainnet):
-        from lunespy.client.wallet.utils import validate_address
+        from lunespy.client.account.utils import validate_address
 
         assert validate_address(account_from_new_seed_mainnet.address, chain_id="1") == True
 
     def test_address_from_create_account_from_new_seed_testnet(self, account_from_new_seed_testnet):
-        from lunespy.client.wallet.utils import validate_address
+        from lunespy.client.account.utils import validate_address
 
         assert validate_address(account_from_new_seed_testnet.address, chain_id="0") == True
 
 
 class TestAccountFromSeed:
-    from lunespy.client.wallet import Account
+    from lunespy.client.account import Wallet
 
     @fixture
     def account_from_seed_mainnet(self):
         seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-        return self.Account(seed=seed)
+        return self.Wallet(seed=seed)
 
     @fixture
     def account_from_seed_testnet(self):
         seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-        return self.Account(seed=seed, chain="testnet")
+        return self.Wallet(seed=seed, chain="testnet")
 
 
     def test_create_account_from_seed_mainnet(self, account_from_seed_mainnet):
@@ -63,7 +63,7 @@ class TestAccountFromSeed:
     def test_create_account_from_seed_mainnet_with_nonces_0_1_2_3_4(self, nonce, address):
 
         seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-        assert self.Account(seed=seed, nonce=nonce).address == address
+        assert self.Wallet(seed=seed, nonce=nonce).address == address
 
     @mark.parametrize(
         "nonce, address",
@@ -78,22 +78,22 @@ class TestAccountFromSeed:
     def test_create_account_from_seed_testnet_with_nonces_0_1_2_3_4(self, nonce, address):
 
         seed = "scrub guard swim catch range upon dawn ensure segment alpha sentence spend effort bar benefit"
-        assert self.Account(seed=seed, nonce=nonce, chain="testnet").address == address
+        assert self.Wallet(seed=seed, nonce=nonce, chain="testnet").address == address
 
 
 class TestAccountFromPrivateKey:
 
-    from lunespy.client.wallet import Account
+    from lunespy.client.account import Wallet
 
     @fixture
     def account_from_private_key_mainnet(self):
         private_key = "BnafXBSq1VDUdZ1nSjJoxhnQdBv2hk3o6dbV49TD1bzo"
-        return self.Account(private_key=private_key, chain="mainnet")
+        return self.Wallet(private_key=private_key, chain="mainnet")
 
     @fixture
     def account_from_private_key_testnet(self):
         private_key = "BnafXBSq1VDUdZ1nSjJoxhnQdBv2hk3o6dbV49TD1bzo"
-        return self.Account(private_key=private_key, chain="testnet")
+        return self.Wallet(private_key=private_key, chain="testnet")
 
 
     def test_create_account_from_private_key_mainnet(self, account_from_private_key_mainnet):
@@ -104,17 +104,17 @@ class TestAccountFromPrivateKey:
 
 
 class TestAccountFromPublicKey:
-    from lunespy.client.wallet import Account
+    from lunespy.client.account import Wallet
 
     @fixture
     def account_from_public_key_mainnet(self):
         public_key = "2uuQVr3B5aGgvSJ5BMCw4Cd19tdYdnMGoYnji99aPde4"
-        return self.Account(public_key=public_key, chain="mainnet")
+        return self.Wallet(public_key=public_key, chain="mainnet")
 
     @fixture
     def account_from_public_key_testnet(self):
         public_key = "2uuQVr3B5aGgvSJ5BMCw4Cd19tdYdnMGoYnji99aPde4"
-        return self.Account(public_key=public_key, chain="testnet")
+        return self.Wallet(public_key=public_key, chain="testnet")
 
 
     def test_create_account_from_publick_key_mainnet(self, account_from_public_key_mainnet):
@@ -125,17 +125,17 @@ class TestAccountFromPublicKey:
 
 
 class TestAccountFromAddress:
-    from lunespy.client.wallet import Account
+    from lunespy.client.account import Wallet
 
     @fixture
     def account_from_address_mainnet(self):
         address = "37o7aY3eZZTXmzrDa5e4Wj3Z4ZZuyV42Aaj"
-        return self.Account(address=address, chain="mainnet")
+        return self.Wallet(address=address, chain="mainnet")
 
     @fixture
     def account_from_address_testnet(self):
         address = "37PmyYwMGrH4uBR5V4DjCEvHGw4f2pdXW5u"
-        return self.Account(address=address, chain="testnet")
+        return self.Wallet(address=address, chain="testnet")
 
 
     def test_create_account_from_address_mainnet(self, account_from_address_mainnet):

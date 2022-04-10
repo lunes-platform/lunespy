@@ -1,4 +1,4 @@
-from lunespy.client.wallet import Account
+from lunespy.client.account import Wallet
 
 
 def mount_issue(sender: Account, issue_data: dict) -> dict:

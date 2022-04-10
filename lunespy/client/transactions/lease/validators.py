@@ -1,4 +1,4 @@
-from lunespy.client.wallet import Account
+from lunespy.client.account import Wallet
 
 
 def mount_lease(sender: Account, lease_data: dict) -> dict:

@@ -1,6 +1,6 @@
-class Account:
+class Wallet:
     """
-    This is a class for Wallet Account.
+    This is a class for Wallet.
 
     Parameters: 
         private_key(str): The pivate key of your wallet.
@@ -17,7 +17,7 @@ class Account:
     def __init__(self, n_words: int = None, seed: str = None, nonce: int = None,
                  chain: str = None, private_key: str = None, public_key: str = None,
                  address: str = None, address_version: int = None) -> None:
-        from lunespy.client.wallet.utils import new
+        from lunespy.client.account.utils import new
 
         self.__dict__ = new(n_words, seed, nonce, chain, private_key, public_key, address, address_version)
 
@@ -47,7 +47,7 @@ class Account:
         )
 
 
-class LunexAccount(Account):
+class LunexWallet(Wallet):
     """
     params: 
         public_key: str
