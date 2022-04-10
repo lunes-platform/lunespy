@@ -1,5 +1,5 @@
 from lunespy.client.transactions import BaseTransaction
-from lunespy.client.wallet import Account
+from lunespy.client.account import Wallet
 
 
 class CancelLease(BaseTransaction):

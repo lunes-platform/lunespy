@@ -1,5 +1,5 @@
 def validate_transfer(sender: str, receiver: str, amount: int, chain: str) -> bool:
-    from lunespy.client.wallet.utils import validate_address
+    from lunespy.client.account.utils import validate_address
     from lunespy.utils import bcolors
     from base58 import alphabet
 
@@ -19,7 +19,7 @@ def validate_transfer(sender: str, receiver: str, amount: int, chain: str) -> bo
 def mount_transfer(sender: str, timestamp: str, receiver: str, asset_fee: str, asset_id: str, amount: int, chain_id: str, fee: int) -> dict:
     from lunespy.client.transactions.constants import TransferType
     from lunespy.utils.crypto.converters import b58_to_bytes, string_to_b58
-    from lunespy.client.wallet.utils import address_generator
+    from lunespy.client.account.utils import address_generator
 
     return {
         "type": TransferType.to_int.value,

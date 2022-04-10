@@ -5,18 +5,18 @@ timestamp = 1234567890123
 
 @fixture
 def sender():
-    from lunespy.client.wallet import Account
+    from lunespy.client.account import Wallet
 
-    return Account(
+    return Wallet(
         private_key="8YMbX5BCQdazwgdVfeUpKuoUJrmYpMyGVAGAsNaHVj1u"
     )
 
 
 @fixture
 def receiver():
-    from lunespy.client.wallet import Account
+    from lunespy.client.account import Wallet
 
-    return Account(
+    return Wallet(
         private_key="G6E2xNBWtsRG8XBDmeTQQxZNHHUa6K9dnc9KrYtKyGwM"
     )
 
