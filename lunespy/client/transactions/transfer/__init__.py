@@ -1,14 +1,14 @@
 from lunespy.client.transactions import BaseTransaction
 
 class TransferToken(BaseTransaction):
-    def __init__(self, sender: str, receiver: str, chain: str, amount: float, asset_fee: int=None, asset_id: str=None, timestamp: int=None, fee: int=None) -> None:
+    def __init__(self, sender: str, receiver: str, chain: str, amount: float, asset_fee: int=None, token_id: str=None, timestamp: int=None, fee: int=None) -> None:
 
         from lunespy.client.transactions.constants import TransferType
         from lunespy.utils import now, lunes_to_unes
 
         self.timestamp: int = timestamp if timestamp != None else now()
         self.fee: int = fee if fee != None else TransferType.fee.value
-        self.asset_id: str = asset_id if asset_id != None else ""
+        self.asset_id: str = token_id if token_id != None else ""
         self.asset_fee: str = asset_fee if asset_fee != None else ""
         if self.asset_id == "":
             self.amount: int = lunes_to_unes(amount)
