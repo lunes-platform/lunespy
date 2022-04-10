@@ -50,6 +50,7 @@ def serialize_transfer(**tx: dict) -> bytes:
         b58_to_bytes(tx["recipient"])
     )
 
+
 def sign_transaction(private_key: str, **tx: dict) -> dict:
     from lunespy.utils.crypto.converters import b58_to_bytes, string_to_b58
     from lunespy.utils.crypto.converters import sign
@@ -60,7 +61,7 @@ def sign_transaction(private_key: str, **tx: dict) -> dict:
 
 
 # todo async
-def send_transfer(mount_tx: dict, node_url: str) -> dict:
+def broadcast_transfer(mount_tx: dict, node_url: str) -> dict:
     from requests import post
 
     response = post(

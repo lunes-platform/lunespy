@@ -30,7 +30,7 @@ class BaseTransaction(metaclass=ABCMeta):
         return sign_tx(private_key, **tx)
 
 
-    def send(self, send_tx, node_url: str, chain: str) -> dict:
+    def broadcast(self, send_tx, node_url: str, chain: str) -> dict:
         from lunespy.server.nodes import Node
 
         if node_url == None:
