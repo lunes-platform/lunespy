@@ -1,39 +1,3 @@
-def validate_transfer(sender: str, receiver: str, amount: int, chain: str) -> bool:
-    from lunespy.client.account.utils import validate_address
-    from lunespy.utils import bcolors
-    from base58 import alphabet
-
-
-    if amount <= 0:
-        print(bcolors.FAIL + 'Amount dont should be more than 0' + bcolors.ENDC)
-        return False
-    elif not all([i in alphabet.decode() for i in sender]):
-        print(bcolors.FAIL + 'Sender invalid `public key`' + bcolors.ENDC)
-        return False
-    elif not validate_address(receiver, "1" if chain == "mainnet" else "0"):
-        return False
-    else:
-        return True
-
-
-def mount_transfer(sender: str, timestamp: str, receiver: str, asset_fee: str, asset_id: str, amount: int, chain_id: str, fee: int) -> dict:
-    from lunespy.client.transactions.constants import TransferType
-    from lunespy.utils.crypto.converters import b58_to_bytes, string_to_b58
-    from lunespy.client.account.utils import address_generator
-
-    return {
-        "type": TransferType.to_int.value,
-        "senderPublicKey": sender,
-        "timestamp": timestamp,
-        "recipient": receiver,
-        "feeAsset": asset_fee,
-        "assetId": asset_id,
-        "amount": amount,
-        "sender": string_to_b58(address_generator(b58_to_bytes(sender), chain_id)),
-        "fee": fee
-    }
-
-
 def serialize_transfer(**tx: dict) -> bytes:
     from lunespy.client.transactions.constants import TransferType
     from lunespy.utils.crypto.converters import b58_to_bytes
@@ -41,13 +5,13 @@ def serialize_transfer(**tx: dict) -> bytes:
 
     return (
         TransferType.to_byte.value + \
-        b58_to_bytes(tx["senderPublicKey"]) + \
-        (b'\1' + b58_to_bytes(tx["assetId"]) if tx["assetId"] != "" else b'\0') + \
-        (b'\1' + b58_to_bytes(tx["feeAsset"]) if tx["feeAsset"] != "" else b'\0') + \
+        b58_to_bytes(tx["sender_public_key"]) + \
+        (b'\1' + b58_to_bytes(tx["token_id"]) if tx["token_id"] != "" else b'\0') + \
+        (b'\1' + b58_to_bytes(tx["token_fee"]) if tx["token_fee"] != "" else b'\0') + \
         pack(">Q", tx["timestamp"]) + \
         pack(">Q", tx["amount"]) + \
         pack(">Q", tx["fee"]) + \
-        b58_to_bytes(tx["recipient"])
+        b58_to_bytes(tx["receiver"])
     )
 
 
