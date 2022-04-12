@@ -1,8 +1,8 @@
-name: Python package
+name: Test
 
 on:
   push:
-    branches-ignore: [main]
+    branches: [main]
   pull_request:
     branches: [ main ]
 
