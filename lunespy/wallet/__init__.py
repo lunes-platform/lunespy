@@ -13,15 +13,22 @@ class Wallet(BaseModel):
 
 def wallet_factory(
     private_key: str = None,
-    seed_len: int = None,
-    chain: int = None,
-    nonce: int = None,
-    seed: str = None
+    seed_len: int = 12,
+    seed: str = None,
+    chain: int = 1,
+    nonce: int = 0
     ) -> Wallet:
     """
         chain: 1 for mainnet, 0 for testnet
     """
-    from lunespy.wallet.assembly import from_private_key, from_seed
+    from lunespy.wallet.assembly import from_private_key, from_seed, random_seed
 
-    return from_private_key(private_key, chain) if private_key else from_seed(seed, nonce, chain, seed_len)
+    if private_key == None:
+        return from_seed(
+            seed if not seed == None else random_seed(seed_len),
+            nonce,
+            chain
+        )
+    else:
+        return from_private_key(private_key, chain)
 
