@@ -4,12 +4,14 @@
 ## What is the workflow?
 
 1. Create and describe your **proposal/bug** in an _issue_.
-2. Create a new **branch** and **merge request** with the pattern `1-my-feature`.
+2. Create a new **branch** and **pull request** with the pattern `1-my-feature`.
 3. Commit your code to the commit convention.
-4. Finaly, update the **CHANGELOG** and **version** with:
+4. Finaly, update **VERSION**:
 
+**update VERSION**
 ```py
-poetry run log
+# pyproject.toml
+version = "*.*.*"
 ```
 
 ---
@@ -30,17 +32,16 @@ why was it modified?
 ### **Types**
 
 - **deprecated!** compatibility break
-- **merged** solve a problem and merge in `main`
-- **added** adds a new feature
-- **fixed** fixes a bug
-- **removed** remove a peace of code
-- **refactored** does not add a feature or fix a bug
+- **add** adds a new feature
+- **fix** fixes a bug
+- **remove** remove a peace of code
+- **update** does not add a feature or fix a bug
 
 ### **Semantic Version**
 
 - **deprecated!** -> _Major_
-- **merged** -> _Minor_
-- **added, fixed** -> _Patch_
+- **add** -> _Minor_
+- **update|fix** -> _Patch_
 
 ---
 
