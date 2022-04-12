@@ -1,4 +1,4 @@
-from lunespy.wallet.crypto import hidden_seed, to_address, to_private_key, to_public_key
+from lunespy.crypto import hidden_seed, to_address, to_private_key, to_public_key
 from pytest import mark
 
 

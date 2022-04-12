@@ -21,7 +21,7 @@ def random_seed(len: int) -> str:
 
 
 def from_seed(seed: str, nonce: int, chain: int):
-    from lunespy.wallet.crypto import bytes_to_b58, to_address, to_private_key, to_public_key, hidden_seed
+    from lunespy.crypto import bytes_to_b58, to_address, to_private_key, to_public_key, hidden_seed
     from lunespy.wallet import Wallet
 
     hash_seed: bytes = hidden_seed(nonce, seed)
@@ -40,7 +40,7 @@ def from_seed(seed: str, nonce: int, chain: int):
 
 
 def from_private_key(private_key: str, chain: int = 1):
-    from lunespy.wallet.crypto import bytes_to_b58, b58_to_bytes, to_address, to_private_key, to_public_key
+    from lunespy.crypto import bytes_to_b58, b58_to_bytes, to_address, to_private_key, to_public_key
     from lunespy.wallet import Wallet
 
     private_key: bytes = to_private_key(b58_to_bytes(private_key))

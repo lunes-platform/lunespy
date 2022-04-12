@@ -38,10 +38,10 @@ def sign_tx(sender: Wallet, create_tx: TransferToken):
 
 
 def test_signature_of_transfer(sign_tx: TransferToken):
-    from lunespy.utils.crypto.converters import validate_sign
-    from lunespy.wallet.crypto import b58_to_bytes
+    from lunespy.crypto import validate_signature
+    from lunespy.crypto import b58_to_bytes
 
-    assert True == validate_sign(
+    assert True == validate_signature(
         b58_to_bytes(sign_tx.senderPublicKey),
         b58_to_bytes(sign_tx.message),
         b58_to_bytes(sign_tx.signature),

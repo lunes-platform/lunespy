@@ -1,4 +1,4 @@
-from lunespy.wallet.crypto import validate_address
+from lunespy.crypto import validate_address
 from lunespy.wallet import wallet_factory
 from pytest import fixture, mark
 

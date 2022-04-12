@@ -1,11 +1,11 @@
 from lunespy.tx.transfer import TransferToken
 from requests import Response
 
-from lunespy.wallet.crypto import bytes_to_b58
+from lunespy.crypto import bytes_to_b58
 
 
 def serialize_transfer(tx: TransferToken) -> bytes:
-    from lunespy.wallet.crypto import b58_to_bytes
+    from lunespy.crypto import b58_to_bytes
     from struct import pack
 
     return (
@@ -21,12 +21,12 @@ def serialize_transfer(tx: TransferToken) -> bytes:
 
 
 def sign_transfer(private_key: str, tx: TransferToken) -> dict:
-    from lunespy.utils.crypto.converters import sign
-    from lunespy.wallet.crypto import b58_to_bytes, bytes_to_b58
+    from lunespy.crypto import fast_signature
+    from lunespy.crypto import b58_to_bytes, bytes_to_b58
 
     tx.message = bytes_to_b58(serialize_transfer(tx))
 
-    return bytes_to_b58(sign(
+    return bytes_to_b58(fast_signature(
         b58_to_bytes(private_key),
         b58_to_bytes(tx.message)
     ))

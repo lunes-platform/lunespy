@@ -1,13 +1,31 @@
+def validate_signature(public_key: bytes, message: bytes, signature: bytes) -> bool:
+    from axolotl_curve25519 import verifySignature
+
+    return True if verifySignature(
+        public_key,
+        message,
+        signature
+    ) == 0 else False
+
+def fast_signature(private_key: bytes, message: bytes) -> bytes:
+    from axolotl_curve25519 import calculateSignature as curve
+    from os import urandom
+
+    return curve(
+        urandom(64),
+        private_key,
+        message
+    )
+
 def to_sha256(message: bytes) -> bytes:
     from hashlib import sha256
 
     return sha256(message).digest()
 
 def to_keccak256(message: bytes) -> bytes:
-    from lunespy.utils.crypto.algorithms import KeccakHash
+    from sha3 import keccak_256
 
-    keccak256 = KeccakHash()
-    return keccak256.digest(message).encode('latin-1')
+    return keccak_256(message).digest()
 
 def to_blake2b32b(message: bytes) -> bytes:
     from hashlib import blake2b

@@ -18,7 +18,7 @@ class TransferToken(BaseModel):
 
     @validator("recipient")
     def same_chain(cls, recipient, values):
-        from lunespy.wallet.crypto import same_chain_address
+        from lunespy.crypto import same_chain_address
 
         if not same_chain_address(recipient, values['sender']):
             raise ValueError(f"Different chain addresses ({recipient}, {values['sender']})")
@@ -39,7 +39,7 @@ class TransferToken(BaseModel):
 
 
 def transfer_token_factory(sender: str, receiver: str, amount: float, chain: int = 1, **kwargs: dict) -> TransferToken:
-    from lunespy.wallet.crypto import b58_to_bytes, bytes_to_b58, to_address
+    from lunespy.crypto import b58_to_bytes, bytes_to_b58, to_address
 
 
     return TransferToken(
