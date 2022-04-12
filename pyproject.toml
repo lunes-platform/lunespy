@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lunespy"
-version = "1.95.0"
+version = "2.0.0"
 description = "Library for communication with nodes in mainnet or testnet of the lunes-blockchain network Allows the automation of sending assets, issue end reissue tokens, leasing, registry, and create new wallet."
 authors = [
     "Lunes Platform <development@lunes.io>"
@@ -31,10 +31,6 @@ pytest = "^6.2.5"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 python = "^3.10"
-
-[tool.poetry.scripts]
-log = "lunespy.utils:changelog"
-test = "lunespy.utils:parallel_test"
 
 [tool.pytest.ini_options]
 markers = [
