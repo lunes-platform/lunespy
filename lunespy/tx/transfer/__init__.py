@@ -38,6 +38,7 @@ class TransferToken(BaseModel):
         )
 
 
+
 def transfer_token_factory(sender_public_key: str, receiver_address: str, amount: float, chain: int = 1, **kwargs: dict) -> TransferToken:
     from lunespy.crypto import b58_to_bytes, bytes_to_b58, to_address
 
