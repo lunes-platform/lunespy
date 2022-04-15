@@ -29,7 +29,7 @@ def create_tx(sender: Wallet, receiver: Wallet):
 
     return transfer_token_factory(
         sender_public_key=sender.public_key,
-        receiver=receiver.address,
+        receiver_address=receiver.address,
         amount=1000
     )
 
@@ -54,7 +54,7 @@ def test_invalid_create_transfer(sender: Wallet, receiver: Wallet, result):
     with raises(ValidationError):
         transfer_token_factory(
             sender_public_key=sender.public_key,
-            receiver=receiver.address,
+            receiver_address=receiver.address,
             amount=1000,
             chain=sender.chain
         )
@@ -68,7 +68,7 @@ def test_create_transfer_testnet():
 
     transfer_token_factory(
         sender_public_key=sender.public_key,
-        receiver=receiver.address,
+        receiver_address=receiver.address,
         amount=1000,
         chain=0
     )
