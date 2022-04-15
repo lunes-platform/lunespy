@@ -43,12 +43,14 @@ def b58_to_bytes(message: str) -> bytes:
     return b58decode(message)
 
 def to_address(public_key: bytes, chain: int, addr_version: int) -> bytes:
+    from lunespy.wallet.constants import ADDRESS_CHECKSUM_LENGTH, ADDRESS_HASH_LENGTH
+
     raw_addr: bytes = (
         chr(addr_version).encode('latin-1') +
         str(chain).encode('latin-1') +
-        to_keccak256(to_blake2b32b(public_key))[:20]
+        to_keccak256(to_blake2b32b(public_key))[:ADDRESS_HASH_LENGTH]
     )
-    checksum: bytes = to_keccak256(to_blake2b32b(raw_addr))[:4]
+    checksum: bytes = to_keccak256(to_blake2b32b(raw_addr))[:ADDRESS_CHECKSUM_LENGTH]
 
     return (raw_addr + checksum)
 
