@@ -1,6 +1,5 @@
+from itertools import count
 from lunespy.server.nodes import Node
-from lunespy.utils import unes_to_lunes
-from lunespy.utils import export_json
 from requests import get
 
 
@@ -30,7 +29,7 @@ def asset_distribution(asset_id: str, node_url: str == None) -> dict:
         full_url = f'{Node.mainnet.value}/assets/{asset_id}/distribution'
     else: 
         full_url = f'{node_url}/assets/{asset_id}/distribution' # You have pass your node url with https or other contents
-    
+
     response = get(full_url)
 
     if response.status_code in range(200, 300):
@@ -50,9 +49,9 @@ def balance_all_assets_of_address(address: str, node_url: str == None) -> dict:
         full_url = f'{Node.mainnet.value}/assets/balance/{address}'
     else:
         full_url = f'{node_url}/assets/balance/{address}' # You have pass your node url with https or other contents
-    
+
     response = get(full_url)
-    
+
     if response.status_code in range(200, 300):
         return {
             'status': 'ok',
@@ -70,7 +69,7 @@ def balance_for_especify_asset_of_address(address: str, asset_id: str, node_url:
         full_url = f'{Node.mainnet.value}/assets/balance/{address}/{asset_id}'
     else:
         full_url = f'{node_url}/assets/balance/{address}/{asset_id}' # You have pass your node url with https or other contents 
-    
+
     response = get(full_url)
 
     if response.status_code in range(200, 300):
@@ -107,7 +106,7 @@ def balance_of_address(address: str, node_url: str = None) -> int:
         full_url = f'{Node.mainnet.value}/addresses/balance/{address}'
     else:
         full_url = f'{node_url}/addresses/balance/{address}' # You have pass your node url with https or other contents
-    
+
     response = get(full_url)
 
     if response.status_code in range(200, 300):
@@ -126,7 +125,7 @@ def list_of_rich(**kargs: dict) -> dict:
     """
     Example:
         quantity=30,
-        node_ip_port="127.0.0.1:555",
+        node_ip="127.0.0.1:555",
         net="mainnet" or "testnet"
         node_api_key="",
         export=True or False,
@@ -143,8 +142,7 @@ def list_of_rich(**kargs: dict) -> dict:
         return percent(total)
 
     response = balance_of_all_address(kargs['node_ip'], kargs['node_api_key'])
-    supply = Node.mainnet_total_supply.value if kargs['net'] == 'mainnet' else Node.testnet_total_supply.value
-    link = Node.mainnet_blockexplorer.value if kargs['net'] == 'mainnet' else Node.testnet_blockexplorer.value
+    supply = Node.mainnet_supply.value if kargs['net'] == 'mainnet' else Node.testnet_total_supply.value
 
     if response['status'] != 'ok':
         return  {
@@ -155,18 +153,17 @@ def list_of_rich(**kargs: dict) -> dict:
         wallets_lunes = dict(zip(
             response['response'],
             list(map(
-                lambda item: unes_to_lunes(item),
+                lambda item: int(item / 10e7),
                 response['response'].values()
             ))
         ))
-
-        wallets = sorted(
+        rich_list = sorted(
             [
                 {
                     'address': address,
                     'amount': amount,
                     'percent': percent(amount),
-                    'link': f'{link}/address/{address}'
+                    'link': f'https://blockexplorer.lunes.io/address/{address}'
                 }
                 for address, amount in list(
                     wallets_lunes.items()
@@ -176,19 +173,20 @@ def list_of_rich(**kargs: dict) -> dict:
             reverse = True
         )[:kargs.get('quantity')]
 
+        total = len(rich_list)
         report = {
             "total_supply": supply,
             "chain": kargs['net'],
-            "total_percent": percent_total(wallets),
-            "wallet_list": wallets
+            "total_of_wallets": total,
+            "total_percent": percent_total(rich_list),
+            "rich_list": rich_list
         }
 
-        if kargs.get('export', False):
-            export_json(
-                report,
-                "rich_list",
-                kargs.get('path', './data/')
-            )
+        for index in range(total):
+            i = index + 1
+            report["rich_list"][index]["index"] = i
+
+
 
         return  {
             'status': 'ok',
