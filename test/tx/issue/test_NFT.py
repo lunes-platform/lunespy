@@ -14,15 +14,12 @@ def sender():
 
 @fixture
 def create_tx(sender: Wallet):
-    from lunespy.tx.issue import issue_token_factory
+    from lunespy.tx.issue import mint_NFT_factory
 
-    return issue_token_factory(
+    return mint_NFT_factory(
         sender_public_key=sender.public_key,
         name="My Test Token",
-        quantity=10000,
         description="This Token Is Not Real, Only Test",
-        reissuable=True,
-        decimals=8,
         timestamp=1650250375987
     )
 
@@ -40,11 +37,11 @@ def test_issue_tx(create_tx: IssueToken):
         'description': 'This Token Is Not Real, Only Test',
         'timestamp': 1650250375987,
         'name': 'My Test Token',
-        'reissuable': True,
-        'quantity': 10000,
+        'reissuable': False,
+        'quantity': 1,
         'fee': 100000000,
         'signature': '',
-        'decimals': 8,
+        'decimals': 0,
         'type': 3
     }
 
