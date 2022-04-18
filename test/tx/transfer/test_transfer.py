@@ -30,7 +30,8 @@ def create_tx(sender: Wallet, receiver: Wallet):
     return transfer_token_factory(
         sender_public_key=sender.public_key,
         receiver_address=receiver.address,
-        amount=1000
+        amount=1000,
+        timestamp=1650250375987
     )
 
 
@@ -38,6 +39,23 @@ def create_tx(sender: Wallet, receiver: Wallet):
 def sign_tx(sender: Wallet, create_tx: TransferToken):
     create_tx.sign(sender.private_key)
     return create_tx
+
+
+
+def test_issue_tx(create_tx: TransferToken):
+
+    assert create_tx.dict() == {
+        'senderPublicKey': '2ti1GM7F7J78J347fqSWSVocueDV3RSCFkLSKqmhk35Z',
+        'recipient': '37xRcbn1LiT1Az4REoLhjpca93jPG1gTEwq',
+        'sender': '37tQRv7x2RHd32Ss2i1EFTWSTSsqkwXcaBe',
+        'timestamp': 1650250375987,
+        'amount': 100000000000,
+        'signature': '',
+        'fee': 1000000,
+        'feeAsset': '',
+        'assetId': '',
+        'type': 4
+    }
 
 
 @mark.parametrize(
@@ -84,6 +102,3 @@ def test_signature_of_transfer(sign_tx: TransferToken):
         b58_to_bytes(sign_tx.signature),
     )
 
-
-def test_send_transfer():
-    assert 1 == 1
