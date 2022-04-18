@@ -30,17 +30,3 @@ def sign_transfer(private_key: str, tx: TransferToken) -> dict:
         b58_to_bytes(private_key),
         b58_to_bytes(tx.message)
     ))
-
-
-
-# todo async
-def broadcast_transfer(mount_tx: dict, node_url: str) -> Response:
-    from httpx import post
-
-    return post(
-        f'{node_url}/transactions/broadcast',
-        json=mount_tx,
-        headers={
-            'content-type':
-            'application/json'
-    })
