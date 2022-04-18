@@ -42,7 +42,7 @@ def issue_token_factory(sender_public_key: str, name: str, quantity: int, descri
     )
 
 
-def issue_NFT_factory(sender_public_key: str, name: str, description: str, **kwargs: dict) -> IssueToken:
+def mint_NFT_factory(sender_public_key: str, name: str, description: str, **kwargs: dict) -> IssueToken:
     return IssueToken(
         senderPublicKey=sender_public_key,
         description=description,
