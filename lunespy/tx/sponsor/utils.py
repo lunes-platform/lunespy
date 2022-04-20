@@ -7,13 +7,13 @@ def serialize_sponsor(tx: SponsorToken) -> bytes:
 
     return (
         chr(tx.type).encode() + \
+        b'\1' + \
         b58_to_bytes(tx.senderPublicKey) + \
         b58_to_bytes(tx.assetId) + \
         pack(">Q", tx.minSponsoredAssetFee) + \
         pack(">Q", tx.fee) + \
         pack(">Q", tx.timestamp)
     )
-
 
 def sign_sponsor(private_key: str, tx: SponsorToken) -> str:
     from lunespy.crypto import fast_signature

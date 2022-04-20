@@ -14,7 +14,7 @@ class TransferToken(BaseModel):
     type: int = Field(4, const=True)
     amount: int = Field(..., gt=0)
     signature: str = Field("")
-    feeAsset: int = Field("")
+    feeAsset: str = Field("")
 
     @validator("recipient")
     def same_chain(cls, recipient, values):
@@ -39,7 +39,7 @@ class TransferToken(BaseModel):
 
 
 
-def transfer_token_factory(sender_public_key: str, receiver_address: str, amount: float, chain: int = 1, **kwargs: dict) -> TransferToken:
+def transfer_token_factory(sender_public_key: str, receiver_address: str, amount: float, chain: int = 1, asset_id: str = "", **kwargs: dict) -> TransferToken:
     from lunespy.crypto import b58_to_bytes, bytes_to_b58, to_address
 
 
@@ -48,6 +48,7 @@ def transfer_token_factory(sender_public_key: str, receiver_address: str, amount
         amount=int(amount * 10e7),
         senderPublicKey=sender_public_key,
         recipient=receiver_address,
+        assetId=asset_id,
         **kwargs
     )
 
