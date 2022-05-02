@@ -2,8 +2,7 @@ from http.client import OK
 from lunespy.blockchain.nodes import Node
 from lunespy.utils import unes_to_lunes
 from lunespy.utils import export_json
-from httpx import Response
-import httpx
+from httpx import get, Response
 
 def address_associated_with_an_alias(alias: str, node_url: str = Node.mainnet.value) -> Response:
     """
@@ -11,20 +10,16 @@ def address_associated_with_an_alias(alias: str, node_url: str = Node.mainnet.va
 
     Just passing a alias and url of your node.
     """
-    full_url = f'{node_url}/addresses/alias/by-alias/{alias}'
-
-    if httpx.get(full_url).status_code == OK:
-        return httpx.get(full_url).json()
-
-    else:
-        print('Something wrong with your request')
+    return get(
+        f'{node_url}/addresses/alias/by-alias/{alias}'
+    )
 
 
 def asset_distribution(asset_id: str, node_url: str = Node.mainnet.value) -> Response:
     full_url = f'{node_url}/assets/{asset_id}/distribution'
 
-    if httpx.get(full_url).status_code == OK:
-        return httpx.get(full_url).json()
+    if get(full_url).status_code == OK:
+        return get(full_url).json()
 
     else:
         print('Something wrong with your request')
@@ -33,8 +28,8 @@ def asset_distribution(asset_id: str, node_url: str = Node.mainnet.value) -> Res
 def balance_all_assets_of_address(address: str, node_url: str = Node.mainnet.value) -> Response:
     full_url = f'{node_url}/assets/balance/{address}'
 
-    if httpx.get(full_url).status_code == OK:
-        return httpx.get(full_url).json()
+    if get(full_url).status_code == OK:
+        return get(full_url).json()
 
     else:
         print('Something wrong with your request')
@@ -43,8 +38,8 @@ def balance_all_assets_of_address(address: str, node_url: str = Node.mainnet.val
 def balance_for_especify_asset_of_address(address: str, asset_id: str, node_url: str = Node.mainnet.value) -> Response:
     full_url = f'{node_url}/assets/balance/{address}/{asset_id}' 
 
-    if httpx.get(full_url).status_code == OK:
-        return httpx.get(full_url).json()
+    if get(full_url).status_code == OK:
+        return get(full_url).json()
 
     else:
         print('Something wrong with your request')
@@ -53,14 +48,14 @@ def balance_for_especify_asset_of_address(address: str, asset_id: str, node_url:
 def balance_of_all_address(node_ip: str, node_api_key: str) -> Response:    
     full_url = f"{node_ip}/debug/state"
     header = {"X-API-key": node_api_key}
-    return httpx.get(full_url, headers=header)
+    return get(full_url, headers=header)
 
 
 def balance_of_address(address: str, node_url: str = Node.mainnet.value) -> int:
     full_url = f'{node_url}/addresses/balance/{address}'
 
-    if httpx.get(full_url).status_code == OK:
-        return httpx.get(full_url).json()
+    if get(full_url).status_code == OK:
+        return get(full_url).json()
 
     else:
         print('Something wrong with your request')
@@ -143,8 +138,8 @@ def list_of_rich(**kargs: dict) -> dict:
 def leasing_active_by_address(address: str, node_url: str = Node.mainnet.value) -> Response:
     full_url = f'{node_url}/leasing/active/{address}'
 
-    if httpx.get(full_url).status_code == OK:
-        return httpx.get(full_url).json()
+    if get(full_url).status_code == OK:
+        return get(full_url).json()
 
     else:
         print('Something wrong with your request')
@@ -153,8 +148,8 @@ def leasing_active_by_address(address: str, node_url: str = Node.mainnet.value) 
 def address_of_node_from_url(node_url: str = Node.mainnet.value) -> Response:
     full_url = f'{node_url}/addresses'        
 
-    if httpx.get(full_url).status_code == OK:
-        return httpx.get(full_url).json()
+    if get(full_url).status_code == OK:
+        return get(full_url).json()
 
     else:
         print('Something wrong with your request')
@@ -163,8 +158,8 @@ def address_of_node_from_url(node_url: str = Node.mainnet.value) -> Response:
 def aliases_associated_with_an_address(address: str, node_url: str = Node.mainnet.value) -> Response:
     full_url = f'{node_url}/addresses/alias/by-address/{address}'
 
-    if httpx.get(full_url).status_code == OK:
-        return httpx.get(full_url).json()
+    if get(full_url).status_code == OK:
+        return get(full_url).json()
 
     else:
         print('Something wrong with your request')

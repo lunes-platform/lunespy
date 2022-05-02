@@ -9,11 +9,14 @@ from lunespy.blockchain.address import balance_of_address
 from lunespy.blockchain.address import asset_distribution
 from pytest import mark
 
-
+@mark.now
 @mark.address
 @mark.requests
 def test_address_associated_with_an_alias():
-    assert type(address_associated_with_an_alias('gabriel')['address']) == str
+    response = address_associated_with_an_alias('gabriel')
+    assert response.is_success == True
+    assert response.json()['address'] == '3868pVhDQAs2v5MGxNN75CaHzyx1YV8TivM'
+
 
 
 @mark.address
