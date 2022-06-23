@@ -3,24 +3,8 @@ from lunespy.tx.transfer import TransferToken
 from lunespy.crypto import same_chain_address
 from pytest import fixture, mark, raises
 from pydantic import ValidationError
+from test.tx import sender, receiver
 
-
-@fixture
-def sender():
-    from lunespy.wallet import wallet_factory
-
-    return wallet_factory(
-        private_key="8YMbX5BCQdazwgdVfeUpKuoUJrmYpMyGVAGAsNaHVj1u"
-    )
-
-
-@fixture
-def receiver():
-    from lunespy.wallet import wallet_factory
-
-    return wallet_factory(
-        private_key="G6E2xNBWtsRG8XBDmeTQQxZNHHUa6K9dnc9KrYtKyGwM"
-    )
 
 
 @fixture

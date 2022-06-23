@@ -13,7 +13,7 @@ def account_from_new_seed_mainnet():
 def account_from_new_seed_testnet():
     return wallet_factory(chain=0)
 
-@mark.now
+
 def test_validate_address_mainnet(account_from_new_seed_mainnet):
     assert validate_address(chain=1, address=account_from_new_seed_mainnet.address) == True
 

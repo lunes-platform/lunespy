@@ -1,16 +1,7 @@
 from lunespy.tx.issue import IssueToken
 from lunespy.wallet import Wallet
 from pytest import fixture
-
-
-@fixture
-def sender():
-    from lunespy.wallet import wallet_factory
-
-    return wallet_factory(
-        private_key="8YMbX5BCQdazwgdVfeUpKuoUJrmYpMyGVAGAsNaHVj1u"
-    )
-
+from test.tx import sender
 
 @fixture
 def create_tx(sender: Wallet):
