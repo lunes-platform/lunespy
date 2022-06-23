@@ -1,17 +1,29 @@
 [tool.poetry]
 name = "lunespy"
-version = "2.1.3"
-description = "Library for communication with nodes in mainnet or testnet of the lunes-blockchain network Allows the automation of sending assets, issue end reissue tokens, leasing, registry, and create new wallet."
-authors = [
-    "Lunes Platform <development@lunes.io>"
-]
+version = "2.3.0"
+description = "📦 Library for communication with nodes in mainnet or testnet of the lunes-blockchain network Allows the automation of sending assets, issue end reissue tokens, leasing, registry, and create new wallet."
+documentation = "https://lunes-platform.github.io/telescope/"
+repository = "https://github.com/lunes-platform/lunespy.git"
+maintainers = ["Lucas Oliveira <olivmath@protonmail.com>"]
+authors = ["Lunes Platform <development@lunes.io>"]
+homepage = "https://github.com/lunes-platform/"
 license = "Apache-2.0"
 readme = "README.md"
-documentation = "https://github.com/lunes-platform/lunespy/blob/main/docs/TUTORIAL.md" 
 keywords = [
     "cryptocurrency",
     "lunes",
-    "blockchain"
+    "blockchain",
+    "keccak-256",
+]
+classifiers = [
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Build Tools",
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Python :: 3 :: Only",
+    "Development Status :: 6 - Mature",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: Unix",
 ]
 
 [tool.poetry.dependencies]

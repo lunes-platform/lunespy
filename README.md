@@ -2,6 +2,7 @@
 
 📦 Library for communication with nodes in mainnet or testnet of the lunes-blockchain network Allows the automation of sending assets, issue end reissue tokens, leasing, registry, and create new wallet.
 
+[![CodeQL](https://github.com/lunes-platform/lunespy/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/lunes-platform/lunespy/actions/workflows/codeql-analysis.yml)
 [![Test](https://github.com/lunes-platform/lunespy/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/lunes-platform/lunespy/actions/workflows/test.yml)
 ![PyPI](https://img.shields.io/pypi/v/lunespy)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/lunespy)
@@ -12,29 +13,40 @@
 
 ![PyPI - License](https://img.shields.io/pypi/l/lunespy)
 ![Discord](https://img.shields.io/discord/958424925453058158)
-## Documentation
 
-The `lunespy` documentations is hosted at [Telescope](https://lunes-platform.github.io/telescope/)
+---
 
-## Changelog
+## Table of Contents
 
-The changelog process for this project is described [here](CHANGELOG.md).
+- [Credits](#credits)
+- [How to install](#how-to-install)
+- [How it works](#how-it-works)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Credits
+
+[![GitHub Contributors Image](https://contrib.rocks/image?repo=lunes-platform/lunespy)](https://github.com/lunes-platform/lunespy/graphs/contributors)
+
+## How to install
+
+```
+pip install lunespy
+```
+
+```
+poetry add lunespy
+```
+
+## How it works
+
+- see the docs: [Telescope](https://lunes-platform.github.io/telescope)
 
 ## Contributing
 
-`lunespy` is still under development. Contributions are always welcome! Please follow the [Developers Guide](CONTRIBUTING.md) if you want to help.
-
-Thanks to the following people who have contributed to this project:
-
-- [olivmath](https://github.com/olivmath)
-- [marcoslkz](https://github.com/marcoslkz)
-- [VanJustin](https://github.com/VanJustin)
-- [xonfps](https://github.com/xonfps)
-
-## Contact
-
-If you want to contact me you can reach me at <development@lunes.io>.
+- Before read a code of conduct: **[CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)**
+- Follow the guide of development: **[CONTRIBUTING](CONTRIBUTING.md)**
 
 ## License
 
-[Apache License Version 2.0](https://github.com/lunes-platform/lunespy/blob/main/LICENSE).
+[Apache v2.0](LICENSE)

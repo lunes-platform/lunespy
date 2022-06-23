@@ -7,9 +7,10 @@
 		"python.pythonPath": "."
 	},
 	"extensions": [
-		"ms-python.python",
-		"eamodio.gitlens",
+		"bungcip.better-toml",
 		"mhutchie.git-graph",
-		"bungcip.better-toml"
+		"Tyriar.sort-lines",
+		"ms-python.python",
+		"eamodio.gitlens"
 	]
 }
