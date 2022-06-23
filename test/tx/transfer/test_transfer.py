@@ -7,6 +7,7 @@ from test.tx import sender, receiver
 
 
 
+
 @fixture
 def create_tx(sender: Wallet, receiver: Wallet):
     from lunespy.tx.transfer import transfer_token_factory

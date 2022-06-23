@@ -6,7 +6,7 @@ from typing import List
 class MultiTokens(BaseModel):
     from httpx import Response
 
-    tokens: list[IssueToken] = Field(..., description="list of issue tokens")
+    tokens: List[IssueToken] = Field(..., description="list of issue tokens")
 
     @property
     def length(cls) -> int:

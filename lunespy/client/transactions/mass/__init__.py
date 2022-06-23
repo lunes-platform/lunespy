@@ -16,7 +16,7 @@ class MassTransferToken(BaseTransaction):
     def __init__(self, sender: Account, receivers_list: list, **mass_transfer_data: dict) -> None:
         super().__init__("Mass", {'receivers_list': receivers_list, 'mass_transfer_data': mass_transfer_data})
         self.sender: Account = sender
-        self.receivers_list: list[dict] = receivers_list
+        self.receivers_list: List[dict] = receivers_list
         self.mass_transfer_data: dict = mass_transfer_data
         self.history: list = []
 
