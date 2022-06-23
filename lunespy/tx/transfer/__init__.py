@@ -33,8 +33,8 @@ class TransferToken(BaseModel):
         from lunespy.utils import broadcast_tx
 
         return broadcast_tx(
-            cls.dict(),
-            node if not node == None else "https://lunesnode-testnet.lunes.io"
+            node if not node == None else "https://lunesnode-testnet.lunes.io",
+            cls.dict()
         )
 
 

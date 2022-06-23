@@ -6,7 +6,7 @@ def now() -> int:
     return int(time() * 1000)
 
 # todo async
-def broadcast_tx(tx: dict, node_url: str) -> Response:
+def broadcast_tx(node_url: str, tx: dict) -> Response:
     from httpx import post
 
     return post(

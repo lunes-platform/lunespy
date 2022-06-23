@@ -1,18 +1,20 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 class IssueToken(BaseModel):
+    from pydantic import Field, constr
     from lunespy.utils import now
-    from requests import Response
+    from httpx import Response
 
-    description: str = Field(..., description="description with size smaller than 1000 char", )
+
+    description: constr(max_length=1000) = Field(..., description="description with size smaller than 1000 char", )
+    name: constr(max_length=16, min_length=4) = Field(..., description="name of token")
+    decimals: int = Field(..., description="token fractionability", le=8)
     reissuable: bool = Field(..., description="token will be reissued")
     quantity: int = Field(..., description="total supply of token")
-    decimals: int = Field(..., description="token fractionability")
     senderPublicKey: str = Field(..., description="public_key")
-    name: str = Field(..., description="name of token")
     timestamp: int = Field(now(), ge=1483228800)
-    message: str = Field("", exclude=True)
     fee: int = Field(100000000, ge=100000000)
+    message: str = Field("", exclude=True)
     type: int = Field(3, const=True)
     signature: str = Field("")
 
@@ -25,8 +27,8 @@ class IssueToken(BaseModel):
         from lunespy.utils import broadcast_tx
 
         return broadcast_tx(
-            cls.dict(),
-            node if not node == None else "https://lunesnode-testnet.lunes.io"
+            node if not node == None else "https://lunesnode-testnet.lunes.io",
+            cls.dict()
         )
 
 
@@ -60,8 +62,3 @@ def tokens_airdrop():
     """
     ...
 
-def mint_multiple_NFT():
-    """
-    # Create multiples NFTs
-    """
-    ...
