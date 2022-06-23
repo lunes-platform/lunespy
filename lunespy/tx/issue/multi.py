@@ -1,6 +1,6 @@
-
 from lunespy.tx.issue import IssueToken, issue_token_factory
 from pydantic import BaseModel, Field
+from typing import List
 
 
 class MultiTokens(BaseModel):
@@ -28,7 +28,7 @@ class MultiTokens(BaseModel):
         return list(map(broadcast, cls.tokens))
 
 
-def issue_multiples_tokens(sender_public_key: str, tokens_list: list[dict]) -> MultiTokens:
+def issue_multiples_tokens(sender_public_key: str, tokens_list: List[dict]) -> MultiTokens:
     return MultiTokens(tokens=[
         issue_token_factory(
             sender_public_key,
@@ -42,7 +42,7 @@ def issue_multiples_tokens(sender_public_key: str, tokens_list: list[dict]) -> M
     ])
 
 
-def mint_multiples_NFT(sender_public_key: str, tokens_list: list[dict]) -> MultiTokens:
+def mint_multiples_NFT(sender_public_key: str, tokens_list: List[dict]) -> MultiTokens:
     def toNFT(token: dict) -> dict:
         token["quantity"], token["decimals"] = 1, 0
         return token

@@ -2,6 +2,7 @@ from pytest import fixture, mark, raises
 from pydantic import ValidationError
 from lunespy.wallet import Wallet
 from test.tx import sender
+from typing import List
 
 
 @fixture
@@ -57,7 +58,7 @@ def error_descrition_length():
     ]
 
 
-def test_multiples_NFT_error_name_length(sender: Wallet, error_name_length: list[dict]):
+def test_multiples_NFT_error_name_length(sender: Wallet, error_name_length: List[dict]):
     from lunespy.tx.issue.multi import mint_multiples_NFT
 
     with raises(ValidationError) as string_err:
@@ -65,7 +66,7 @@ def test_multiples_NFT_error_name_length(sender: Wallet, error_name_length: list
     assert "name" in str(string_err.value)
 
 
-def test_multiples_NFT_error_descrition_length(sender: Wallet, error_descrition_length: list[dict]):
+def test_multiples_NFT_error_descrition_length(sender: Wallet, error_descrition_length: List[dict]):
     from lunespy.tx.issue.multi import mint_multiples_NFT
 
     with raises(ValidationError) as string_err:

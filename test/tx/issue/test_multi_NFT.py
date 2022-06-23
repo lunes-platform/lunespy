@@ -1,6 +1,7 @@
 from lunespy.wallet import Wallet
 from pytest import fixture, mark
 from test.tx import sender
+from typing import List
 
 @fixture
 def list_of_tokens():
@@ -23,7 +24,7 @@ def list_of_tokens():
     ]
 
 
-def test_length_of_create_multiples_NFT(sender: Wallet, list_of_tokens: list[dict]):
+def test_length_of_create_multiples_NFT(sender: Wallet, list_of_tokens: List[dict]):
     from lunespy.tx.issue.multi import mint_multiples_NFT
 
     tokens = mint_multiples_NFT(sender.public_key, list_of_tokens)
@@ -31,7 +32,7 @@ def test_length_of_create_multiples_NFT(sender: Wallet, list_of_tokens: list[dic
     assert tokens.length == len(list_of_tokens)
 
 
-def test_create_multiples_NFT(sender: Wallet, list_of_tokens: list[dict]):
+def test_create_multiples_NFT(sender: Wallet, list_of_tokens: List[dict]):
     from lunespy.tx.issue.multi import mint_multiples_NFT
 
     tokens = mint_multiples_NFT(sender.public_key, list_of_tokens)
@@ -40,7 +41,7 @@ def test_create_multiples_NFT(sender: Wallet, list_of_tokens: list[dict]):
         assert i.senderPublicKey == sender.public_key
 
 
-def test_signing_multiples_NFT(sender: Wallet, list_of_tokens: list[dict]):
+def test_signing_multiples_NFT(sender: Wallet, list_of_tokens: List[dict]):
     from lunespy.crypto import b58_to_bytes, validate_signature
     from lunespy.tx.issue.multi import mint_multiples_NFT
 

@@ -2,6 +2,7 @@ from pytest import fixture, mark, raises
 from pydantic import ValidationError
 from lunespy.wallet import Wallet
 from test.tx import sender
+from typing import List
 
 
 @fixture
@@ -84,7 +85,7 @@ def error_descrition_length():
 
 
 
-def test_multiples_tokens_error_name_length(sender: Wallet, error_name_length: list[dict]):
+def test_multiples_tokens_error_name_length(sender: Wallet, error_name_length: List[dict]):
     from lunespy.tx.issue.multi import issue_multiples_tokens
 
     with raises(ValidationError) as string_err:
@@ -92,7 +93,7 @@ def test_multiples_tokens_error_name_length(sender: Wallet, error_name_length: l
     assert "name" in str(string_err.value)
 
 
-def test_multiples_tokens_error_decimals_greater_than_8(sender: Wallet, error_decimals_greater_than_8: list[dict]):
+def test_multiples_tokens_error_decimals_greater_than_8(sender: Wallet, error_decimals_greater_than_8: List[dict]):
     from lunespy.tx.issue.multi import issue_multiples_tokens
 
     with raises(ValidationError) as string_err:
@@ -100,7 +101,7 @@ def test_multiples_tokens_error_decimals_greater_than_8(sender: Wallet, error_de
     assert "decimals" in str(string_err.value)
 
 
-def test_multiples_tokens_error_descrition_length(sender: Wallet, error_descrition_length: list[dict]):
+def test_multiples_tokens_error_descrition_length(sender: Wallet, error_descrition_length: List[dict]):
     from lunespy.tx.issue.multi import issue_multiples_tokens
 
     with raises(ValidationError) as string_err:
